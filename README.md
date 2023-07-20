@@ -42,11 +42,6 @@ git clone "https://github.com/YurinDoctrine/deploy-artix"
 4. Run `./setup.sh`.
 5. When everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with Connman.
 
-### Post-installation
-
-If all went well, to complete the post-installation configuration,
-* Run `./deploy.sh`.
-
 #### References
 
 * [Artix Wiki Installation](https://wiki.artixlinux.org/Main/Installation)
