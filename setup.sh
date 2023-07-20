@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 confirm_password() {
   stty -echo
@@ -27,6 +27,7 @@ case "$(readlink -f /sbin/init)" in
   MY_INIT = "runit"
   echo -e "Init system ("$MY_INIT"): "
   ;;
+esac
 
 # Choose disk
 while :; do
@@ -82,13 +83,13 @@ fi
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
-  printf "Region/City (e.g. 'America/Denver'): " && read -p $"> " REGION_CITY
+  echo -e "Region/City (e.g. America/Denver): " && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY = "America/Denver"
 done
 
 # Host
 while :; do
-  printf "Hostname: " && read -p $"> " MY_HOSTNAME
+  echo -e "Hostname: " && read -p $"> " MY_HOSTNAME
   [ "$MY_HOSTNAME" ] && break
 done
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Boring stuff you should probably do
 ln -sf /usr/share/zoneinfo/"$REGION_CITY" /etc/localtime
