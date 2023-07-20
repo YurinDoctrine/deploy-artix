@@ -2,7 +2,7 @@
 
 confirm_password() {
   stty -echo
-  until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
+  until [ "$pass1"="$pass2" ] && [ "$pass2" ]; do
     echo -e "%s: " "$1" >&2 && read -p $"> " pass1
     echo -e "Confirm %s: " "$1" >&2 && read -p $"> " pass2
   done
@@ -12,7 +12,7 @@ confirm_password() {
 
 # Load keymap
 echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && sudo loadkeys $MY_KEYMAP
-[ ! "$MY_KEYMAP" ] && MY_KEYMAP = "us"
+[ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Check boot mode
 [ ! -d /sys/firmware/efi ] && echo -e "WARNING: Not booted in UEFI mode."
@@ -20,11 +20,11 @@ echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && sudo loadkeys $M
 # Check MY_INIT
 case "$(readlink -f /sbin/init)" in
 *openrc*)
-  MY_INIT = "openrc"
+  MY_INIT="openrc"
   echo -e "Init system ("$MY_INIT"): "
   ;;
 *runit*)
-  MY_INIT = "runit"
+  MY_INIT="runit"
   echo -e "Init system ("$MY_INIT"): "
   ;;
 esac
@@ -39,52 +39,52 @@ while :; do
 done
 
 
-PART1 = "$MY_DISK"1
-PART2 = "$MY_DISK"2
-PART3 = "$MY_DISK"3
+PART1="$MY_DISK"1
+PART2="$MY_DISK"2
+PART3="$MY_DISK"3
 case "$MY_DISK" in
 *"nvme"*)
-  PART1 = "$MY_DISK"p1
-  PART2 = "$MY_DISK"p2
-  PART3 = "$MY_DISK"p3
+  PART1="$MY_DISK"p1
+  PART2="$MY_DISK"p2
+  PART3="$MY_DISK"p3
   ;;
 esac
 
 # Swap size
 until (echo "$SWAP_SIZE" | grep -Eq "^[0-9]+$") && [ "$SWAP_SIZE" -gt 0 ] && [ "$SWAP_SIZE" -lt 97 ]; do
   echo -e "Size of swap partition in GiB (Default: 4GB): " && read -p $"> " SWAP_SIZE
-  [ ! "$SWAP_SIZE" ] && SWAP_SIZE = 4
+  [ ! "$SWAP_SIZE" ] && SWAP_SIZE=4
 done
 
 # Choose filesystem
-until [ "$MY_FS" = "btrfs" ] || [ "$MY_FS" = "ext4" ]; do
+until [ "$MY_FS"="btrfs" ] || [ "$MY_FS"="ext4" ]; do
   echo -e "Filesystem (btrfs/ext4): " && read -p $"> " MY_FS
-  [ ! "$MY_FS" ] && MY_FS = "btrfs"
+  [ ! "$MY_FS" ] && MY_FS="btrfs"
 done
 
-ROOT_PART = $PART3
-[ "$MY_FS" = "ext4" ] && ROOT_PART = $PART2
+ROOT_PART=$PART3
+[ "$MY_FS"="ext4" ] && ROOT_PART=$PART2
 
 # Encrypt
 echo -e "Encrypt? (y/N): " && read -p $"> " ENCRYPTED
-[ ! "$ENCRYPTED" ] && ENCRYPTED = "n"
+[ ! "$ENCRYPTED" ] && ENCRYPTED="n"
 
 # Layout
 MY_ROOT="/dev/mapper/root"
 MY_SWAP="/dev/mapper/swap"
-if [ "$ENCRYPTED" = "y" ]; then
+if [ "$ENCRYPTED"="y" ]; then
   CRYPTPASS=$(confirm_password "Encryption Password: ")
 else
-  MY_ROOT = $PART3
-  MY_SWAP = $PART2
-  [ "$MY_FS" = "ext4" ] && MY_ROOT = $PART2
+  MY_ROOT=$PART3
+  MY_SWAP=$PART2
+  [ "$MY_FS"="ext4" ] && MY_ROOT=$PART2
 fi
-[ "$MY_FS" = "ext4" ] && MY_SWAP = "/dev/MyVolGrp/swap"
+[ "$MY_FS"="ext4" ] && MY_SWAP="/dev/MyVolGrp/swap"
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
   echo -e "Region/City (e.g. America/Denver): " && read -p $"> " REGION_CITY
-  [ ! "$REGION_CITY" ] && REGION_CITY = "America/Denver"
+  [ ! "$REGION_CITY" ] && REGION_CITY="America/Denver"
 done
 
 # Host
@@ -106,23 +106,23 @@ installvars() {
 echo -e "Done with configuration. Installing..."
 
 # Partition disk
-if [ "$MY_FS" = "ext4" ]; then
-  layout = ",,V"
-  fs_pkgs = "lvm2 lvm2-$MY_INIT"
-elif [ "$MY_FS" = "btrfs" ]; then
-  layout = ",${SWAP_SIZE}G,S\n,,"
-  fs_pkgs = "btrfs-progs"
+if [ "$MY_FS"="ext4" ]; then
+  layout=",,V"
+  fs_pkgs="lvm2 lvm2-$MY_INIT"
+elif [ "$MY_FS"="btrfs" ]; then
+  layout=",${SWAP_SIZE}G,S\n,,"
+  fs_pkgs="btrfs-progs"
 fi
-[ "$ENCRYPTED" = "y" ] && fs_pkgs = $fs_pkgs + " cryptsetup cryptsetup-$MY_INIT"
+[ "$ENCRYPTED"="y" ] && fs_pkgs=$fs_pkgs + " cryptsetup cryptsetup-$MY_INIT"
 
 printf "label: gpt\n,550M,U\n%s\n" "$layout" | sudo sfdisk "$MY_DISK"
 
 # Format and mount partitions
-if [ "$ENCRYPTED" = "y" ]; then
+if [ "$ENCRYPTED"="y" ]; then
   yes "$CRYPTPASS" | sudo cryptsetup -q luksFormat "$ROOT_PART"
   yes "$CRYPTPASS" | sudo cryptsetup open "$ROOT_PART" root
 
-  if [ "$MY_FS" = "btrfs" ]; then
+  if [ "$MY_FS"="btrfs" ]; then
     yes "$CRYPTPASS" | sudo cryptsetup -q luksFormat "$PART2"
     yes "$CRYPTPASS" | sudo cryptsetup open "$PART2" swap
   fi
@@ -130,7 +130,7 @@ fi
 
 sudo mkfs.fat -F 32 "$PART1"
 
-if [ "$MY_FS" = "ext4" ]; then
+if [ "$MY_FS"="ext4" ]; then
 # Setup LVM
   sudo pvcreate "$MY_ROOT"
   sudo vgcreate MyVolGrp "$MY_ROOT"
@@ -140,7 +140,7 @@ if [ "$MY_FS" = "ext4" ]; then
   sudo mkfs.ext4 /dev/MyVolGrp/root
 
   sudo mount /dev/MyVolGrp/root /mnt
-elif [ "$MY_FS" = "btrfs" ]; then
+elif [ "$MY_FS"="btrfs" ]; then
   sudo mkfs.btrfs "$MY_ROOT"
 
   # Create subvolumes
