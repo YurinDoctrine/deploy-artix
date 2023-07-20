@@ -3,8 +3,8 @@
 confirm_password() {
   stty -echo
   until [ "$pass1"="$pass2" ] && [ "$pass2" ]; do
-    printf "%s: " "$1" >&2 && read -p $"> " pass1
-    printf "Confirm %s: " "$1" >&2 && read -p $"> " pass2
+    printf "\n%s: " "$1" >&2 && read -p $"> " pass1
+    printf "\nConfirm %s: " "$1" >&2 && read -p $"> " pass2
   done
   stty echo
   echo -e "$pass2"
