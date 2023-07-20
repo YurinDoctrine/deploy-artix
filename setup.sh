@@ -3,15 +3,15 @@
 confirm_password() {
   stty -echo
   until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
-    echo -e "%s: " "$1" >&2 && read -pr pass1
-    echo -e "Confirm %s: " "$1" >&2 && read -pr pass2
+    echo -e "%s: " "$1" >&2 && read -p pass1
+    echo -e "Confirm %s: " "$1" >&2 && read -p pass2
   done
   stty echo
   echo -e "$pass2"
 }
 
 # Load keymap
-echo -e "Load keymap (e.g. us): " && read -pr $MY_KEYMAP && sudo loadkeys $MY_KEYMAP
+echo -e "Load keymap (e.g. us): " && read -p $MY_KEYMAP && sudo loadkeys $MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP = "us"
 
 # Check boot mode
@@ -33,7 +33,7 @@ while :; do
   echo ""
   sudo fdisk -l
   echo -e "WARNING: the selected disk will be rewritten."
-  echo -e "Disk to install to (e.g. /dev/Xda): " && read -pr MY_DISK
+  echo -e "Disk to install to (e.g. /dev/Xda): " && read -p MY_DISK
   [ -b "$MY_DISK" ] && break
 done
 
@@ -51,13 +51,13 @@ esac
 
 # Swap size
 until (echo "$SWAP_SIZE" | grep -Eq "^[0-9]+$") && [ "$SWAP_SIZE" -gt 0 ] && [ "$SWAP_SIZE" -lt 97 ]; do
-  echo -e "Size of swap partition in GiB (Default: 4GB): " && read -pr SWAP_SIZE
+  echo -e "Size of swap partition in GiB (Default: 4GB): " && read -p SWAP_SIZE
   [ ! "$SWAP_SIZE" ] && SWAP_SIZE = 4
 done
 
 # Choose filesystem
 until [ "$MY_FS" = "btrfs" ] || [ "$MY_FS" = "ext4" ]; do
-  echo -e "Filesystem (btrfs/ext4): " && read -pr MY_FS
+  echo -e "Filesystem (btrfs/ext4): " && read -p MY_FS
   [ ! "$MY_FS" ] && MY_FS = "btrfs"
 done
 
@@ -65,7 +65,7 @@ ROOT_PART = $PART3
 [ "$MY_FS" = "ext4" ] && ROOT_PART = $PART2
 
 # Encrypt
-echo -e "Encrypt? (y/N): " && read -pr ENCRYPTED
+echo -e "Encrypt? (y/N): " && read -p ENCRYPTED
 [ ! "$ENCRYPTED" ] && ENCRYPTED = "n"
 
 # Layout
@@ -82,13 +82,13 @@ fi
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
-  printf "Region/City (e.g. 'America/Denver'): " && read -pr REGION_CITY
+  printf "Region/City (e.g. 'America/Denver'): " && read -p REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY = "America/Denver"
 done
 
 # Host
 while :; do
-  printf "Hostname: " && read -pr MY_HOSTNAME
+  printf "Hostname: " && read -p MY_HOSTNAME
   [ "$MY_HOSTNAME" ] && break
 done
 
