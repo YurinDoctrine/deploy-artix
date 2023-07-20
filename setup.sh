@@ -3,8 +3,8 @@
 confirm_password() {
   stty -echo
   until [ "$pass1"="$pass2" ] && [ "$pass2" ]; do
-    echo -e "%s: " "$1" >&2 && read -p $"> " pass1
-    echo -e "Confirm %s: " "$1" >&2 && read -p $"> " pass2
+    printf "%s: " "$1" >&2 && read -p $"> " pass1
+    printf "Confirm %s: " "$1" >&2 && read -p $"> " pass2
   done
   stty echo
   echo -e "$pass2"
@@ -113,7 +113,7 @@ elif [ "$MY_FS"="btrfs" ]; then
   layout=",${SWAP_SIZE}G,S\n,,"
   fs_pkgs="btrfs-progs"
 fi
-[ "$ENCRYPTED"="y" ] && fs_pkgs=$fs_pkgs + " cryptsetup cryptsetup-$MY_INIT"
+[ "$ENCRYPTED"="y" ] && fs_pkgs=$fs_pkgs+" cryptsetup cryptsetup-$MY_INIT"
 
 printf "label: gpt\n,550M,U\n%s\n" "$layout" | sudo sfdisk "$MY_DISK"
 
