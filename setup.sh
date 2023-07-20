@@ -58,8 +58,8 @@ done
 
 # Choose filesystem
 until [ "$MY_FS"="btrfs" ] || [ "$MY_FS"="ext4" ]; do
-  echo -e "Filesystem (btrfs/ext4): " && read -p $"> " MY_FS
-  [ ! "$MY_FS" ] && MY_FS="btrfs"
+  echo -e "Filesystem (btrfs/Default: ext4): " && read -p $"> " MY_FS
+  [ ! "$MY_FS" ] && MY_FS="ext4"
 done
 
 ROOT_PART=$PART3
