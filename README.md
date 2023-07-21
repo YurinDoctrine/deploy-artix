@@ -35,7 +35,7 @@ connmanctl # In Connman, use respectively: `agent on`, `scan wifi`, `services`, 
 ```
 3. Clone the repository:
 ```
-sudo pacman -Sy git # Install git in live environment, then clone:
+sudo pacman -Sy --noconfirm git # Install git in live environment, then clone:
 
 git clone "https://github.com/YurinDoctrine/deploy-artix"
 ```
