@@ -30,13 +30,7 @@ sed -i -e '/%wheel ALL=(ALL) ALL/s/^#//g' /etc/sudoers
 # Other stuff you should do
 if [ "$MY_INIT"="openrc" ]; then
   rc-update add connmand default
-elif [ "$MY_INIT"="runit" ]; then
-  ln -s /etc/runit/sv/connmand /run/runit/service
 fi
-
-[ "$MY_FS"="ext4" ] && [ "$MY_INIT"="openrc" ] && rc-update add lvm boot
-
-printf "\n%s\t\tswap\t\tswap\t\tsw\t0 0\n" "$MY_SWAP" >>/etc/fstab
 
 # Configure mkinitcpio
 if [ "$MY_FS"="btrfs" ]; then
