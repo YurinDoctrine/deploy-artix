@@ -132,4 +132,4 @@ fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
 ($(installvars) artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
-  echo -e 'You may now poweroff...'
+  echo -e 'You may now reboot or poweroff...'
