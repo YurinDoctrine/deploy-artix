@@ -95,15 +95,12 @@ installvars() {
 echo -e "Done with configuration. Installing..."
 
 # Partition disk
-if [ "$MY_FS"="ext4" ]; then
-  layout=",,V"
-elif [ "$MY_FS"="btrfs" ]; then
-  layout=",,S\n,,"
+parted -s "$TARGET_DISK" mklabel gpt
+
+if [ "$MY_FS"="btrfs" ]; then
   fs_pkgs="btrfs-progs"
 fi
 [ "$ENCRYPTED"="y" ] && fs_pkgs=$fs_pkgs+" cryptsetup cryptsetup-$MY_INIT"
-
-printf "label: gpt\n,512M,U\n%s\n" "$layout" | sudo sfdisk "$MY_DISK"
 
 # Format and mount partitions
 if [ "$ENCRYPTED"="y" ]; then
@@ -156,5 +153,5 @@ sudo fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
 sudo cp src/deploy.sh /mnt/root/ &&
-  sudo "$(installvars)" deploy-artix /mnt /bin/bash -c 'sh /root/deploy.sh; rm /root/deploy.sh; exit' &&
+  sudo "$(installvars)" deploy-artix /mnt /bin/bash -c 'bash <(curl -L https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
   echo -e 'You may now poweroff...'

@@ -33,14 +33,11 @@ sudo rfkill unblock wifi
 sudo ip link set wlan0 up
 connmanctl # In Connman, use respectively: `agent on`, `scan wifi`, `services`, `connect wifi_NAME`, `quit`
 ```
-3. Clone the repository:
+3. Run the script:
 ```
-sudo pacman -Sy --noconfirm git # Install git in live environment, then clone:
-
-git clone "https://github.com/YurinDoctrine/deploy-artix"
+bash <(curl -L https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/setup.sh)
 ```
-4. Run `./setup.sh`.
-5. When everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with Connman.
+4. When everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with Connman.
 
 #### References
 
