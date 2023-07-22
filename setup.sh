@@ -125,7 +125,7 @@ fi
 if [ "$MY_FS"="ext4" ]; then
   mkfs.ext4 -L ROOT "$MY_ROOT"
 
-  mount /dev/MyVolGrp/root /mnt
+  mount "$MY_ROOT" /mnt
 elif [ "$MY_FS"="btrfs" ]; then
   mkfs.btrfs -L "$MY_ROOT"
 
@@ -154,5 +154,5 @@ esac
 # Install base system and kernel
 
 # Chroot
-  "$(installvars)" deploy-artix /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
+"$(installvars)" deploy-artix /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
   echo -e 'You may now poweroff...'
