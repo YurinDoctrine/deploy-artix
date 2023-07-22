@@ -127,7 +127,7 @@ esac
 
 # Install base system and kernel
 basestrap /mnt base base-devel "$MY_INIT" elogind-"$MY_INIT" efibootmgr grub "$ucode" dhcpcd wpa_supplicant connman-"$MY_INIT" "$fs_pkgs" &&
-basestrap /mnt linux linux-firmware linux-headers mkinitcpio &&
+basestrap /mnt linux linux-headers linux-firmware mkinitcpio &&
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
