@@ -121,6 +121,8 @@ if [ "$ENCRYPTED"="y" ]; then
   fi
 fi
 
+mkfs.fat -F 32 "$PART1"
+fatlabel "$PART1" ESP
 
 if [ "$MY_FS"="ext4" ]; then
   mkfs.ext4 -L ROOT "$MY_ROOT"
@@ -140,7 +142,6 @@ elif [ "$MY_FS"="btrfs" ]; then
   mkdir /mnt/home
   mount -t btrfs -o compress=zstd,subvol=home "$MY_ROOT" /mnt/home
 fi
-
 
 case $(grep vendor /proc/cpuinfo) in
 *"Intel"*)
