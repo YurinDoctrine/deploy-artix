@@ -56,7 +56,7 @@ esac
 ROOT_PART=$PART2
 
 # Choose filesystem
-until [ "$MY_FS"="btrfs" ] || [ "$MY_FS"="ext4" ]; do
+until [ ! -e $MY_FS ]; do
   echo -e "Filesystem (btrfs/Default: ext4): " && read -p $"> " MY_FS
   [ ! "$MY_FS" ] && MY_FS="ext4"
 done
