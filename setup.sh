@@ -90,10 +90,6 @@ parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
 parted -s "$MY_DISK" mkpart primary "$MY_FS" 512MiB 100%
 parted -s "$MY_DISK" set 1 boot on
 
-if [ "$MY_FS"="btrfs" ]; then
-  fs_pkgs="btrfs-progs"
-fi
-
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
@@ -126,10 +122,14 @@ case $(grep vendor /proc/cpuinfo) in
 esac
 
 # Install base system and kernel
-basestrap /mnt base base-devel "$MY_INIT" elogind-"$MY_INIT" efibootmgr grub "$ucode" dhcpcd wpa_supplicant connman-"$MY_INIT" $fs_pkgs &&
-basestrap /mnt linux linux-headers linux-firmware mkinitcpio &&
+if [ "$MY_FS"="btrfs" ]; then
+  basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs
+else
+  basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT
+fi
+basestrap /mnt linux linux-headers linux-firmware mkinitcpio
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-"$(installvars)" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
+($(installvars) artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
   echo -e 'You may now poweroff...'
