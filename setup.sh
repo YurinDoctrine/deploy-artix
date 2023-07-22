@@ -61,15 +61,6 @@ until [ "$MY_FS"="btrfs" ] || [ "$MY_FS"="ext4" ]; do
   [ ! "$MY_FS" ] && MY_FS="ext4"
 done
 
-# Encrypt
-echo -e "Encrypt? (y/N): " && read -p $"> " ENCRYPTED
-[ ! "$ENCRYPTED" ] && ENCRYPTED="n"
-
-# Layout
-if [ "$ENCRYPTED"="y" ]; then
-  CRYPTPASS=$(confirm_password "Encryption Password: ")
-fi
-
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
   echo -e "Region/City (e.g. America/Denver): " && read -p $"> " REGION_CITY
@@ -87,9 +78,8 @@ ROOT_PASSWORD=$(confirm_password "Root Password: ")
 
 installvars() {
   echo -e MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" \
-    MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ENCRYPTED="$ENCRYPTED" \
-    REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" \
-    CRYPTPASS="$CRYPTPASS" ROOT_PASSWORD="$ROOT_PASSWORD"
+    MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" \
+    REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME"
 }
 
 echo -e "Done with configuration. Installing..."
@@ -102,18 +92,6 @@ parted -s "$MY_DISK" set 1 boot on
 
 if [ "$MY_FS"="btrfs" ]; then
   fs_pkgs="btrfs-progs"
-fi
-[ "$ENCRYPTED"="y" ] && fs_pkgs=$fs_pkgs+" cryptsetup cryptsetup-$MY_INIT"
-
-# Format and mount partitions
-if [ "$ENCRYPTED"="y" ]; then
-  yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
-  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
-
-  if [ "$MY_FS"="btrfs" ]; then
-    yes "$CRYPTPASS" | cryptsetup -q luksFormat "$PART2"
-    yes "$CRYPTPASS" | cryptsetup open "$PART2" swap
-  fi
 fi
 
 mkfs.fat -F 32 "$PART1"
