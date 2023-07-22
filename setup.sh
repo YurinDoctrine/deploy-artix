@@ -73,16 +73,8 @@ while :; do
   [ "$MY_HOSTNAME" ] && break
 done
 
-# Users
+# Root
 ROOT_PASSWORD=$(confirm_password "Root Password: ")
-
-installvars() {
-  echo -e MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" \
-    MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" \
-    REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME"
-}
-
-echo -e "Done with configuration. Installing..."
 
 # Partition disk
 parted -s "$MY_DISK" mklabel gpt
@@ -121,6 +113,8 @@ case $(grep vendor /proc/cpuinfo) in
   ;;
 esac
 
+echo -e 'Done with configuration. Installing...'
+
 # Install base system and kernel
 if [ "$MY_FS"="btrfs" ]; then
   basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs
@@ -131,5 +125,5 @@ basestrap /mnt linux linux-headers linux-firmware mkinitcpio
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-($(installvars) artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
+(MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
   echo -e 'You may now reboot or poweroff...'
