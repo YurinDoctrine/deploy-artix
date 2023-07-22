@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project aims to provide a smooth installation experience, both for beginners and experts.
+This project aims to provide a smooth Artix installation experience, both for beginners and experts.
 It also supports both EFI (recommended) and BIOS boot.
 
 This installer also might appeal to you if you already are an expert but want a reproducable best-practices installation.
