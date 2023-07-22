@@ -101,6 +101,9 @@ echo -e "Done with configuration. Installing..."
 
 # Partition disk
 parted -s "$TARGET_DISK" mklabel gpt
+parted -s "$TARGET_DISK" mkpart primary fat32 1MiB 512MiB
+parted -s "$TARGET_DISK" mkpart primary "$MY_FS" 512MiB 100%
+parted -s "$TARGET_DISK" set 1 boot on
 
 if [ "$MY_FS"="btrfs" ]; then
   fs_pkgs="btrfs-progs"
