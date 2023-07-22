@@ -16,6 +16,7 @@ confirm_password() {
 }
 
 # Load keymap
+echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Check boot mode
@@ -36,6 +37,7 @@ esac
 # Choose disk
 while :; do
   echo ""
+  sfdisk -l
   echo -e "WARNING: the selected disk will be rewritten."
   echo -e "Disk to install to (e.g. /dev/Xda): " && read -p $"> " MY_DISK
   [ -b "$MY_DISK" ] && break
@@ -99,9 +101,6 @@ echo -e "Done with configuration. Installing..."
 
 # Partition disk
 parted -s "$TARGET_DISK" mklabel gpt
-parted -s "$TARGET_DISK" mkpart primary fat32 1MiB 512MiB
-parted -s "$TARGET_DISK" mkpart primary "$MY_FS" 512MiB 100%
-parted -s "$TARGET_DISK" set 1 boot on
 
 if [ "$MY_FS"="btrfs" ]; then
   fs_pkgs="btrfs-progs"
@@ -110,19 +109,33 @@ fi
 
 # Format and mount partitions
 if [ "$ENCRYPTED"="y" ]; then
+  yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
+  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
 
   if [ "$MY_FS"="btrfs" ]; then
+    yes "$CRYPTPASS" | cryptsetup -q luksFormat "$PART2"
+    yes "$CRYPTPASS" | cryptsetup open "$PART2" swap
   fi
 fi
 
 
 if [ "$MY_FS"="ext4" ]; then
+  mkfs.ext4 -L ROOT "$MY_ROOT"
 
+  mount /dev/MyVolGrp/root /mnt
 elif [ "$MY_FS"="btrfs" ]; then
+  mkfs.btrfs -L "$MY_ROOT"
 
   # Create subvolumes
+  mount "$MY_ROOT" /mnt
+  btrfs subvolume create /mnt/root
+  btrfs subvolume create /mnt/home
+  umount -R /mnt
 
   # Mount subvolumes
+  mount -t btrfs -o compress=zstd,subvol=root "$MY_ROOT" /mnt
+  mkdir /mnt/home
+  mount -t btrfs -o compress=zstd,subvol=home "$MY_ROOT" /mnt/home
 fi
 
 
@@ -138,4 +151,5 @@ esac
 # Install base system and kernel
 
 # Chroot
+  "$(installvars)" deploy-artix /mnt /bin/bash -c 'bash <(curl -L https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
   echo -e 'You may now poweroff...'
