@@ -53,26 +53,21 @@ case "$MY_DISK" in
   ;;
 esac
 
+ROOT_PART=$PART2
+
 # Choose filesystem
 until [ "$MY_FS"="btrfs" ] || [ "$MY_FS"="ext4" ]; do
   echo -e "Filesystem (btrfs/Default: ext4): " && read -p $"> " MY_FS
   [ ! "$MY_FS" ] && MY_FS="ext4"
 done
 
-ROOT_PART=$PART2
-[ "$MY_FS"="ext4" ] && ROOT_PART=$PART2
-
 # Encrypt
 echo -e "Encrypt? (y/N): " && read -p $"> " ENCRYPTED
 [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
 
 # Layout
-MY_ROOT="/dev/mapper/root"
 if [ "$ENCRYPTED"="y" ]; then
   CRYPTPASS=$(confirm_password "Encryption Password: ")
-else
-  MY_ROOT=$PART2
-  [ "$MY_FS"="ext4" ] && MY_ROOT=$PART2
 fi
 
 # Timezone
@@ -92,7 +87,7 @@ ROOT_PASSWORD=$(confirm_password "Root Password: ")
 
 installvars() {
   echo -e MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" \
-    MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ENCRYPTED="$ENCRYPTED" MY_ROOT="$MY_ROOT" \
+    MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ENCRYPTED="$ENCRYPTED" \
     REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" \
     CRYPTPASS="$CRYPTPASS" ROOT_PASSWORD="$ROOT_PASSWORD"
 }
@@ -125,22 +120,22 @@ mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
 if [ "$MY_FS"="ext4" ]; then
-  mkfs.ext4 -L ROOT "$MY_ROOT"
+  mkfs.ext4 -L ROOT "$ROOT_PART"
 
-  mount "$MY_ROOT" /mnt
+  mount "$ROOT_PART" /mnt
 elif [ "$MY_FS"="btrfs" ]; then
-  mkfs.btrfs -L "$MY_ROOT"
+  mkfs.btrfs -L "$ROOT_PART"
 
   # Create subvolumes
-  mount "$MY_ROOT" /mnt
+  mount "$ROOT_PART" /mnt
   btrfs subvolume create /mnt/root
   btrfs subvolume create /mnt/home
   umount -R /mnt
 
   # Mount subvolumes
-  mount -t btrfs -o compress=zstd,subvol=root "$MY_ROOT" /mnt
+  mount -t btrfs -o compress=zstd,subvol=root "$ROOT_PART" /mnt
   mkdir /mnt/home
-  mount -t btrfs -o compress=zstd,subvol=home "$MY_ROOT" /mnt/home
+  mount -t btrfs -o compress=zstd,subvol=home "$ROOT_PART" /mnt/home
 fi
 
 case $(grep vendor /proc/cpuinfo) in
