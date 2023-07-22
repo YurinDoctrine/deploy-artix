@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+if [ "$(id -u)" -ne 0 ]; then
+  echo -e "This script must be run as root. Please use 'sudo' or run it as root."
+  exit 1
+fi
+
 confirm_password() {
   stty -echo
   until [ "$pass1"="$pass2" ] && [ "$pass2" ]; do
@@ -11,7 +16,6 @@ confirm_password() {
 }
 
 # Load keymap
-echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && sudo loadkeys $MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Check boot mode
@@ -32,7 +36,6 @@ esac
 # Choose disk
 while :; do
   echo ""
-  sudo sfdisk -l
   echo -e "WARNING: the selected disk will be rewritten."
   echo -e "Disk to install to (e.g. /dev/Xda): " && read -p $"> " MY_DISK
   [ -b "$MY_DISK" ] && break
@@ -96,6 +99,9 @@ echo -e "Done with configuration. Installing..."
 
 # Partition disk
 parted -s "$TARGET_DISK" mklabel gpt
+parted -s "$TARGET_DISK" mkpart primary fat32 1MiB 512MiB
+parted -s "$TARGET_DISK" mkpart primary "$MY_FS" 512MiB 100%
+parted -s "$TARGET_DISK" set 1 boot on
 
 if [ "$MY_FS"="btrfs" ]; then
   fs_pkgs="btrfs-progs"
@@ -104,38 +110,21 @@ fi
 
 # Format and mount partitions
 if [ "$ENCRYPTED"="y" ]; then
-  yes "$CRYPTPASS" | sudo cryptsetup -q luksFormat "$ROOT_PART"
-  yes "$CRYPTPASS" | sudo cryptsetup open "$ROOT_PART" root
 
   if [ "$MY_FS"="btrfs" ]; then
-    yes "$CRYPTPASS" | sudo cryptsetup -q luksFormat "$PART2"
-    yes "$CRYPTPASS" | sudo cryptsetup open "$PART2" swap
   fi
 fi
 
-sudo mkfs.fat -F 32 "$PART1"
 
 if [ "$MY_FS"="ext4" ]; then
-  sudo mkfs.ext4 -L ROOT "$MY_ROOT"
 
-  sudo mount /dev/MyVolGrp/root /mnt
 elif [ "$MY_FS"="btrfs" ]; then
-  sudo mkfs.btrfs -L "$MY_ROOT"
 
   # Create subvolumes
-  sudo mount "$MY_ROOT" /mnt
-  sudo btrfs subvolume create /mnt/root
-  sudo btrfs subvolume create /mnt/home
-  sudo umount -R /mnt
 
   # Mount subvolumes
-  sudo mount -t btrfs -o compress=zstd,subvol=root "$MY_ROOT" /mnt
-  sudo mkdir /mnt/home
-  sudo mount -t btrfs -o compress=zstd,subvol=home "$MY_ROOT" /mnt/home
 fi
 
-sudo mkdir /mnt/boot
-sudo mount "$PART1" /mnt/boot
 
 case $(grep vendor /proc/cpuinfo) in
 *"Intel"*)
@@ -147,11 +136,6 @@ case $(grep vendor /proc/cpuinfo) in
 esac
 
 # Install base system and kernel
-sudo basestrap /mnt base base-devel "$MY_INIT" elogind-"$MY_INIT" "$fs_pkgs" efibootmgr grub "$ucode" dhcpcd wpa_supplicant connman-"$MY_INIT" &&
-sudo basestrap /mnt linux linux-firmware linux-headers mkinitcpio &&
-sudo fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-sudo cp src/deploy.sh /mnt/root/ &&
-  sudo "$(installvars)" deploy-artix /mnt /bin/bash -c 'bash <(curl -L https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
   echo -e 'You may now poweroff...'
