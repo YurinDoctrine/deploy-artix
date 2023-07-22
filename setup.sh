@@ -126,7 +126,10 @@ case $(grep vendor /proc/cpuinfo) in
 esac
 
 # Install base system and kernel
+basestrap /mnt base base-devel "$MY_INIT" elogind-"$MY_INIT" efibootmgr grub "$ucode" dhcpcd wpa_supplicant connman-"$MY_INIT" "$fs_pkgs" &&
+basestrap /mnt linux linux-firmware linux-headers mkinitcpio &&
+fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-"$(installvars)" deploy-artix /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
+"$(installvars)" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit' &&
   echo -e 'You may now poweroff...'
