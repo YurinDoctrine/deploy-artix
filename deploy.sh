@@ -15,13 +15,6 @@ echo -e "$MY_HOSTNAME" >/etc/hostname
 echo -e 'hostname="$MY_HOSTNAME"' >/etc/conf.d/hostname
 printf "\n127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$MY_HOSTNAME" "$MY_HOSTNAME" >/etc/hosts
 
-# Install boot loader
-ROOT_PART_uuid=$(blkid "$ROOT_PART" -o value -s UUID)
-
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --recheck
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --removable --recheck
-grub-mkconfig -o /boot/grub/grub.cfg
-
 # Root user
 yes "$ROOT_PASSWORD" | passwd
 
@@ -33,6 +26,10 @@ if [ "$MY_INIT"="openrc" ]; then
 elif [ "$MY_INIT"="runit" ]; then
   ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
 fi
+
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # Configure mkinitcpio
 if [ "$MY_FS"="btrfs" ]; then

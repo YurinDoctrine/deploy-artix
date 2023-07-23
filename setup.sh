@@ -20,7 +20,7 @@ echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEY
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Check boot mode
-[ ! -d /sys/firmware/efi ] && echo -e "WARNING: Not booted in UEFI mode."
+[ ! -d /sys/firmware/efi ] && echo -e "WARNING: Not booted in UEFI mode." && exit 1
 
 # Check MY_INIT
 case "$(readlink -f /sbin/init)" in
@@ -104,8 +104,8 @@ elif [ "$MY_FS"="btrfs" ]; then
   mount -t btrfs -o compress=zstd,subvol=home "$ROOT_PART" /mnt/home
 fi
 
-mkdir /mnt/boot
-mount "$PART1" /mnt/boot
+mkdir -p /mnt/boot/efi
+mount "$PART1" /mnt/boot/efi
 
 case $(grep vendor /proc/cpuinfo) in
 *"Intel"*)
