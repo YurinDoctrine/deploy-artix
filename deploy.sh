@@ -18,8 +18,8 @@ printf "\n127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\
 # Install boot loader
 ROOT_PART_uuid=$(blkid "$ROOT_PART" -o value -s UUID)
 
-grub-install --target=x86_64-efi --efi-directory=/boot --recheck
-grub-install --target=x86_64-efi --efi-directory=/boot --removable --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Root user
@@ -30,6 +30,8 @@ sed -i -e '/%wheel ALL=(ALL) ALL/s/^#//g' /etc/sudoers
 # Other stuff you should do
 if [ "$MY_INIT"="openrc" ]; then
   rc-update add connmand default
+elif [ "$MY_INIT"="runit" ]; then
+  ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
 fi
 
 # Configure mkinitcpio
