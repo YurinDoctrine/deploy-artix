@@ -82,7 +82,7 @@ parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
 parted -s "$MY_DISK" mkpart primary "$MY_FS" 512MiB 100%
 parted -s "$MY_DISK" set 1 boot on
 
-mkfs.fat -L BOOT -F 32 "$PART1"
+mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
 if [ "$MY_FS"="ext4" ]; then
