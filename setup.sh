@@ -86,22 +86,13 @@ mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
 if [ "$MY_FS"="ext4" ]; then
-  mkfs.ext4 -L ROOT "$ROOT_PART"
+  mkfs.ext4 "$ROOT_PART"
 
   mount "$ROOT_PART" /mnt
 elif [ "$MY_FS"="btrfs" ]; then
-  mkfs.btrfs -L ROOT "$ROOT_PART"
+  mkfs.btrfs "$ROOT_PART"
 
-  # Create subvolumes
   mount "$ROOT_PART" /mnt
-  btrfs subvolume create /mnt/root
-  btrfs subvolume create /mnt/home
-  umount -R /mnt
-
-  # Mount subvolumes
-  mount -t btrfs -o compress=zstd,subvol=root "$ROOT_PART" /mnt
-  mkdir /mnt/home
-  mount -t btrfs -o compress=zstd,subvol=home "$ROOT_PART" /mnt/home
 fi
 
 mkdir -p /mnt/boot/efi
