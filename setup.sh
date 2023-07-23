@@ -104,6 +104,9 @@ elif [ "$MY_FS"="btrfs" ]; then
   mount -t btrfs -o compress=zstd,subvol=home "$ROOT_PART" /mnt/home
 fi
 
+mkdir /mnt/boot
+mount "$PART1" /mnt/boot
+
 case $(grep vendor /proc/cpuinfo) in
 *"Intel"*)
   ucode="intel-ucode"
