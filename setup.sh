@@ -73,8 +73,14 @@ while :; do
   [ "$MY_HOSTNAME" ] && break
 done
 
+# Username
+while :; do
+  echo -e "Username: " && read -p $"> " MY_USERNAME
+  [ "$MY_USERNAME" ] && break
+done
+
 # Root
-ROOT_PASSWORD=$(confirm_password "Root Password: ")
+ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ")
 
 # Partition disk
 parted -s "$MY_DISK" mklabel gpt
@@ -119,5 +125,5 @@ basestrap /mnt linux linux-headers linux-firmware mkinitcpio
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-(MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
+(MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
   echo -e 'You may now reboot or poweroff...'

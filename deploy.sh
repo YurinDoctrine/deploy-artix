@@ -15,10 +15,14 @@ echo -e "$MY_HOSTNAME" >/etc/hostname
 echo -e 'hostname="$MY_HOSTNAME"' >/etc/conf.d/hostname
 printf "\n127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$MY_HOSTNAME" "$MY_HOSTNAME" >/etc/hosts
 
+# User
+useradd -m -G users,wheel,audio,video -s /bin/bash $MY_USERNAME
+yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
+
 # Root user
 yes "$ROOT_PASSWORD" | passwd
 
-sed -i -e '/%wheel ALL=(ALL) ALL/s/^#//g' /etc/sudoers
+sed -i -e '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers
 
 # Other stuff you should do
 if [ "$MY_INIT"="openrc" ]; then
