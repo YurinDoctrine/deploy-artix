@@ -27,15 +27,15 @@ sed -i -e '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers
 
 # Pacman
 echo -e "[universe]
-Server = https://universe.artixlinux.org/$arch
-Server = https://mirror1.artixlinux.org/universe/$arch
-Server = https://mirror.pascalpuffke.de/artix-universe/$arch
-Server = https://mirrors.qontinuum.space/artixlinux-universe/$arch
-Server = https://mirror1.cl.netactuate.com/artix/universe/$arch
-Server = https://ftp.crifo.org/artix-universe/$arch
-Server = https://artix.sakamoto.pl/universe/$arch
+Server = https://universe.artixlinux.org/\$arch
+Server = https://mirror1.artixlinux.org/universe/\$arch
+Server = https://mirror.pascalpuffke.de/artix-universe/\$arch
+Server = https://mirrors.qontinuum.space/artixlinux-universe/\$arch
+Server = https://mirror1.cl.netactuate.com/artix/universe/\$arch
+Server = https://ftp.crifo.org/artix-universe/\$arch
+Server = https://artix.sakamoto.pl/universe/\$arch
 # TOR
-Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/$arch" | tee -a /etc/pacman.conf
+Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/\$arch" | tee -a /etc/pacman.conf
 
 pacman -Sy --noconfirm artix-keyring artix-archlinux-support
 echo -e "[extra]
