@@ -20,7 +20,7 @@ echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEY
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Check boot mode
-[ ! -d /sys/firmware/efi ] && echo -e "WARNING: Not booted in UEFI mode." && exit 1
+[ ! -d /sys/firmware/efi ] && echo -e "Not booted in UEFI mode." && exit 1
 
 # Check MY_INIT
 case "$(readlink -f /sbin/init)" in
