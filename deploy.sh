@@ -90,7 +90,7 @@ sudo mv .config/.nanorc /root
 sudo mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
 sudo rm -rfd /usr/share/lxdm/themes
 sudo cp -rfd .config/themes /usr/share/lxdm
-sudo mv .config/default.conf /etc/lxdm
+sudo mv .config/lxdm.conf /etc/lxdm
 sudo rm -rfd /usr/share/icons/CBPP*
 sudo cp -rfd .config/CBPP /usr/share/icons
 sudo cp -rfd .config/openbox-3 /usr/share/themes/CBPP
