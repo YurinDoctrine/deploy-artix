@@ -46,6 +46,7 @@ pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 pacman -Sy --noconfirm curl git lxdm-$MY_INIT mesa openbox pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg
 
 # Pull my dotfiles
+release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
 cd /tmp
 git clone --branch $release https://github.com/CBPP/cbpp-ui-theme.git
 sudo rm -rfd /usr/share/themes/CBPP*
@@ -54,24 +55,24 @@ sudo cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/them
 sudo rm -rfd /usr/share/backgrounds
 sudo mkdir -p /usr/share/backgrounds
 git clone --branch artix https://github.com/YurinDoctrine/.config.git
-sudo rm -rfd $HOME/.*
+sudo rm -rfd /home/$MY_USERNAME/.*
 sudo rm -rfd /etc/skel/.*
 sudo rm -rfd /root/.*
-sudo rmdir -p $HOME/*
+sudo rmdir -p /home/$MY_USERNAME/*
 sudo rmdir -p /etc/skel/*
 sudo rmdir -p /root/*
-sudo mkdir -p $HOME/.config
+sudo mkdir -p /home/$MY_USERNAME/.config
 sudo mkdir -p /etc/skel/.config
 sudo mkdir -p /root/.config
-sudo mkdir -p $HOME/.local
+sudo mkdir -p /home/$MY_USERNAME/.local
 sudo mkdir -p /etc/skel/.local
-sudo cp -rfd .config/.gmrunrc $HOME
-sudo cp -rfd .config/.gtkrc-2.0 $HOME/.gtkrc-2.0
-sudo cp -rfd .config/.fonts.conf $HOME
-sudo cp -rfd .config/.gtk-bookmarks $HOME
-sudo cp -rfd .config/.vimrc $HOME
-sudo cp -rfd .config/.Xresources $HOME
-sudo cp -rfd .config/.nanorc $HOME
+sudo cp -rfd .config/.gmrunrc /home/$MY_USERNAME
+sudo cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
+sudo cp -rfd .config/.fonts.conf /home/$MY_USERNAME
+sudo cp -rfd .config/.gtk-bookmarks /home/$MY_USERNAME
+sudo cp -rfd .config/.vimrc /home/$MY_USERNAME
+sudo cp -rfd .config/.Xresources /home/$MY_USERNAME
+sudo cp -rfd .config/.nanorc /home/$MY_USERNAME
 sudo cp -rfd .config/.gmrunrc /etc/skel
 sudo cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
 sudo cp -rfd .config/.fonts.conf /etc/skel
@@ -95,26 +96,26 @@ sudo cp -rfd .config/CBPP /usr/share/icons
 sudo cp -rfd .config/openbox-3 /usr/share/themes/CBPP
 sudo mkdir -p /usr/share/icons/default
 sudo cp -rfd .config/CBPP/index.theme /usr/share/icons/default
-sudo cp -rfd .config/.newsboat $HOME/.newsboat
+sudo cp -rfd .config/.newsboat /home/$MY_USERNAME/.newsboat
 sudo cp -rfd .config/.newsboat /etc/skel/.newsboat
 sudo cp -rfd .config/.newsboat /root/.newsboat
-sudo cp -rfd .config/.local/* $HOME/.local
+sudo cp -rfd .config/.local/* /home/$MY_USERNAME/.local
 sudo cp -rfd .config/.local/* /etc/skel/.local
-sudo cp -rfd .config/* $HOME/.config
+sudo cp -rfd .config/* /home/$MY_USERNAME/.config
 sudo cp -rfd .config/* /etc/skel/.config
 sudo cp -rfd .config/* /root/.config
-sudo chown -hR $USER:$USER /home/$USER/.*
-sudo chown -hR $USER:$USER /home/$USER/*
-sudo find $HOME/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
+sudo chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.*
+sudo chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/*
+sudo find /home/$MY_USERNAME/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
 sudo find /etc/skel/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
 sudo find /root/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
-sudo find $HOME/.config/ | egrep '\themes' | xargs sudo rm -rfd
+sudo find /home/$MY_USERNAME/.config/ | egrep '\themes' | xargs sudo rm -rfd
 sudo find /etc/skel/.config/ | egrep '\themes' | xargs sudo rm -rfd
 sudo find /root/.config/ | egrep '\themes' | xargs sudo rm -rfd
-sudo find $HOME/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
+sudo find /home/$MY_USERNAME/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
 sudo find /etc/skel/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
 sudo find /root/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
-sudo find $HOME/.config/ | egrep '\cbpp' | xargs sudo rm -f
+sudo find /home/$MY_USERNAME/.config/ | egrep '\cbpp' | xargs sudo rm -f
 sudo find /root/.config/ | egrep '\cbpp' | xargs sudo rm -f
 sudo find /usr/bin/ | egrep '\cbpp' | xargs sudo rm -f
 sudo find /usr/bin/ | egrep '\conkywonky' | xargs sudo rm -f
