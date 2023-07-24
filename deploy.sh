@@ -43,83 +43,85 @@ Include = /etc/pacman.d/mirrorlist-arch" | tee -a /etc/pacman.conf
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm curl git lxdm-$MY_INIT mesa openbox pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg
+pacman -Sy --noconfirm curl git lxdm-$MY_INIT kitty mesa openbox pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
 cd /tmp
 git clone --branch $release https://github.com/CBPP/cbpp-ui-theme.git
-sudo rm -rfd /usr/share/themes/CBPP*
-sudo rm -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/CBPP/xf*
-sudo cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/themes
-sudo rm -rfd /usr/share/backgrounds
-sudo mkdir -p /usr/share/backgrounds
+rm -rfd /usr/share/themes/CBPP*
+rm -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/CBPP/xf*
+cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/themes
+rm -rfd /usr/share/backgrounds
+mkdir -p /usr/share/backgrounds
 git clone --branch artix https://github.com/YurinDoctrine/.config.git
-sudo rm -rfd /home/$MY_USERNAME/.*
-sudo rm -rfd /etc/skel/.*
-sudo rm -rfd /root/.*
-sudo rmdir -p /home/$MY_USERNAME/*
-sudo rmdir -p /etc/skel/*
-sudo rmdir -p /root/*
-sudo mkdir -p /home/$MY_USERNAME/.config
-sudo mkdir -p /etc/skel/.config
-sudo mkdir -p /root/.config
-sudo mkdir -p /home/$MY_USERNAME/.local
-sudo mkdir -p /etc/skel/.local
-sudo cp -rfd .config/.gmrunrc /home/$MY_USERNAME
-sudo cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
-sudo cp -rfd .config/.fonts.conf /home/$MY_USERNAME
-sudo cp -rfd .config/.gtk-bookmarks /home/$MY_USERNAME
-sudo cp -rfd .config/.vimrc /home/$MY_USERNAME
-sudo cp -rfd .config/.Xresources /home/$MY_USERNAME
-sudo cp -rfd .config/.nanorc /home/$MY_USERNAME
-sudo cp -rfd .config/.gmrunrc /etc/skel
-sudo cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
-sudo cp -rfd .config/.fonts.conf /etc/skel
-sudo cp -rfd .config/.gtk-bookmarks /etc/skel
-sudo cp -rfd .config/.vimrc /etc/skel
-sudo cp -rfd .config/.Xresources /etc/skel
-sudo cp -rfd .config/.nanorc /etc/skel
-sudo mv .config/.gmrunrc /root
-sudo mv .config/.gtkrc-2.0 /root/.gtkrc-2.0
-sudo mv .config/.fonts.conf /root
-sudo mv .config/.gtk-bookmarks /root
-sudo mv .config/.vimrc /root
-sudo mv .config/.Xresources /root
-sudo mv .config/.nanorc /root
-sudo mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
-sudo rm -rfd /usr/share/lxdm/themes
-sudo cp -rfd .config/themes /usr/share/lxdm
-sudo mv .config/lxdm.conf /etc/lxdm
-sudo rm -rfd /usr/share/icons/CBPP*
-sudo cp -rfd .config/CBPP /usr/share/icons
-sudo cp -rfd .config/openbox-3 /usr/share/themes/CBPP
-sudo mkdir -p /usr/share/icons/default
-sudo cp -rfd .config/CBPP/index.theme /usr/share/icons/default
-sudo cp -rfd .config/.newsboat /home/$MY_USERNAME/.newsboat
-sudo cp -rfd .config/.newsboat /etc/skel/.newsboat
-sudo cp -rfd .config/.newsboat /root/.newsboat
-sudo cp -rfd .config/.local/* /home/$MY_USERNAME/.local
-sudo cp -rfd .config/.local/* /etc/skel/.local
-sudo cp -rfd .config/* /home/$MY_USERNAME/.config
-sudo cp -rfd .config/* /etc/skel/.config
-sudo cp -rfd .config/* /root/.config
-sudo chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.*
-sudo chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/*
-sudo find /home/$MY_USERNAME/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
-sudo find /etc/skel/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
-sudo find /root/.config/ | egrep '\CBPP' | xargs sudo rm -rfd
-sudo find /home/$MY_USERNAME/.config/ | egrep '\themes' | xargs sudo rm -rfd
-sudo find /etc/skel/.config/ | egrep '\themes' | xargs sudo rm -rfd
-sudo find /root/.config/ | egrep '\themes' | xargs sudo rm -rfd
-sudo find /home/$MY_USERNAME/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
-sudo find /etc/skel/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
-sudo find /root/.config/ | egrep '\openbox-3' | xargs sudo rm -rfd
-sudo find /home/$MY_USERNAME/.config/ | egrep '\cbpp' | xargs sudo rm -f
-sudo find /root/.config/ | egrep '\cbpp' | xargs sudo rm -f
-sudo find /usr/bin/ | egrep '\cbpp' | xargs sudo rm -f
-sudo find /usr/bin/ | egrep '\conkywonky' | xargs sudo rm -f
-sudo find /usr/bin/ | egrep '\tint2restart' | xargs sudo rm -f
+rm -rfd /home/$MY_USERNAME/.*
+rm -rfd /etc/skel/.*
+rm -rfd /root/.*
+rmdir -p /home/$MY_USERNAME/*
+rmdir -p /etc/skel/*
+rmdir -p /root/*
+mkdir -p /home/$MY_USERNAME/.config
+mkdir -p /etc/skel/.config
+mkdir -p /root/.config
+mkdir -p /home/$MY_USERNAME/.local
+mkdir -p /etc/skel/.local
+cp -rfd .config/.gmrunrc /home/$MY_USERNAME
+cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
+cp -rfd .config/.fonts.conf /home/$MY_USERNAME
+cp -rfd .config/.gtk-bookmarks /home/$MY_USERNAME
+cp -rfd .config/.vimrc /home/$MY_USERNAME
+cp -rfd .config/.Xresources /home/$MY_USERNAME
+cp -rfd .config/.nanorc /home/$MY_USERNAME
+cp -rfd .config/.gmrunrc /etc/skel
+cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
+cp -rfd .config/.fonts.conf /etc/skel
+cp -rfd .config/.gtk-bookmarks /etc/skel
+cp -rfd .config/.vimrc /etc/skel
+cp -rfd .config/.Xresources /etc/skel
+cp -rfd .config/.nanorc /etc/skel
+mv .config/.gmrunrc /root
+mv .config/.gtkrc-2.0 /root/.gtkrc-2.0
+mv .config/.fonts.conf /root
+mv .config/.gtk-bookmarks /root
+mv .config/.vimrc /root
+mv .config/.Xresources /root
+mv .config/.nanorc /root
+mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
+rm -rfd /usr/share/lxdm/themes
+cp -rfd .config/themes /usr/share/lxdm
+mv .config/lxdm.conf /etc/lxdm
+rm -rfd /usr/share/icons/CBPP*
+cp -rfd .config/CBPP /usr/share/icons
+cp -rfd .config/openbox-3 /usr/share/themes/CBPP
+mkdir -p /usr/share/icons/default
+cp -rfd .config/CBPP/index.theme /usr/share/icons/default
+cp -rfd .config/.newsboat /home/$MY_USERNAME/.newsboat
+cp -rfd .config/.newsboat /etc/skel/.newsboat
+cp -rfd .config/.newsboat /root/.newsboat
+cp -rfd .config/.local/* /home/$MY_USERNAME/.local
+cp -rfd .config/.local/* /etc/skel/.local
+cp -rfd .config/* /home/$MY_USERNAME/.config
+cp -rfd .config/* /etc/skel/.config
+cp -rfd .config/* /root/.config
+chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.*
+chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/*
+find /home/$MY_USERNAME/.config/ | egrep '\CBPP' | xargs rm -rfd
+find /etc/skel/.config/ | egrep '\CBPP' | xargs rm -rfd
+find /root/.config/ | egrep '\CBPP' | xargs rm -rfd
+find /home/$MY_USERNAME/.config/ | egrep '\themes' | xargs rm -rfd
+find /etc/skel/.config/ | egrep '\themes' | xargs rm -rfd
+find /root/.config/ | egrep '\themes' | xargs rm -rfd
+find /home/$MY_USERNAME/.config/ | egrep '\openbox-3' | xargs rm -rfd
+find /etc/skel/.config/ | egrep '\openbox-3' | xargs rm -rfd
+find /root/.config/ | egrep '\openbox-3' | xargs rm -rfd
+find /home/$MY_USERNAME/.config/ | egrep '\cbpp' | xargs rm -f
+find /root/.config/ | egrep '\cbpp' | xargs rm -f
+find /usr/bin/ | egrep '\cbpp' | xargs rm -f
+find /usr/bin/ | egrep '\conkywonky' | xargs rm -f
+find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
+
+sed -i -e "s/# autologin=.*/autologin=$MY_USERNAME/g" /etc/lxdm/lxdm.conf
 
 # Other stuff you should do
 if [ "$MY_INIT" = "openrc" ]; then
