@@ -7,7 +7,7 @@ fi
 
 confirm_password() {
   stty -echo
-  until [ "$pass1"="$pass2" ] && [ "$pass2" ]; do
+  until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
     printf "\n%s: \n" "$1" >&2 && read -p $"> " pass1
     printf "\nConfirm %s: \n" "$1" >&2 && read -p $"> " pass2
   done
@@ -91,11 +91,11 @@ parted -s "$MY_DISK" set 1 boot on
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
-if [ "$MY_FS"="ext4" ]; then
+if [ "$MY_FS" = "ext4" ]; then
   mkfs.ext4 "$ROOT_PART"
 
   mount "$ROOT_PART" /mnt
-elif [ "$MY_FS"="btrfs" ]; then
+elif [ "$MY_FS" = "btrfs" ]; then
   mkfs.btrfs "$ROOT_PART"
 
   mount "$ROOT_PART" /mnt
@@ -116,7 +116,7 @@ esac
 echo -e 'Done with configuration. Installing...'
 
 # Install base system and kernel
-if [ "$MY_FS"="btrfs" ]; then
+if [ "$MY_FS" = "btrfs" ]; then
   basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs
 else
   basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT

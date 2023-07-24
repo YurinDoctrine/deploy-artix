@@ -121,12 +121,12 @@ sudo find /usr/bin/ | egrep '\conkywonky' | xargs sudo rm -f
 sudo find /usr/bin/ | egrep '\tint2restart' | xargs sudo rm -f
 
 # Other stuff you should do
-if [ "$MY_INIT"="openrc" ]; then
+if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
   rc-update add lxdm default
   rc-update add pipewire default
   rc-update add wireplumber default
-elif [ "$MY_INIT"="runit" ]; then
+elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/lxdm/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/pipewire/ /etc/runit/runsvdir/current
@@ -138,7 +138,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub 
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Configure mkinitcpio
-if [ "$MY_FS"="btrfs" ]; then
+if [ "$MY_FS" = "btrfs" ]; then
   sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
 fi
 sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
