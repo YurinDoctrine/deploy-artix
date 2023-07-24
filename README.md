@@ -2,6 +2,10 @@
 
 ## Overview
 
+<p align="center">
+  <img src="https://github.com/YurinDoctrine/deploy-artix/blob/main/screenshot.png?raw=true" alt="screenshot" border="0">
+</p>
+
 This project aims to provide a smooth Artix installation experience, both for beginners and experts.
 It also supports both EFI (recommended) and BIOS boot.
 
