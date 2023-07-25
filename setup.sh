@@ -157,6 +157,6 @@ basestrap /mnt linux linux-headers linux-firmware mkinitcpio
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-(MY_INIT="$MY_INIT" MY_FS="$MY_FS" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
+(MY_INIT="$MY_INIT" MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
 
 echo -e 'You may now reboot or poweroff...'

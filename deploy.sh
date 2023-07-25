@@ -151,16 +151,17 @@ key='/root/.keyfiles/main'" >/etc/conf.d/dmcrypt
 fi
 
 # Install boot loader
-if [ "$ENCRYPTED" = "y" ]; then
-  UUID=$(blkid "$PART2" -o value -s UUID)
-  params="cryptdevice=UUID=$UUID:root root=$PART2"
-  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"$params quiet\"/" /etc/default/grub
-  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
-fi
-
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
+
+if [ "$ENCRYPTED" = "y" ]; then
+  UUID=$(blkid "$ROOT_PART" -o value -s UUID)
+  params="cryptdevice=UUID=$UUID:root root=$ROOT_PART"
+  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"$params quiet\"/" /etc/default/grub
+  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
+  update-grub
+fi
 
 # Configure mkinitcpio
 if [ "$MY_FS" = "btrfs" ]; then
