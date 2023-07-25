@@ -42,7 +42,7 @@ esac
 # Choose disk
 while :; do
   echo ""
-  sfdisk -l | egrep "/dev/"
+  sfdisk -l | grep -E "/dev/"
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
   echo -e "Disk to install to (e.g. /dev/Xda): " && read -p $"> " MY_DISK
