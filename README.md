@@ -2,7 +2,7 @@
 
 ## Overview
 
-![](https://img.shields.io/badge/OS-Artix%20Linux-blue?logo=Artix+Linux)
+![](https://img.shields.io/badge/Artix%20Linux-grey?logo=Artix+Linux)
 <p align="center">
   <img src="https://github.com/YurinDoctrine/deploy-artix/blob/main/screenshot.png?raw=true" alt="screenshot" border="0">
 </p>
