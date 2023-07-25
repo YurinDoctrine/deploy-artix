@@ -15,6 +15,9 @@ confirm_password() {
   echo -e "$pass2"
 }
 
+# Dependencies
+pacman -Sy --noconfirm parted
+
 # Load keymap
 echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
@@ -100,6 +103,8 @@ parted -s "$MY_DISK" set 1 boot on
 if [ "$ENCRYPTED" = "y" ]; then
   yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
   yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
+
+  ROOT_PART="/dev/mapper/root"
 fi
 
 # Format and mount partitions
