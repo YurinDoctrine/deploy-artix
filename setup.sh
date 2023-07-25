@@ -13,6 +13,7 @@ confirm_password() {
   done
   stty echo
   echo -e "$pass2"
+  echo -e ""
 }
 
 # Dependencies
@@ -30,18 +31,19 @@ echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEY
 case "$(readlink -f /sbin/init)" in
 *"openrc"*)
   MY_INIT="openrc"
-  echo -e "Init system ("$MY_INIT"): "
+  echo -e "Init system: "$MY_INIT""
   ;;
 *"runit"*)
   MY_INIT="runit"
-  echo -e "Init system ("$MY_INIT"): "
+  echo -e "Init system: "$MY_INIT""
   ;;
 esac
 
 # Choose disk
 while :; do
   echo ""
-  sfdisk -l
+  sfdisk -l | grep "/dev/"
+  echo ""
   echo -e "WARNING: The selected disk will be rewritten."
   echo -e "Disk to install to (e.g. /dev/Xda): " && read -p $"> " MY_DISK
   [ -b "$MY_DISK" ] && break
@@ -125,6 +127,7 @@ fi
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
+clear
 echo -e 'Done with configuration. Installing...'
 
 # Install base system and kernel
