@@ -152,9 +152,9 @@ fi
 
 # Install boot loader
 if [ "$ENCRYPTED" = "y" ]; then
-  ROOT_PART_uuid=$(blkid "$ROOT_PART" -o value -s UUID)
-  my_params="cryptdevice=UUID=$ROOT_PART_uuid:root root=$ROOT_PART"
-  sed -i -e "s/^GRUB_CMDLINE_LINUX_DEFAULT.*$/GRUB_CMDLINE_LINUX_DEFAULT=\"$my_params\"/g" /etc/default/grub
+  ROOT_PART_UUID=$(blkid "$ROOT_PART" -o value -s UUID)
+  params="cryptdevice=UUID=$ROOT_PART_UUID:root root=$PART2"
+  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"$params quiet\"/" /etc/default/grub
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
 fi
 
