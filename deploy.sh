@@ -150,12 +150,13 @@ key='/root/.keyfiles/main'" >/etc/conf.d/dmcrypt
   [ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
 fi
 
+# Install boot loader
 if [ "$ENCRYPTED" = "y" ]; then
+  ROOT_PART_uuid=$(blkid "$ROOT_PART" -o value -s UUID)
   my_params="cryptdevice=UUID=$ROOT_PART_uuid:root root=$ROOT_PART"
   sed -i -e "s/^GRUB_CMDLINE_LINUX_DEFAULT.*$/GRUB_CMDLINE_LINUX_DEFAULT=\"$my_params\"/g" /etc/default/grub
+  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
 fi
-
-[ "$ENCRYPTED" = "y" ] && sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
