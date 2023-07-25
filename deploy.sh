@@ -151,6 +151,18 @@ key='/root/.keyfiles/main'" >/etc/conf.d/dmcrypt
   [ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
 fi
 
+# Configure mkinitcpio
+if [ "$MY_FS" = "btrfs" ]; then
+  sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
+fi
+if [ "$ENCRYPTED" = "y" ]; then
+  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
+else
+  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
+fi
+
+mkinitcpio -P
+
 # Install boot loader
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
@@ -163,15 +175,3 @@ if [ "$ENCRYPTED" = "y" ]; then
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
   update-grub
 fi
-
-# Configure mkinitcpio
-if [ "$MY_FS" = "btrfs" ]; then
-  sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
-fi
-if [ "$ENCRYPTED" = "y" ]; then
-  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
-else
-  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
-fi
-
-mkinitcpio -P
