@@ -37,7 +37,7 @@ sudo rfkill unblock wifi
 sudo ip link set wlan0 up
 connmanctl # In Connman, use respectively: `agent on`, `scan wifi`, `services`, `connect wifi_NAME`, `quit`
 ```
-3. Run the script:
+3. Run the script as root:
 ```
 bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/setup.sh)
 ```
