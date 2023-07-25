@@ -2,12 +2,13 @@
 
 ## Overview
 
+![](https://img.shields.io/badge/OS-Artix%20Linux-blue?logo=Artix+Linux)
 <p align="center">
   <img src="https://github.com/YurinDoctrine/deploy-artix/blob/main/screenshot.png?raw=true" alt="screenshot" border="0">
 </p>
 
 This project aims to provide a smooth Artix installation experience, both for beginners and experts.
-It also supports both EFI (recommended) and BIOS boot.
+It supports both `runit` and `OpenRC` init systems. It also supports `btrfs` and `cryptsetup`.
 
 _This installer also might appeal to you if you already are an expert but want a reproducable best-practices installation._
 
