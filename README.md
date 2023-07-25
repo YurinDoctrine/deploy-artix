@@ -38,8 +38,6 @@ connmanctl # In Connman, use respectively: `agent on`, `scan wifi`, `services`, 
 ```
 3. Run the script:
 ```
-sudo pacman -Sy --noconfirm parted # A program for creating, destroying, resizing, checking and copying partitions
-
 bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/setup.sh)
 ```
 4. When everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with Connman.
