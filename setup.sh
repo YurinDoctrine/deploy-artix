@@ -43,7 +43,6 @@ while :; do
   [ -b "$MY_DISK" ] && break
 done
 
-
 PART1="$MY_DISK"1
 PART2="$MY_DISK"2
 case "$MY_DISK" in
@@ -60,6 +59,16 @@ until [ ! -e $MY_FS ]; do
   echo -e "Filesystem (btrfs/Default: ext4): " && read -p $"> " MY_FS
   [ ! "$MY_FS" ] && MY_FS="ext4"
 done
+
+# Encrypt
+until [ ! -e $ENCRYPTED ]; do
+  echo -e "Encrypt filesystem? (y/N): " && read -p $"> " ENCRYPTED
+  [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
+done
+
+if [ "$ENCRYPTED" = "y" ]; then
+  CRYPTPASS=$(confirm_password "Password for encryption: ")
+fi
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
@@ -88,6 +97,12 @@ parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
 parted -s "$MY_DISK" mkpart primary "$MY_FS" 512MiB 100%
 parted -s "$MY_DISK" set 1 boot on
 
+if [ "$ENCRYPTED" = "y" ]; then
+  yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
+  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
+fi
+
+# Format and mount partitions
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
@@ -104,6 +119,9 @@ fi
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
+echo -e 'Done with configuration. Installing...'
+
+# Install base system and kernel
 case $(grep vendor /proc/cpuinfo) in
 *"Intel"*)
   ucode="intel-ucode"
@@ -113,17 +131,22 @@ case $(grep vendor /proc/cpuinfo) in
   ;;
 esac
 
-echo -e 'Done with configuration. Installing...'
-
-# Install base system and kernel
 if [ "$MY_FS" = "btrfs" ]; then
-  basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs
+  if [ "$ENCRYPTED" = "y" ]; then
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
+  else
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs
+  fi
 else
-  basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT
+  if [ "$ENCRYPTED" = "y" ]; then
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT cryptsetup cryptsetup-$MY_INIT
+  else
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT
+  fi
 fi
 basestrap /mnt linux linux-headers linux-firmware mkinitcpio
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-(MY_INIT="$MY_INIT" MY_DISK="$MY_DISK" PART1="$PART1" PART2="$PART2" MY_FS="$MY_FS" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
+(MY_INIT="$MY_INIT" MY_FS="$MY_FS" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') &&
   echo -e 'You may now reboot or poweroff...'
