@@ -138,21 +138,21 @@ fi
 
 if [ "$ENCRYPTED" = "y" ]; then
   if [ "$MY_FS" = "btrfs" ]; then
-	  mkdir /root/.keyfiles
-	  chmod 0400 /root/.keyfiles
-	  dd if=/dev/urandom of=/root/.keyfiles/main bs=1024 count=4
-	  yes "$CRYPTPASS" | cryptsetup luksAddKey "$ROOT_PART" /root/.keyfiles/main
-	  echo -e "dmcrypt_key_timeout=1
+  mkdir /root/.keyfiles
+  chmod 0400 /root/.keyfiles
+  dd if=/dev/urandom of=/root/.keyfiles/main bs=1024 count=4
+  yes "$CRYPTPASS" | cryptsetup luksAddKey "$ROOT_PART" /root/.keyfiles/main
+  echo -e "dmcrypt_key_timeout=1
 dmcrypt_retries=5
 key='/root/.keyfiles/main'" >/etc/conf.d/dmcrypt
   fi
-	[ "$MY_INIT" = "openrc" ] && rc-update add dmcrypt boot
- 	[ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
+  [ "$MY_INIT" = "openrc" ] && rc-update add dmcrypt boot
+  [ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
 fi
 
 if [ "$ENCRYPTED" = "y" ]; then
-	my_params="cryptdevice=UUID=$ROOT_PART_uuid:root root=$ROOT_PART"
-	sed -i -e "s/^GRUB_CMDLINE_LINUX_DEFAULT.*$/GRUB_CMDLINE_LINUX_DEFAULT=\"$my_params\"/g" /etc/default/grub
+  my_params="cryptdevice=UUID=$ROOT_PART_uuid:root root=$ROOT_PART"
+  sed -i -e "s/^GRUB_CMDLINE_LINUX_DEFAULT.*$/GRUB_CMDLINE_LINUX_DEFAULT=\"$my_params\"/g" /etc/default/grub
 fi
 
 [ "$ENCRYPTED" = "y" ] && sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
