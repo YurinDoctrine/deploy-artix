@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ "$(id -u)" -ne 0 ]; then
-  echo -e "This script must be run as root. Please use 'sudo' or run it as root."
+  echo -e "This script must be run as root. Use 'sudo' or run it as root."
   exit 1
 fi
 
@@ -38,7 +38,7 @@ esac
 while :; do
   echo ""
   sfdisk -l
-  echo -e "WARNING: the selected disk will be rewritten."
+  echo -e "WARNING: The selected disk will be rewritten."
   echo -e "Disk to install to (e.g. /dev/Xda): " && read -p $"> " MY_DISK
   [ -b "$MY_DISK" ] && break
 done
