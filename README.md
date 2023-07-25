@@ -7,10 +7,8 @@
   <img src="https://github.com/YurinDoctrine/deploy-artix/blob/main/screenshot.png?raw=true" alt="screenshot" border="0">
 </p>
 
-This project aims to provide a smooth Artix installation experience, both for beginners and experts.
-It supports both `runit` and `OpenRC` init systems. It also supports `btrfs` and `cryptsetup`.
-
-_This installer also might appeal to you if you already are an expert but want a reproducable best-practices installation._
+_This project aims to provide a smooth Artix installation experience, both for beginners and experts who want a reproducable best-practices installation.
+It supports both `runit` and `OpenRC` init systems. It also supports `btrfs` and `cryptsetup`._
 
 The installer performs the following main steps (in roughly this order),
 with some parts depending on the chosen configuration:
