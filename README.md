@@ -2,10 +2,11 @@
 
 ## Overview
 
-![](https://img.shields.io/badge/Artix%20Linux-grey?logo=Artix+Linux)
 <p align="center">
   <img src="https://github.com/YurinDoctrine/deploy-artix/blob/main/screenshot.png?raw=true" alt="screenshot" border="0">
 </p>
+
+![](https://img.shields.io/badge/Artix%20Linux-grey?logo=Artix+Linux)
 
 _This project aims to provide a smooth Artix installation experience, both for beginners and experts who want a reproducable best-practices installation.
 It supports both `runit` and `OpenRC` init systems. It also supports `btrfs` and `cryptsetup`._
