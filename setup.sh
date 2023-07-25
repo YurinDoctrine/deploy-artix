@@ -9,7 +9,7 @@ confirm_password() {
   stty -echo
   until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
     printf "\n%s\n" "$1" >&2 && read -p $"> " pass1
-    printf "Re-type %s\n" "$1" >&2 && read -p $"> " pass2
+    printf "\nRe-type %s\n" "$1" >&2 && read -p $"> " pass2
   done
   stty echo
   echo -e "$pass2"
