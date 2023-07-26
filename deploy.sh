@@ -13,7 +13,9 @@ echo -e "en_GB.UTF-8 UTF-8" >>/etc/locale.gen
 locale-gen
 echo -e "LANG=en_GB.UTF-8" >/etc/locale.conf
 
-echo -e "KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
+echo -e "FONT=ter-v22b
+FONT_MAP=8859-2" | tee /etc/vconsole.conf
+echo -e "KEYMAP=$MY_KEYMAP" >>/etc/vconsole.conf
 
 # Host stuff
 echo -e "$MY_HOSTNAME" >/etc/hostname
@@ -243,9 +245,13 @@ echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.con
 
 mkdir -p /etc/modules-load.d
 echo -e "bfq" >/etc/modules-load.d/bfq.conf
+echo -e "tcp_bbr2" >/etc/modules-load.d/bbr2.conf
 mkdir -p /etc/udev/rules.d
 echo -e 'ACTION=="add|change", ATTR{queue/scheduler}=="*bfq*", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/scheduler}="bfq"' >/etc/udev/rules.d/60-scheduler.rules
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/iosched/slice_idle}="0", ATTR{queue/iosched/low_latency}="1"' >/etc/udev/rules.d/90-low-latency.rules
+echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/add_random}=="0"' >/etc/udev/rules.d/10-add-random.rules
+echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/iostats}="0"' >/etc/udev/rules.d/20-iostats.rules
+echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{bdi/read_ahead_kb}="64", ATTR{queue/read_ahead_kb}="64", ATTR{queue/nr_requests}="32"' >/etc/udev/rules.d/70-readahead.rules
 
 if $(find /sys/block/nvme* | egrep -q nvme); then
     echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
