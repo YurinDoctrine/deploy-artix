@@ -33,8 +33,6 @@ yes "$ROOT_PASSWORD" | passwd
 sed -i -e '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers
 
 # Pacman
-sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
-
 echo -e "[universe]
 Server = https://universe.artixlinux.org/\$arch
 Server = https://mirror1.artixlinux.org/universe/\$arch
@@ -63,6 +61,8 @@ pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
 pacman -Sy --noconfirm alsa-utils git jemalloc kitty lxdm-$MY_INIT mesa openbox openssh pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+
+sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
