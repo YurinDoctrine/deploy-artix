@@ -162,9 +162,9 @@ fi
 
 # Configure mkinitcpio
 if [ "$ENCRYPTED" = "y" ]; then
-  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
+  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf block encrypt keyboard keymap filesystems fsck)/g' /etc/mkinitcpio.conf
 else
-  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
+  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf block keyboard keymap filesystems fsck)/g' /etc/mkinitcpio.conf
 fi
 
 if [ "$MY_FS" = "btrfs" ]; then
