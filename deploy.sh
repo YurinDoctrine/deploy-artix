@@ -9,7 +9,6 @@ echo -e "en_GB.UTF-8 UTF-8" >>/etc/locale.gen
 locale-gen
 echo -e "LANG=en_GB.UTF-8" >/etc/locale.conf
 echo -e "KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
-echo -e "KEYMAP=$MY_KEYMAP" >/etc/environment
 
 # Host stuff
 echo -e "$MY_HOSTNAME" >/etc/hostname
@@ -178,9 +177,8 @@ mkinitcpio -P
 if [ "$ENCRYPTED" = "y" ]; then
   ROOT_PART="\/dev\/mapper\/root"
   UUID=$(blkid "$PART2" -o value -s UUID)
-  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
   sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART quiet\"/g" /etc/default/grub
-  read
+  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
 fi
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck
