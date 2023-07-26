@@ -179,7 +179,7 @@ if [ "$ENCRYPTED" = "y" ]; then
   ROOT_PART="\/dev\/mapper\/root"
   UUID=$(blkid "$PART2" -o value -s UUID)
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
-  sed -i -e "/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART quiet\"/" /etc/default/grub
+  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART quiet\"/g" /etc/default/grub
   read
 fi
 
