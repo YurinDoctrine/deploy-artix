@@ -154,6 +154,7 @@ else
   fi
 fi
 basestrap /mnt linux linux-headers linux-firmware mkinitcpio
+
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
