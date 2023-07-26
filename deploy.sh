@@ -329,7 +329,7 @@ if [ "$MY_FS" = "btrfs" ]; then
 fi
 
 sudo sed -i -e 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
-sudo sed -i -e 's/#COMPRESSION_OPTIONS=.*/COMPRESSION_OPTIONS=("-q --best")/g' /etc/mkinitcpio.conf
+sudo sed -i -e 's/#COMPRESSION_OPTIONS=.*/COMPRESSION_OPTIONS=("--best")/g' /etc/mkinitcpio.conf
 mkinitcpio -P
 
 # Install boot loader
