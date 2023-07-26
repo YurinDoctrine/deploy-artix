@@ -39,7 +39,7 @@ connmanctl # In Connman, use respectively: `agent on`, `scan wifi`, `services`, 
 ```
 3. Run the script as root:
 ```
-bash <(curl -s https://github.com/YurinDoctrine/deploy-artix/raw/main/setup.sh)
+bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/setup.sh)
 ```
 4. When everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with Connman.
 
