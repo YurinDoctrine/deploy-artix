@@ -162,26 +162,27 @@ key='/root/.keyfiles/main'" >/etc/conf.d/dmcrypt
 fi
 
 # Configure mkinitcpio
-if [ "$MY_FS" = "btrfs" ]; then
-  sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
-fi
 if [ "$ENCRYPTED" = "y" ]; then
   sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
 else
   sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
 fi
 
+if [ "$MY_FS" = "btrfs" ]; then
+  sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
+fi
+
 mkinitcpio -P
 
 # Install boot loader
+if [ "$ENCRYPTED" = "y" ]; then
+  ROOT_PART="\/dev\/mapper\/root"
+  UUID=$(blkid "$PART2" -o value -s UUID)
+  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
+  sed -i -e "/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART quiet\"/" /etc/default/grub
+  read
+fi
+
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
-
-if [ "$ENCRYPTED" = "y" ]; then
-  UUID=$(blkid "$PART2" -o value -s UUID)
-  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART loglevel=3 quiet\"/" /etc/default/grub
-  sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
-  read
-  update-grub
-fi
