@@ -54,7 +54,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm alsa-utils curl git lxdm-$MY_INIT kitty lz4 mesa openbox pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm alsa-utils curl git lxdm-$MY_INIT kitty lz4 mesa openbox openssh pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
@@ -179,8 +179,8 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub 
 grub-mkconfig -o /boot/grub/grub.cfg
 
 if [ "$ENCRYPTED" = "y" ]; then
-  UUID=$(blkid "$ROOT_PART" -o value -s UUID)
-  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$PART2 loglevel=3 quiet\"/" /etc/default/grub
+  UUID=$(blkid "$PART2" -o value -s UUID)
+  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART loglevel=3 quiet\"/" /etc/default/grub
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
   update-grub
 fi
