@@ -174,8 +174,8 @@ fi
 mkinitcpio -P
 
 # Install boot loader
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 if [ "$ENCRYPTED" = "y" ]; then
