@@ -151,7 +151,7 @@ else
     basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT
   fi
 fi
-basestrap /mnt linux linux-headers linux-firmware mkinitcpio
+basestrap /mnt linux-lts linux-lts-headers linux-firmware mkinitcpio
 
 fstabgen -U /mnt >/mnt/etc/fstab
 
