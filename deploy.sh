@@ -36,15 +36,25 @@ Server = https://mirror1.cl.netactuate.com/artix/universe/\$arch
 Server = https://ftp.crifo.org/artix-universe/\$arch
 Server = https://artix.sakamoto.pl/universe/\$arch
 # TOR
-Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/\$arch" | tee -a /etc/pacman.conf
+Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/\$arch
+" | tee -a /etc/pacman.conf
 
 pacman -Sy --noconfirm artix-keyring artix-archlinux-support
+
 echo -e "[extra]
-Include = /etc/pacman.d/mirrorlist-arch" | tee -a /etc/pacman.conf
+Include = /etc/pacman.d/mirrorlist-arch
+
+#[community]
+#Include = /etc/pacman.d/mirrorlist-arch
+
+#[multilib]
+#Include = /etc/pacman.d/mirrorlist-arch
+" | tee -a /etc/pacman.conf
+
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm alsa-utils curl git lxdm-$MY_INIT kitty mesa openbox pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm alsa-utils curl git lxdm-$MY_INIT kitty lz4 mesa openbox pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
@@ -170,8 +180,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 if [ "$ENCRYPTED" = "y" ]; then
   UUID=$(blkid "$ROOT_PART" -o value -s UUID)
-  params="cryptdevice=UUID=$UUID:root root=$PART2"
-  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"$params loglevel=3 quiet\"/" /etc/default/grub
+  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$PART2 loglevel=3 quiet\"/" /etc/default/grub
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
   update-grub
 fi
