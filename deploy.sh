@@ -246,6 +246,7 @@ echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.con
 mkdir -p /etc/modules-load.d
 echo -e "bfq" >/etc/modules-load.d/bfq.conf
 echo -e "tcp_bbr2" >/etc/modules-load.d/bbr2.conf
+
 mkdir -p /etc/udev/rules.d
 echo -e 'ACTION=="add|change", ATTR{queue/scheduler}=="*bfq*", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/scheduler}="bfq"' >/etc/udev/rules.d/60-scheduler.rules
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/iosched/slice_idle}="0", ATTR{queue/iosched/low_latency}="1"' >/etc/udev/rules.d/90-low-latency.rules
