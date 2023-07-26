@@ -62,7 +62,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm alsa-utils curl git lxdm-$MY_INIT kitty lz4 mesa openbox openssh pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm alsa-utils curl git jemalloc kitty lz4 lxdm-$MY_INIT mesa openbox openssh pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
