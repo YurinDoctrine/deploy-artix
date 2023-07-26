@@ -5,29 +5,8 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-confirm_password() {
-  stty -echo
-  until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
-    printf "\n%s\n" "$1" >&2 && read -p $"> " pass1
-    printf "\nRe-type %s\n" "$1" >&2 && read -p $"> " pass2
-  done
-  stty echo
-  echo -e "$pass2"
-  echo -e ""
-}
-
-# Dependencies
-pacman -Sy --noconfirm parted
-clear
-
-# Load keymap
-echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
-[ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
-
-# Check boot mode
 [ ! -d /sys/firmware/efi ] && echo -e "Not booted in UEFI mode." && exit 1
 
-# Check MY_INIT
 case "$(readlink -f /sbin/init)" in
 *"openrc"*)
   MY_INIT="openrc"
@@ -37,7 +16,27 @@ case "$(readlink -f /sbin/init)" in
   MY_INIT="runit"
   echo -e "Init system: "$MY_INIT""
   ;;
+*)
+  echo -e "Init system not supported." && exit 1
+  ;;
 esac
+
+confirm_password() {
+  stty -echo
+  until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
+    printf "\n%s\n" "$1" >&2 && read -p $"> " pass1
+    printf "\nRe-type %s\n" "$1" >&2 && read -p $"> " pass2
+  done
+  stty echo
+  echo -e "$pass2"
+}
+
+# Dependencies
+pacman -Sy --noconfirm parted && clear
+
+# Load keymap
+echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
+[ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Choose disk
 while :; do
@@ -74,6 +73,7 @@ done
 
 if [ "$ENCRYPTED" = "y" ]; then
   CRYPTPASS=$(confirm_password "Password for encryption: ")
+  echo ""
 fi
 
 # Timezone
@@ -96,6 +96,7 @@ done
 
 # Root
 ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ")
+echo ""
 
 # Partition disk
 parted -s "$MY_DISK" mklabel gpt
@@ -127,8 +128,7 @@ fi
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
-clear
-echo -e 'Done with configuration. Installing...'
+clear && echo -e 'Done with configuration. Installing...'
 
 # Install base system and kernel
 case $(grep vendor /proc/cpuinfo) in
