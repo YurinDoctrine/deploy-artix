@@ -335,7 +335,6 @@ fi
 
 sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' /etc/default/grub
 sed -i -e 's/GRUB_RECORDFAIL_TIMEOUT=.*/GRUB_RECORDFAIL_TIMEOUT=0/' /etc/default/grub
-
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
