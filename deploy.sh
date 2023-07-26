@@ -5,9 +5,14 @@ ln -sf /usr/share/zoneinfo/"$REGION_CITY" /etc/localtime
 hwclock --systohc
 
 # Localization
+echo -e "LANG=en_GB.UTF8" >>/etc/environment
+echo -e "LANGUAGE=en_GB.UTF8" >>/etc/environment
+echo -e "LC_ALL=en_GB.UTF8" >>/etc/environment
+echo -e "LC_COLLATE=C" >>/etc/environment
 echo -e "en_GB.UTF-8 UTF-8" >>/etc/locale.gen
 locale-gen
 echo -e "LANG=en_GB.UTF-8" >/etc/locale.conf
+
 echo -e "KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
 
 # Host stuff
@@ -26,6 +31,8 @@ yes "$ROOT_PASSWORD" | passwd
 sed -i -e '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers
 
 # Pacman
+sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
+
 echo -e "[universe]
 Server = https://universe.artixlinux.org/\$arch
 Server = https://mirror1.artixlinux.org/universe/\$arch
@@ -114,6 +121,9 @@ cp -rfd .config/.local/* /etc/skel/.local
 cp -rfd .config/* /home/$MY_USERNAME/.config
 cp -rfd .config/* /etc/skel/.config
 cp -rfd .config/* /root/.config
+mkdir -p /var/cache/libx11/compose
+mkdir -p /home/$MY_USERNAME/.compose-cache
+touch /home/$MY_USERNAME/.XCompose
 chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.*
 chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/*
 find /home/$MY_USERNAME/.config/ | egrep '\CBPP' | xargs rm -rfd
@@ -134,6 +144,146 @@ find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
 sed -i -e "s/# autologin=.*/autologin=$MY_USERNAME/g" /etc/lxdm/lxdm.conf
 
 # Other stuff you should do
+echo -e "LD_PRELOAD=/usr/lib/libjemalloc.so
+MALLOC_CHECK=0
+MALLOC_TRACE=0
+MESA_DEBUG=0
+LIBGL_DEBUG=0
+LIBGL_NO_DRAWARRAYS=1
+LIBC_FORCE_NOCHECK=1
+HISTCONTROL=ignoreboth:eraseboth
+HISTSIZE=0
+LESSHISTFILE=-
+LESSHISTSIZE=0
+LESSSECURE=1
+PAGER=less" | tee -a /etc/environment
+
+mkdir -p /etc/modprobe.d
+echo -e "blacklist pcspkr
+blacklist snd_pcsp
+blacklist lpc_ich
+blacklist gpio-ich
+blacklist iTCO_wdt
+blacklist iTCO_vendor_support
+blacklist joydev
+blacklist mousedev
+blacklist mac_hid
+blacklist uvcvideo
+blacklist parport_pc
+blacklist parport
+blacklist lp
+blacklist ppdev
+blacklist sunrpc
+blacklist floppy
+blacklist arkfb
+blacklist aty128fb
+blacklist atyfb
+blacklist radeonfb
+blacklist cirrusfb
+blacklist cyber2000fb
+blacklist kyrofb
+blacklist matroxfb_base
+blacklist mb862xxfb
+blacklist neofb
+blacklist pm2fb
+blacklist pm3fb
+blacklist s3fb
+blacklist savagefb
+blacklist sisfb
+blacklist tdfxfb
+blacklist tridentfb
+blacklist vt8623fb
+blacklist sp5100-tco
+blacklist sp5100_tco
+blacklist pcmcia
+blacklist yenta_socket
+blacklist btusb
+blacklist dccp
+blacklist sctp
+blacklist rds
+blacklist tipc
+blacklist n-hdlc
+blacklist ax25
+blacklist netrom
+blacklist x25
+blacklist rose
+blacklist decnet
+blacklist econet
+blacklist af_802154
+blacklist ipx
+blacklist appletalk
+blacklist psnap
+blacklist p8022
+blacklist p8023
+blacklist llc
+blacklist i2400m
+blacklist i2400m_usb
+blacklist wimax
+blacklist parport
+blacklist parport_pc
+blacklist cramfs
+blacklist freevxfs
+blacklist jffs2
+blacklist hfs
+blacklist hfsplus
+blacklist squashfs
+blacklist udf
+blacklist wl
+blacklist ssb
+blacklist b43
+blacklist b43legacy
+blacklist bcma
+blacklist bcm43xx
+blacklist brcm80211
+blacklist brcmfmac
+blacklist brcmsmac" | tee /etc/modprobe.d/nomisc.conf
+
+echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
+echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.conf
+
+mkdir -p /etc/modules-load.d
+echo -e "bfq" >/etc/modules-load.d/bfq.conf
+mkdir -p /etc/udev/rules.d
+echo -e 'ACTION=="add|change", ATTR{queue/scheduler}=="*bfq*", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/scheduler}="bfq"' >/etc/udev/rules.d/60-scheduler.rules
+echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/iosched/slice_idle}="0", ATTR{queue/iosched/low_latency}="1"' >/etc/udev/rules.d/90-low-latency.rules
+
+if $(find /sys/block/nvme* | egrep -q nvme); then
+    echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
+fi
+
+echo -e "* soft nofile 524288
+* hard nofile 524288
+root soft nofile 524288
+root hard nofile 524288
+* soft as unlimited
+* hard as unlimited
+root soft as unlimited
+root hard as unlimited
+* soft memlock unlimited
+* hard memlock unlimited
+root soft memlock unlimited
+root hard memlock unlimited
+* soft core unlimited
+* hard core unlimited
+root soft core unlimited
+root hard core unlimited
+* soft nproc unlimited
+* hard nproc unlimited
+root soft nproc unlimited
+root hard nproc unlimited
+* soft sigpending unlimited
+* hard sigpending unlimited
+root soft sigpending unlimited
+root hard sigpending unlimited
+* soft stack unlimited
+* hard stack unlimited
+root soft stack unlimited
+root hard stack unlimited
+* soft data unlimited
+* hard data unlimited
+root soft data unlimited
+root hard data unlimited" | tee /etc/security/limits.conf
+
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
   rc-update add lxdm default
@@ -148,7 +298,7 @@ fi
 
 if [ "$ENCRYPTED" = "y" ]; then
   if [ "$MY_FS" = "btrfs" ]; then
-  mkdir /root/.keyfiles
+  mkdir -p /root/.keyfiles
   chmod 0400 /root/.keyfiles
   dd if=/dev/urandom of=/root/.keyfiles/main bs=1024 count=4
   yes "$CRYPTPASS" | cryptsetup luksAddKey "$ROOT_PART" /root/.keyfiles/main
@@ -171,6 +321,8 @@ if [ "$MY_FS" = "btrfs" ]; then
   sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
 fi
 
+sudo sed -i -e 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
+sudo sed -i -e 's/#COMPRESSION_OPTIONS=.*/COMPRESSION_OPTIONS=("-q --best")/g' /etc/mkinitcpio.conf
 mkinitcpio -P
 
 # Install boot loader
@@ -180,6 +332,9 @@ if [ "$ENCRYPTED" = "y" ]; then
   sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$DRIVE_UUID:root root=UUID=$ROOT_UUID quiet\"/g" /etc/default/grub
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
 fi
+
+sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' /etc/default/grub
+sed -i -e 's/GRUB_RECORDFAIL_TIMEOUT=.*/GRUB_RECORDFAIL_TIMEOUT=0/' /etc/default/grub
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
