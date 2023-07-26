@@ -175,12 +175,12 @@ mkinitcpio -P
 
 # Install boot loader
 if [ "$ENCRYPTED" = "y" ]; then
-  ROOT_PART="\/dev\/mapper\/root"
-  UUID=$(blkid "$PART2" -o value -s UUID)
-  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART quiet\"/g" /etc/default/grub
+  ROOT_UUID=$(blkid "$ROOT_PART" -o value -s UUID)
+  DRIVE_UUID=$(blkid "$PART2" -o value -s UUID)
+  sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$DRIVE_UUID:root root=UUID=$ROOT_UUID quiet\"/g" /etc/default/grub
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
 fi
 
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
