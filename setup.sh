@@ -72,8 +72,7 @@ until [ ! -e $ENCRYPTED ]; do
 done
 
 if [ "$ENCRYPTED" = "y" ]; then
-  CRYPTPASS=$(confirm_password "Password for encryption: ")
-  echo ""
+  CRYPTPASS=$(confirm_password "Password for encryption: ") && echo ""
 fi
 
 # Timezone
@@ -95,8 +94,7 @@ while :; do
 done
 
 # Root
-ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ")
-echo ""
+ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ") && echo ""
 
 # Partition disk
 parted -s "$MY_DISK" mklabel gpt
