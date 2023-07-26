@@ -182,5 +182,6 @@ if [ "$ENCRYPTED" = "y" ]; then
   UUID=$(blkid "$PART2" -o value -s UUID)
   sed -i -e "s/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=$UUID:root root=$ROOT_PART loglevel=3 quiet\"/" /etc/default/grub
   sed -i -e '/GRUB_ENABLE_CRYPTODISK=y/s/^#//g' /etc/default/grub
+  read
   update-grub
 fi
