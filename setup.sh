@@ -97,6 +97,8 @@ done
 ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ") && echo ""
 
 # Partition disk
+umount /mnt*
+swapoff -a
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
 parted -s "$MY_DISK" mkpart primary "$MY_FS" 512MiB 100%
