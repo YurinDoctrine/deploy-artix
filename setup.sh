@@ -157,9 +157,6 @@ basestrap /mnt linux-lts linux-lts-headers linux-firmware mkinitcpio
 
 fstabgen -U /mnt >/mnt/etc/fstab
 
-# Network
-cp -rfd /var/lib/connman/* /mnt/var/lib/connman/
-
 # Chroot
 (MY_INIT="$MY_INIT" MY_FS="$MY_FS" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
 
