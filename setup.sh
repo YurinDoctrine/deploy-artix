@@ -142,15 +142,15 @@ esac
 
 if [ "$MY_FS" = "btrfs" ]; then
   if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd-$MY_INIT wpa_supplicant-$MY_INIT connman-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
   else
-    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT btrfs-progs
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd-$MY_INIT wpa_supplicant-$MY_INIT connman-$MY_INIT btrfs-progs
   fi
 else
   if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT cryptsetup cryptsetup-$MY_INIT
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd-$MY_INIT wpa_supplicant-$MY_INIT connman-$MY_INIT cryptsetup cryptsetup-$MY_INIT
   else
-    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd wpa_supplicant connman-$MY_INIT
+    basestrap /mnt base base-devel $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode dhcpcd-$MY_INIT wpa_supplicant-$MY_INIT connman-$MY_INIT
   fi
 fi
 
