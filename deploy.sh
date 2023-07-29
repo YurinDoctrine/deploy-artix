@@ -62,7 +62,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils git gtk-engines gtk-engine-murrine iwd jemalloc kitty lxdm-$MY_INIT mesa openbox openssh-$MY_INIT pipewire pipewire-alsa thermald-$MY_INIT wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils git gtk-engines gtk-engine-murrine iwd-$MY_INIT jemalloc kitty lxdm-$MY_INIT mesa openbox openssh-$MY_INIT pipewire pipewire-alsa thermald-$MY_INIT wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
