@@ -293,16 +293,10 @@ root hard data unlimited" | tee /etc/security/limits.conf
 
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
-  rc-update add iwd default
   rc-update add lxdm default
-  rc-update add pipewire default
-  rc-update add wireplumber default
 elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/iwd/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/lxdm/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/pipewire/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/wireplumber/ /etc/runit/runsvdir/current
 fi
 
 if [ "$ENCRYPTED" = "y" ]; then
