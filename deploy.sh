@@ -251,10 +251,11 @@ echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
 echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.conf
 
 mkdir -p /etc/modules-load.d
-echo -e "bfq" >/etc/modules-load.d/bfq.conf
-echo -e "tcp_bbr
-tcp_bbr2" >/etc/modules-load.d/bbr2.conf
-echo -e "tcp_dctcp" >/etc/modules-load.d/dctcp.conf
+modprobe bfq && echo -e "bfq" >/etc/modules-load.d/bfq.conf
+modprobe tcp_bbr2 && echo -e "tcp_bbr2" >/etc/modules-load.d/bbr2.conf || modprobe tcp_bbr && echo -e "tcp_bbr" >/etc/modules-load.d/bbr.conf
+mkdir -p /usr/lib/sysctl.d
+echo -e "net.core.default_qdisc=fq" >/usr/lib/sysctl.d/99-tcp.conf
+modprobe tcp_bbr2 && echo -e "net.ipv4.tcp_congestion_control=bbr2" >>/usr/lib/sysctl.d/99-tcp.conf || modprobe tcp_bbr && echo -e "net.ipv4.tcp_congestion_control=bbr" >>/usr/lib/sysctl.d/99-tcp.conf
 
 mkdir -p /etc/udev/rules.d
 echo -e 'ACTION=="add|change", ATTR{queue/scheduler}=="*bfq*", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/scheduler}="bfq"' >/etc/udev/rules.d/60-scheduler.rules
