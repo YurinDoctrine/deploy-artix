@@ -260,39 +260,6 @@ if $(find /sys/block/nvme* | egrep -q nvme); then
     echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
 fi
 
-echo -e "* soft nofile 524288
-* hard nofile 524288
-root soft nofile 524288
-root hard nofile 524288
-* soft as unlimited
-* hard as unlimited
-root soft as unlimited
-root hard as unlimited
-* soft memlock unlimited
-* hard memlock unlimited
-root soft memlock unlimited
-root hard memlock unlimited
-* soft core unlimited
-* hard core unlimited
-root soft core unlimited
-root hard core unlimited
-* soft nproc unlimited
-* hard nproc unlimited
-root soft nproc unlimited
-root hard nproc unlimited
-* soft sigpending unlimited
-* hard sigpending unlimited
-root soft sigpending unlimited
-root hard sigpending unlimited
-* soft stack unlimited
-* hard stack unlimited
-root soft stack unlimited
-root hard stack unlimited
-* soft data unlimited
-* hard data unlimited
-root soft data unlimited
-root hard data unlimited" | tee /etc/security/limits.conf
-
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
