@@ -294,7 +294,6 @@ root soft data unlimited
 root hard data unlimited" | tee /etc/security/limits.conf
 
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
-echo -e "exec thermald &" >/etc/profile.d/thermald.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
