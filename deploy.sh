@@ -62,7 +62,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm alsa-utils git gtk-engines gtk-engine-murrine iwd jemalloc kitty lxdm-$MY_INIT mesa openbox openssh pipewire pipewire-alsa wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm acpid alsa-utils git gtk-engines gtk-engine-murrine iwd jemalloc kitty lxdm-$MY_INIT mesa openbox openssh pipewire pipewire-alsa wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
@@ -261,6 +261,7 @@ if $(find /sys/block/nvme* | egrep -q nvme); then
 fi
 
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
+echo -e "exec acpid &" >/etc/profile.d/pipewire.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
