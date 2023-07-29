@@ -149,7 +149,7 @@ sed -i -e "s/# autologin=.*/autologin=$MY_USERNAME/g" /etc/lxdm/lxdm.conf
 
 # Other stuff you should do
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
-sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
+sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/elogind/logind.conf
 sed -i -e 's/#HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=reboot/' /etc/elogind/logind.conf
 
