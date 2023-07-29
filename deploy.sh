@@ -62,7 +62,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm acpid alsa-utils git gtk-engines gtk-engine-murrine iwd jemalloc kitty lxdm-$MY_INIT mesa openbox openssh pipewire pipewire-alsa wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils git gtk-engines gtk-engine-murrine iwd jemalloc kitty lxdm-$MY_INIT mesa openbox openssh-$MY_INIT pipewire pipewire-alsa thermald-$MY_INIT wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
@@ -148,6 +148,11 @@ find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
 sed -i -e "s/# autologin=.*/autologin=$MY_USERNAME/g" /etc/lxdm/lxdm.conf
 
 # Other stuff you should do
+sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
+sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
+sed -i -e 's/#HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/elogind/logind.conf
+sed -i -e 's/#HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=reboot/' /etc/elogind/logind.conf
+
 echo -e "LD_PRELOAD=/usr/lib/libjemalloc.so
 MALLOC_CHECK=0
 MALLOC_TRACE=0
@@ -247,7 +252,9 @@ echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.con
 
 mkdir -p /etc/modules-load.d
 echo -e "bfq" >/etc/modules-load.d/bfq.conf
-echo -e "tcp_bbr2" >/etc/modules-load.d/bbr2.conf
+echo -e "tcp_bbr
+tcp_bbr2" >/etc/modules-load.d/bbr2.conf
+echo -e "tcp_dctcp" >/etc/modules-load.d/dctcp.conf
 
 mkdir -p /etc/udev/rules.d
 echo -e 'ACTION=="add|change", ATTR{queue/scheduler}=="*bfq*", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/scheduler}="bfq"' >/etc/udev/rules.d/60-scheduler.rules
@@ -261,15 +268,17 @@ if $(find /sys/block/nvme* | egrep -q nvme); then
 fi
 
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
-echo -e "exec acpid &" >/etc/profile.d/acpid.sh
-echo -e "exec thermald &" >/etc/profile.d/thermald.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
   rc-update add lxdm default
+  rc-update add acpid default
+  rc-update add thermald default
 elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/lxdm/ /etc/runit/runsvdir/current
+  ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
+  ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
 fi
 
 if [ "$ENCRYPTED" = "y" ]; then
