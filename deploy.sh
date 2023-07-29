@@ -17,7 +17,7 @@ echo -e "FONT=ter-v22b
 FONT_MAP=8859-2" | tee /etc/vconsole.conf
 
 mkdir -p /etc/profile.d
-echo -e "setxkbmap $MY_KEYMAP" >/etc/profile.d/keymap.sh
+echo -e "exec setxkbmap $MY_KEYMAP &" >/etc/profile.d/keymap.sh
 
 # Host stuff
 echo -e "$MY_HOSTNAME" >/etc/hostname
