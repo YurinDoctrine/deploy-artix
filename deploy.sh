@@ -293,7 +293,7 @@ root hard stack unlimited
 root soft data unlimited
 root hard data unlimited" | tee /etc/security/limits.conf
 
-echo -e "pipewire &" >/etc/profile.d/pipewire.sh
+echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
