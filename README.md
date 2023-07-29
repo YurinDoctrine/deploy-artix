@@ -35,7 +35,7 @@ with some parts depending on the chosen configuration:
 ```
 sudo rfkill unblock wifi
 sudo ip link set wlan0 up
-connmanctl # In Connman, use respectively: `agent on`, `scan wifi`, `services`, `connect wifi_NAME`, `quit`
+connmanctl # In Connman, use respectively: `agent on`, `enable wifi`, `scan wifi`, `services`, `connect wifi_NAME`, `quit`
 ```
 3. Run the script as root:
 ```
