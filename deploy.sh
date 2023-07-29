@@ -60,7 +60,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm alsa-utils git jemalloc kitty lxdm-$MY_INIT mesa openbox openssh pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm alsa-utils git iwd jemalloc kitty lxdm-$MY_INIT mesa openbox openssh pipewire procps psmisc wayland wget wireplumber xdg-utils xdg-user-dirs xorg xterm
 
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
@@ -293,11 +293,13 @@ root hard data unlimited" | tee /etc/security/limits.conf
 
 if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
+  rc-update add iwd default
   rc-update add lxdm default
   rc-update add pipewire default
   rc-update add wireplumber default
 elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
+  ln -s /etc/runit/sv/iwd/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/lxdm/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/pipewire/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/wireplumber/ /etc/runit/runsvdir/current
