@@ -253,6 +253,7 @@ echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.con
 mkdir -p /etc/modules-load.d
 modprobe bfq && echo -e "bfq" >/etc/modules-load.d/bfq.conf
 modprobe tcp_bbr2 && echo -e "tcp_bbr2" >/etc/modules-load.d/bbr2.conf || modprobe tcp_bbr && echo -e "tcp_bbr" >/etc/modules-load.d/bbr.conf
+
 mkdir -p /usr/lib/sysctl.d
 echo -e "net.core.default_qdisc=fq" >/usr/lib/sysctl.d/99-tcp.conf
 modprobe tcp_bbr2 && echo -e "net.ipv4.tcp_congestion_control=bbr2" >>/usr/lib/sysctl.d/99-tcp.conf || modprobe tcp_bbr && echo -e "net.ipv4.tcp_congestion_control=bbr" >>/usr/lib/sysctl.d/99-tcp.conf
