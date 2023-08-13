@@ -31,17 +31,19 @@ with some parts depending on the chosen configuration:
 ### Usage
 
 1. Boot into live environment (both login and password are `artix`).
-2. Connect to the internet. Ethernet is setup automatically, and WiFi is done with something like:
+2. Connect to the internet.
+
+Ethernet is setup automatically, and WiFi is setup with something like:
 ```
 sudo rfkill unblock wifi
 sudo ip link set wlan0 up
-connmanctl # In Connman, use respectively: `agent on`, `enable wifi`, `scan wifi`, `services`, `connect wifi_NAME`, `quit`
+connmanctl # In ConnMan, use respectively: `agent on`, `enable wifi`, `scan wifi`, `services`, `connect wifi_NAME`, `quit`
 ```
 3. Run the script as root:
 ```
 bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/setup.sh)
 ```
-4. When everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with ConnMan.
+4. Once everything finishes, `reboot` or `poweroff` then remove the installation media and boot into Artix. The post-installation networking is done with ConnMan.
 
 #### References
 
