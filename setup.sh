@@ -128,6 +128,8 @@ fi
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
+cp -rfd /var/lib/connman /mnt/var/lib/
+
 clear && echo -e 'Done with configuration. Installing...'
 
 # Install base system and kernel
