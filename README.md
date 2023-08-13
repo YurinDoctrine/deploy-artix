@@ -8,7 +8,7 @@
 
 ![](https://img.shields.io/badge/Artix%20Linux-grey?logo=Artix+Linux)
 
-_This project aims to provide a smooth Artix installation experience, both for beginners and experts who want a reproducable best-practices installation.
+_This project aims to provide a smooth Artix installation experience, either for beginners or experts who want a reproducable best-practices installation.
 It supports both `runit` and `openrc` init systems. It also supports `btrfs` and `cryptsetup`._
 
 The installer performs the following main steps (in roughly this order),
