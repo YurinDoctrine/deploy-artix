@@ -49,7 +49,9 @@ Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/a
 
 pacman -Sy --noconfirm artix-keyring artix-archlinux-support
 
-echo -e "[extra]
+echo -e "
+# Arch
+[extra]
 Include = /etc/pacman.d/mirrorlist-arch
 
 #[community]
