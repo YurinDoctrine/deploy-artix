@@ -273,15 +273,15 @@ fi
 
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
 
-if [ "$MY_INIT" = "openrc" ]; then
-  echo -e 'rc_parallel="YES"
+echo -e 'rc_parallel="YES"
 rc_interactive="NO"
 rc_logger="NO"
 rc_send_sigkill="YES"
 rc_send_sighup="YES"
-SSD_NICELEVEL="-19"
-rc_timeout_stopsec="10"' >/etc/rc.conf
+rc_timeout_stopsec="10"
+SSD_NICELEVEL="-19"' >/etc/rc.conf
 
+if [ "$MY_INIT" = "openrc" ]; then
   rc-update add connmand default
   rc-update add lxdm default
   rc-update add acpid default
