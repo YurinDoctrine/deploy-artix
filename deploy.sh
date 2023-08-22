@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Boring stuff you should probably do
+# Boring stuff you should probably do now
 ln -sf /usr/share/zoneinfo/"$REGION_CITY" /etc/localtime
 hwclock --systohc
 
