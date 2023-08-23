@@ -273,11 +273,6 @@ fi
 
 echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
 
-echo -e "nameserver 9.9.9.11
-nameserver 149.112.112.11
-nameserver 127.0.0.1
-options rotate timeout:1 attempts:3 edns0 trust-ad use-vc single-request-reopen no-tld-query" >/etc/resolv.conf
-
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
