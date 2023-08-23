@@ -32,8 +32,6 @@ yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
 # Root user
 yes "$ROOT_PASSWORD" | passwd
 
-sed -i -e '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers
-
 # Pacman
 echo -e "[universe]
 Server = https://universe.artixlinux.org/\$arch
@@ -320,8 +318,9 @@ if [ "$MY_FS" = "btrfs" ]; then
   sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
 fi
 
-sudo sed -i -e 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
-sudo sed -i -e 's/#COMPRESSION_OPTIONS=.*/COMPRESSION_OPTIONS=("--best")/g' /etc/mkinitcpio.conf
+sed -i -e 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
+sed -i -e 's/#COMPRESSION_OPTIONS=.*/COMPRESSION_OPTIONS=("--best")/g' /etc/mkinitcpio.conf
+
 mkinitcpio -P
 
 # Install boot loader
