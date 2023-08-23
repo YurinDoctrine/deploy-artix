@@ -271,6 +271,13 @@ if $(find /sys/block/nvme* | egrep -q nvme); then
     echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
 fi
 
+echo -e "nameserver 9.9.9.11
+nameserver 149.112.112.11
+nameserver 127.0.0.1
+options rotate timeout:1 attempts:3 edns0 trust-ad use-vc single-request-reopen no-tld-query" >/etc/resolv.conf
+
+echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
+
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
