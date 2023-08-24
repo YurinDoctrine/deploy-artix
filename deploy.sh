@@ -273,6 +273,8 @@ fi
 
 echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
 
+sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard|g' /etc/fstab
+
 echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
 
 if [ "$MY_INIT" = "openrc" ]; then
