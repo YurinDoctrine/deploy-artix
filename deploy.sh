@@ -250,6 +250,7 @@ blacklist brcmfmac
 blacklist brcmsmac" | tee /etc/modprobe.d/nomisc.conf
 
 echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
+
 echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.conf
 
 mkdir -p /etc/modules-load.d
