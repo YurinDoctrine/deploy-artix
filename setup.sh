@@ -67,7 +67,7 @@ done
 
 # Encrypt
 until [ ! -e $ENCRYPTED ]; do
-  echo -e "Encrypt filesystem? (y/N): " && read -p $"> " ENCRYPTED
+  echo -e "Encrypt filesystem? (y/Default: n): " && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
 done
 
