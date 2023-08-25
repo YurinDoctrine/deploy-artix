@@ -77,19 +77,21 @@ fi
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
-  echo -e "Region/City (e.g. America/Denver): " && read -p $"> " REGION_CITY
-  [ ! "$REGION_CITY" ] && REGION_CITY="America/Denver"
+  echo -e "Region/City (Default: Europe/Moscow): " && read -p $"> " REGION_CITY
+  [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
 # Host
 while :; do
-  echo -e "Hostname: " && read -p $"> " MY_HOSTNAME
+  echo -e "Hostname (Default: localhost): " && read -p $"> " MY_HOSTNAME
+  [ ! "$MY_HOSTNAME" ] && MY_HOSTNAME="localhost"
   [ "$MY_HOSTNAME" ] && break
 done
 
 # Username
 while :; do
-  echo -e "Username: " && read -p $"> " MY_USERNAME
+  echo -e "Username (Default: artix): " && read -p $"> " MY_USERNAME
+  [ ! "$MY_USERNAME" ] && MY_USERNAME="artix"
   [ "$MY_USERNAME" ] && break
 done
 
