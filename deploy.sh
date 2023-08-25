@@ -338,6 +338,7 @@ fi
 
 sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' /etc/default/grub
 sed -i -e 's/GRUB_RECORDFAIL_TIMEOUT=.*/GRUB_RECORDFAIL_TIMEOUT=0/' /etc/default/grub
+sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet rootfstype=ext4,btrfs,xfs,f2fs biosdevname=0 nowatchdog noautogroup noresume zswap.enabled=1 zswap.compressor=lz4 zswap.max_pool_percent=20 zswap.zpool=zsmalloc plymouth.ignore-serial-consoles rd.systemd.show_status=auto loglevel=0 rd.udev.log_level=0 udev.log_priority=3 audit=0 clocksource=tsc tsc=perfect rcu_nocb_poll irqpoll irqaffinity=0 idle=nomwait noatime boot_delay=0 io_delay=none rootdelay=0 elevator=noop init_on_alloc=0 init_on_free=0 mitigations=off ftrace_enabled=0 fsck.repair=no fsck.mode=skip cgroup_disable=memory cgroup_no_v1=all"/' /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
