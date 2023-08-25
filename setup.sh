@@ -35,7 +35,7 @@ confirm_password() {
 pacman -Sy --noconfirm parted && clear
 
 # Load keymap
-echo -e "Load keymap (e.g. us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
+echo -e "Load keymap (Default: us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 
 # Choose disk
