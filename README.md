@@ -14,8 +14,8 @@ It supports both `runit` and `openrc` init systems. It also supports `btrfs` and
 The installer performs the following main steps (in roughly this order),
 with some parts depending on the chosen configuration:
 
-1. Base system configuration (hostname, timezone, keymap, locales, ...)
-2. Partition disks
+1. Configure system (hostname, timezone, keymap, locales, ...)
+2. Partition disk
 3. Install base packages
 4. Install kernel
 5. Setup grub
