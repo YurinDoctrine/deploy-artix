@@ -17,7 +17,7 @@ with some parts depending on the chosen configuration:
 1. Base system configuration (hostname, timezone, keymap, locales, ...)
 2. Partition disks
 3. Install base packages
-4. Install lts kernel
+4. Install kernel
 5. Setup grub
 6. Ensure minimal working system with my [dotfiles](https://github.com/YurinDoctrine/.config/tree/artix)
 
