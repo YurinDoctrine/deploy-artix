@@ -19,7 +19,7 @@ with some parts depending on the chosen configuration:
 3. Install base packages
 4. Install kernel
 5. Setup grub
-6. Ensure minimal working system with my [dotfiles](https://github.com/YurinDoctrine/.config/tree/artix)
+6. Ensure minimal working Artix with [dotfiles](https://github.com/YurinDoctrine/.config/tree/artix)
 
 ### Preinstallation
 
