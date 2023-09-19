@@ -288,7 +288,7 @@ rc_timeout_stopsec="10"
 SSD_NICELEVEL="-19"' >/etc/rc.conf
 
   rc-update add connmand default
-  rc-update add lxdm default
+  rc-update add lxdm boot
   rc-update add acpid default
   rc-update add thermald default
 elif [ "$MY_INIT" = "runit" ]; then
