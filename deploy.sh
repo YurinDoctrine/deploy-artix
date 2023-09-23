@@ -274,8 +274,6 @@ sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,n
 echo -e "@realtime - rtprio 99
 @realtime - memlock unlimited" >>/etc/security/limits.conf
 
-echo -e "exec pipewire &" >/etc/profile.d/pipewire.sh
-
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
 rc_interactive="NO"
