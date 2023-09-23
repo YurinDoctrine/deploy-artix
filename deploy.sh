@@ -271,7 +271,7 @@ sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,n
 echo -e "@realtime - rtprio 99
 @realtime - memlock unlimited" >>/etc/security/limits.conf
 
-sed -i -e s"/\exec setxkbmap replaceme &/exec setxkbmap $MY_KEYMAP &/"g /home/$MY_USERNAME/openbox/autostart
+sed -i -e s"/\setxkbmap replaceme &/setxkbmap $MY_KEYMAP &/"g /home/$MY_USERNAME/openbox/autostart
 
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
