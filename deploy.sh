@@ -276,7 +276,6 @@ echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntra
 
 sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard|g' /etc/fstab
 
-## Set realtime to unlimited
 echo -e "@realtime - rtprio 99
 @realtime - memlock unlimited" >>/etc/security/limits.conf
 
