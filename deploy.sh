@@ -147,9 +147,9 @@ find /usr/bin/ | egrep '\conkywonky' | xargs rm -f
 find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
 
 # Other stuff you should do
-sed -i -e s"/\replaceme &/$MY_KEYMAP &/"g /home/$MY_USERNAME/.config/openbox/autostart
-sed -i -e s"/\replaceme &/$MY_KEYMAP &/"g /etc/skel/.config/openbox/autostart
-sed -i -e s"/\replaceme &/$MY_KEYMAP &/"g /root/.config/openbox/autostart
+sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
+sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
+sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
 
 echo -e "exec startx --" >/home/$MY_USERNAME/.bash_profile
 echo -e "exec startx --" >/etc/skel/.bash_profile
