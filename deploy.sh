@@ -62,7 +62,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils doas gcc git gtk-engines gtk-engine-murrine iwd jemalloc kitty lxdm-$MY_INIT mesa openbox pipewire pipewire-alsa thermald-$MY_INIT unzip wayland wget wireplumber wpa_supplicant xdg-utils xdg-user-dirs xorg xterm
+pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils doas gcc git gtk-engines gtk-engine-murrine iwd jemalloc kitty mesa openbox pipewire pipewire-alsa thermald-$MY_INIT unzip wayland wget wireplumber wpa_supplicant xdg-utils xdg-user-dirs xorg xterm
 
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
@@ -111,9 +111,6 @@ mv .config/.vimrc /root
 mv .config/.Xresources /root
 mv .config/.nanorc /root
 mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
-rm -rfd /usr/share/lxdm/themes
-cp -rfd .config/themes /usr/share/lxdm
-mv .config/lxdm.conf /etc/lxdm
 rm -rfd /usr/share/icons/CBPP*
 cp -rfd .config/CBPP /usr/share/icons
 cp -rfd .config/openbox-3 /usr/share/themes/CBPP
@@ -146,8 +143,6 @@ find /root/.config/ | egrep '\cbpp' | xargs rm -f
 find /usr/bin/ | egrep '\cbpp' | xargs rm -f
 find /usr/bin/ | egrep '\conkywonky' | xargs rm -f
 find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
-
-sed -i -e "s/# autologin=.*/autologin=$MY_USERNAME/g" /etc/lxdm/lxdm.conf
 
 # Other stuff you should do
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
@@ -291,12 +286,10 @@ rc_timeout_stopsec="10"
 SSD_NICELEVEL="-19"' >/etc/rc.conf
 
   rc-update add connmand default
-  rc-update add lxdm boot
   rc-update add acpid default
   rc-update add thermald default
 elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/connmand/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/lxdm/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
 fi
