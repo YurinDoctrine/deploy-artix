@@ -21,6 +21,15 @@ case "$(readlink -f /sbin/init)" in
   ;;
 esac
 
+case $(grep vendor /proc/cpuinfo) in
+*"Intel"*)
+  UCODE"intel-ucode"
+  ;;
+*"Amd"*)
+  UCODE"amd-ucode"
+  ;;
+esac
+
 confirm_password() {
   stty -echo
   until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
@@ -132,29 +141,20 @@ mount "$PART1" /mnt/boot/efi
 
 cp -rfd /var/lib/connman /mnt/var/lib/
 
-clear && echo -e 'Done with configuration. Installing...'
-
 # Install base system and kernel
-case $(grep vendor /proc/cpuinfo) in
-*"Intel"*)
-  ucode="intel-ucode"
-  ;;
-*"Amd"*)
-  ucode="amd-ucode"
-  ;;
-esac
+clear && echo -e 'Done with configuration. Installing...'
 
 if [ "$MY_FS" = "btrfs" ]; then
   if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode connman-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
   else
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode connman-$MY_INIT btrfs-progs
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT btrfs-progs
   fi
 else
   if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode connman-$MY_INIT cryptsetup cryptsetup-$MY_INIT
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT cryptsetup cryptsetup-$MY_INIT
   else
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $ucode connman-$MY_INIT
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT
   fi
 fi
 
