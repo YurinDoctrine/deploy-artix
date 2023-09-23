@@ -93,6 +93,7 @@ cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /home/$MY_USERNAME
 cp -rfd .config/.gtk-bookmarks /home/$MY_USERNAME
 cp -rfd .config/.vimrc /home/$MY_USERNAME
+cp -rfd .config/.xinitrc /home/$MY_USERNAME
 cp -rfd .config/.Xresources /home/$MY_USERNAME
 cp -rfd .config/.nanorc /home/$MY_USERNAME
 cp -rfd .config/.gmrunrc /etc/skel
@@ -100,6 +101,7 @@ cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /etc/skel
 cp -rfd .config/.gtk-bookmarks /etc/skel
 cp -rfd .config/.vimrc /etc/skel
+cp -rfd .config/.xinitrc /etc/skel
 cp -rfd .config/.Xresources /etc/skel
 cp -rfd .config/.nanorc /etc/skel
 mv .config/.gmrunrc /root
@@ -107,6 +109,7 @@ mv .config/.gtkrc-2.0 /root/.gtkrc-2.0
 mv .config/.fonts.conf /root
 mv .config/.gtk-bookmarks /root
 mv .config/.vimrc /root
+mv .config/.xinitrc /root
 mv .config/.Xresources /root
 mv .config/.nanorc /root
 mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
