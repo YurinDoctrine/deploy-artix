@@ -30,6 +30,8 @@ yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
 yes "$ROOT_PASSWORD" | passwd
 
 # Pacman
+cp -rfd /etc/pacman.conf /etc/pacman.conf.bak
+
 echo -e "[universe]
 Server = https://universe.artixlinux.org/\$arch
 Server = https://mirror1.artixlinux.org/universe/\$arch
