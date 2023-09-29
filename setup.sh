@@ -107,6 +107,16 @@ done
 # Root
 ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ") && echo ""
 
+# Network
+while :; do
+  echo -e "Wi-Fi SSID (Leave empty for Ethernet): " && read -p $"> " SSID
+  [ ! "$SSID" ] && break
+  until [ ! -e $PSK ]; do
+    echo -e "Wi-Fi Password: " && read -p $"> " PSK
+  done
+  [ "$PSK" ] && break
+done
+
 # Partition disk
 umount /mnt*
 swapoff -a
@@ -138,6 +148,13 @@ fi
 
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
+
+if [ "$SSID" ]; then
+  echo -e "network={
+ssid=\"$SSID\"
+psk=\"$PSK\"
+}" >/mnt/etc/wpa_supplicant/wpa_supplicant.conf
+fi
 
 # Install base system and kernel
 clear && echo -e 'Done with configuration. Installing...'
