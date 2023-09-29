@@ -144,15 +144,15 @@ clear && echo -e 'Done with configuration. Installing...'
 
 if [ "$MY_FS" = "btrfs" ]; then
   if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT btrfs-progs cryptsetup cryptsetup-$MY_INIT
   else
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT btrfs-progs
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT btrfs-progs
   fi
 else
   if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT cryptsetup cryptsetup-$MY_INIT
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT cryptsetup cryptsetup-$MY_INIT
   else
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr grub $UCODE connman-$MY_INIT
+    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT
   fi
 fi
 
