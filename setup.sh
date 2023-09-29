@@ -149,13 +149,6 @@ fi
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
-if [ "$SSID" ]; then
-  echo -e "network={
-ssid=\"$SSID\"
-psk=\"$PSK\"
-}" >/mnt/etc/wpa_supplicant/wpa_supplicant.conf
-fi
-
 # Install base system and kernel
 clear && echo -e 'Done with configuration. Installing...'
 
@@ -176,6 +169,14 @@ fi
 basestrap /mnt linux-lts linux-lts-headers linux-firmware mkinitcpio
 
 fstabgen -U /mnt >/mnt/etc/fstab
+
+# Save connection
+if [ "$SSID" ]; then
+  echo -e "network={
+ssid=\"$SSID\"
+psk=\"$PSK\"
+}" >/mnt/etc/wpa_supplicant/wpa_supplicant.conf
+fi
 
 # Chroot
 (MY_INIT="$MY_INIT" MY_FS="$MY_FS" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
