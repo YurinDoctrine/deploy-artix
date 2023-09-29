@@ -298,8 +298,6 @@ SSD_NICELEVEL="-19"' >/etc/rc.conf
   rc-update add thermald default
   rc-update add wpa_supplicant default
 elif [ "$MY_INIT" = "runit" ]; then
-  sed -i -e "s/--noclear/--noclear --autologin $MY_USERNAME/" /etc/runit/runsvdir/default/agetty-tty1/conf
-
   ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
