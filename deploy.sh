@@ -62,7 +62,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
 # System
-pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils dbus-broker doas gcc git gtk-engines gtk-engine-murrine kitty mesa openbox pipewire pipewire-alsa thermald-$MY_INIT unzip vim wayland wget wireplumber wpa_supplicant xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils dbus-broker doas gtk-engines gtk-engine-murrine kitty mesa openbox pipewire pipewire-alsa thermald-$MY_INIT unzip vim wayland wget wireplumber wpa_supplicant xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
 
@@ -71,13 +71,13 @@ echo "permit persist :wheel" >/etc/doas.conf
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
 cd /tmp
-git clone --branch $release https://github.com/CBPP/cbpp-ui-theme.git
+wget -qO cbpp-ui-theme.zip https://github.com/CBPP/cbpp-ui-theme/archive/refs/heads/$release.zip && unzip cbpp-ui-theme.zip && mv cbpp-ui-theme-$release cbpp-ui-theme
 rm -rfd /usr/share/themes/CBPP*
 rm -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/CBPP/xf*
 cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/themes
 rm -rfd /usr/share/backgrounds
 mkdir -p /usr/share/backgrounds
-git clone --branch artix https://github.com/YurinDoctrine/.config.git
+wget -qO config.zip https://github.com/YurinDoctrine/.config/archive/refs/heads/artix.zip && unzip config.zip && mv .config-artix .config
 rm -rfd /home/$MY_USERNAME/.*
 rm -rfd /etc/skel/.*
 rm -rfd /root/.*
