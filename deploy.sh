@@ -43,7 +43,7 @@ Server = https://ftp.crifo.org/artix-universe/\$arch
 Server = https://artix.sakamoto.pl/universe/\$arch
 # TOR
 Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/\$arch
-" | tee -a /etc/pacman.conf
+" | >>/etc/pacman.conf
 
 pacman -Sy --noconfirm artix-keyring artix-archlinux-support
 
@@ -57,7 +57,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 
 #[multilib]
 #Include = /etc/pacman.d/mirrorlist-arch
-" | tee -a /etc/pacman.conf
+" | >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 
@@ -172,7 +172,7 @@ HISTSIZE=0
 LESSHISTFILE=-
 LESSHISTSIZE=0
 LESSSECURE=1
-PAGER=less" | tee -a /etc/environment
+PAGER=less" | >>/etc/environment
 
 mkdir -p /etc/modprobe.d
 echo -e "blacklist pcspkr
@@ -252,7 +252,7 @@ blacklist bcma
 blacklist bcm43xx
 blacklist brcm80211
 blacklist brcmfmac
-blacklist brcmsmac" | tee /etc/modprobe.d/nomisc.conf
+blacklist brcmsmac" | >/etc/modprobe.d/nomisc.conf
 
 echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
 
