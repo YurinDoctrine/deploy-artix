@@ -289,6 +289,9 @@ nameserver 149.112.112.11
 nameserver 127.0.0.1
 options rotate timeout:1 attempts:3 edns0 trust-ad use-vc single-request-reopen no-tld-query" >/etc/resolv.conf && chattr +i /etc/resolv.conf
 
+echo -e "order bind,hosts
+multi on" >/etc/host.conf
+
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
 rc_interactive="NO"
