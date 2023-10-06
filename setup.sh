@@ -137,7 +137,7 @@ mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 
 if [ "$MY_FS" = "ext4" ]; then
-  mkfs.ext4 "$ROOT_PART"
+  mkfs.ext4 -O casefold,^has_journal,^metadata_csum "$ROOT_PART"
 
   mount "$ROOT_PART" /mnt
 elif [ "$MY_FS" = "btrfs" ]; then
