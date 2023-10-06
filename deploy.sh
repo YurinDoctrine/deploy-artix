@@ -292,8 +292,6 @@ options rotate timeout:1 attempts:3 edns0 trust-ad use-vc single-request-reopen 
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
 
-echo -e "umask 027" >/etc/profile.d/umask.sh
-
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
 rc_interactive="NO"
