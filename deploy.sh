@@ -13,8 +13,7 @@ echo -e "en_GB.UTF-8 UTF-8" >>/etc/locale.gen
 locale-gen
 echo -e "LANG=en_GB.UTF-8" >/etc/locale.conf
 
-echo -e "FONT=ter-v22b
-FONT_MAP=8859-2
+echo -e "FONT_MAP=8859-2
 KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
 
 # Host stuff
