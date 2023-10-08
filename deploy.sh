@@ -314,15 +314,6 @@ elif [ "$MY_INIT" = "runit" ]; then
 fi
 
 if [ "$ENCRYPTED" = "y" ]; then
-  if [ "$MY_FS" = "btrfs" ]; then
-  mkdir -p /root/.keyfiles
-  chmod 0400 /root/.keyfiles
-  dd if=/dev/urandom of=/root/.keyfiles/main bs=1024 count=4
-  yes "$CRYPTPASS" | cryptsetup luksAddKey "$ROOT_PART" /root/.keyfiles/main
-  echo -e "dmcrypt_key_timeout=1
-dmcrypt_retries=5
-key='/root/.keyfiles/main'" >/etc/conf.d/dmcrypt
-  fi
   [ "$MY_INIT" = "openrc" ] && rc-update add dmcrypt boot
   [ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
 fi
@@ -332,10 +323,6 @@ if [ "$ENCRYPTED" = "y" ]; then
   sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf block encrypt filesystems)/g' /etc/mkinitcpio.conf
 else
   sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf block filesystems)/g' /etc/mkinitcpio.conf
-fi
-
-if [ "$MY_FS" = "btrfs" ]; then
-  sed -i -e 's/BINARIES=()/BINARIES=(\/usr\/bin\/btrfs)/g' /etc/mkinitcpio.conf
 fi
 
 sed -i -e 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
