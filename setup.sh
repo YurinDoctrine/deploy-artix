@@ -68,11 +68,7 @@ esac
 
 ROOT_PART=$PART2
 
-# Choose filesystem
-until [ ! -e $MY_FS ]; do
-  echo -e "Filesystem (btrfs/Default: ext4): " && read -p $"> " MY_FS
-  [ ! "$MY_FS" ] && MY_FS="ext4"
-done
+MY_FS="ext4"
 
 # Encrypt
 until [ ! -e $ENCRYPTED ]; do
@@ -135,35 +131,19 @@ fi
 # Format and mount partitions
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
+mkfs.ext4 -O ^quota,^has_journal,^metadata_csum "$ROOT_PART"
 
-if [ "$MY_FS" = "ext4" ]; then
-  mkfs.ext4 -O ^quota,^has_journal,^metadata_csum "$ROOT_PART"
-
-  mount "$ROOT_PART" /mnt
-elif [ "$MY_FS" = "btrfs" ]; then
-  mkfs.btrfs "$ROOT_PART"
-
-  mount "$ROOT_PART" /mnt
-fi
-
+mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
 # Install base system and kernel
 clear && echo -e 'Done with configuration. Installing...'
 
-if [ "$MY_FS" = "btrfs" ]; then
-  if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT btrfs-progs cryptsetup-$MY_INIT
-  else
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT btrfs-progs
-  fi
+if [ "$ENCRYPTED" = "y" ]; then
+  basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT cryptsetup-$MY_INIT
 else
-  if [ "$ENCRYPTED" = "y" ]; then
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT cryptsetup-$MY_INIT
-  else
-    basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT
-  fi
+  basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT
 fi
 
 basestrap /mnt linux-lts linux-lts-headers linux-firmware mkinitcpio
@@ -179,6 +159,6 @@ psk=\"$PSK\"
 fi
 
 # Chroot
-(MY_INIT="$MY_INIT" MY_FS="$MY_FS" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
+(MY_INIT="$MY_INIT" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
 
 echo -e 'Installation completed successfully. You may now reboot or poweroff...'
