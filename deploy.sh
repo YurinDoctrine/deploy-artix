@@ -283,11 +283,6 @@ sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,n
 echo -e "@realtime - rtprio 99
 @realtime - memlock unlimited" >>/etc/security/limits.conf
 
-echo -e "nameserver 9.9.9.11
-nameserver 149.112.112.11
-nameserver 127.0.0.1
-options rotate timeout:1 attempts:3 edns0 trust-ad use-vc single-request-reopen no-tld-query" >/etc/resolv.conf && chattr +i /etc/resolv.conf
-
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
 
