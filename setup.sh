@@ -59,6 +59,7 @@ done
 
 PART1="$MY_DISK"1
 PART2="$MY_DISK"2
+
 case "$MY_DISK" in
 *"nvme"*)
   PART1="$MY_DISK"p1
@@ -67,8 +68,6 @@ case "$MY_DISK" in
 esac
 
 ROOT_PART=$PART2
-
-MY_FS="ext4"
 
 # Encrypt
 until [ ! -e $ENCRYPTED ]; do
@@ -118,7 +117,7 @@ umount /mnt*
 swapoff -a
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
-parted -s "$MY_DISK" mkpart primary "$MY_FS" 512MiB 100%
+parted -s "$MY_DISK" mkpart primary ext4 512MiB 100%
 parted -s "$MY_DISK" set 1 boot on
 
 if [ "$ENCRYPTED" = "y" ]; then
