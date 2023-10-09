@@ -23,7 +23,7 @@ yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
 yes "$ROOT_PASSWORD" | passwd
 
 # Pacman
-sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
+sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads = 3/"g /etc/pacman.conf
 
 cp -rfd /etc/pacman.conf /etc/pacman.conf.bak
 
