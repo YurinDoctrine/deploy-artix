@@ -23,6 +23,8 @@ yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
 yes "$ROOT_PASSWORD" | passwd
 
 # Pacman
+sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
+
 cp -rfd /etc/pacman.conf /etc/pacman.conf.bak
 
 echo -e "[universe]
@@ -52,13 +54,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-
-# System
 pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils dbus-broker doas gtk-engines gtk-engine-murrine kitty mesa openbox pipewire pipewire-alsa thermald-$MY_INIT unzip vim wayland wget wireplumber wpa_supplicant xdg-desktop-portal-lxqt xdg-utils xdg-user-dirs xorg xorg-xinit xterm
-
-sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads=3/"g /etc/pacman.conf
-
-echo "permit persist :wheel" >/etc/doas.conf
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
@@ -140,6 +136,8 @@ find /usr/bin/ | egrep '\conkywonky' | xargs rm -f
 find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
 
 # Other stuff you should do
+echo "permit persist :wheel" >/etc/doas.conf
+
 sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
