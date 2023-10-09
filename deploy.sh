@@ -260,7 +260,7 @@ echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", 
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/iostats}="0"' >/etc/udev/rules.d/20-iostats.rules
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{bdi/read_ahead_kb}="64", ATTR{queue/read_ahead_kb}="64", ATTR{queue/nr_requests}="32"' >/etc/udev/rules.d/70-readahead.rules
 
-if $(find /sys/block/nvme* | grep -q nvme); then
+if $(find /sys/block/nvme[0-9]* | grep -q nvme); then
     echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
 fi
 
