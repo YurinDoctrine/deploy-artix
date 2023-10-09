@@ -444,6 +444,7 @@ net.core.somaxconn=65535
 net.core.optmem_max=65535
 net.core.rmem_max=6291456
 net.core.wmem_max=6291456" >/usr/lib/sysctl.d/99-swappiness.conf
+sysctl -w vm.compact_memory=1 && sysctl -w vm.drop_caches=3 && sysctl -w vm.drop_caches=2
 
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
