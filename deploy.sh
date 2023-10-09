@@ -283,7 +283,7 @@ sed -i -e 's|rw,relatime|rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nof
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
 
-echo -e "umask 027" >>/etc/profile
+echo -e "$MY_USERNAME hard nofile 1048576" >>/etc/security/limits.conf
 
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
