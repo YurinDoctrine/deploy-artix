@@ -120,20 +120,17 @@ mkdir -p /home/$MY_USERNAME/.compose-cache
 touch /home/$MY_USERNAME/.XCompose
 chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.*
 chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/*
-find /home/$MY_USERNAME/.config/ | egrep '\CBPP' | xargs rm -rfd
-find /etc/skel/.config/ | egrep '\CBPP' | xargs rm -rfd
-find /root/.config/ | egrep '\CBPP' | xargs rm -rfd
-find /home/$MY_USERNAME/.config/ | egrep '\themes' | xargs rm -rfd
-find /etc/skel/.config/ | egrep '\themes' | xargs rm -rfd
-find /root/.config/ | egrep '\themes' | xargs rm -rfd
-find /home/$MY_USERNAME/.config/ | egrep '\openbox-3' | xargs rm -rfd
-find /etc/skel/.config/ | egrep '\openbox-3' | xargs rm -rfd
-find /root/.config/ | egrep '\openbox-3' | xargs rm -rfd
-find /home/$MY_USERNAME/.config/ | egrep '\cbpp' | xargs rm -f
-find /root/.config/ | egrep '\cbpp' | xargs rm -f
-find /usr/bin/ | egrep '\cbpp' | xargs rm -f
-find /usr/bin/ | egrep '\conkywonky' | xargs rm -f
-find /usr/bin/ | egrep '\tint2restart' | xargs rm -f
+find /home/$MY_USERNAME/.config/ | grep '\CBPP' | xargs rm -rfd
+find /etc/skel/.config/ | grep '\CBPP' | xargs rm -rfd
+find /root/.config/ | grep '\CBPP' | xargs rm -rfd
+find /home/$MY_USERNAME/.config/ | grep '\themes' | xargs rm -rfd
+find /etc/skel/.config/ | grep '\themes' | xargs rm -rfd
+find /root/.config/ | grep '\themes' | xargs rm -rfd
+find /home/$MY_USERNAME/.config/ | grep '\openbox-3' | xargs rm -rfd
+find /etc/skel/.config/ | grep '\openbox-3' | xargs rm -rfd
+find /root/.config/ | grep '\openbox-3' | xargs rm -rfd
+find /home/$MY_USERNAME/.config/ | grep '\cbpp' | xargs rm -f
+find /root/.config/ | grep '\cbpp' | xargs rm -f
 
 # Other stuff you should do
 echo "permit persist :wheel" >/etc/doas.conf
@@ -263,7 +260,7 @@ echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", 
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/iostats}="0"' >/etc/udev/rules.d/20-iostats.rules
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{bdi/read_ahead_kb}="64", ATTR{queue/read_ahead_kb}="64", ATTR{queue/nr_requests}="32"' >/etc/udev/rules.d/70-readahead.rules
 
-if $(find /sys/block/nvme* | egrep -q nvme); then
+if $(find /sys/block/nvme* | grep -q nvme); then
     echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
 fi
 
