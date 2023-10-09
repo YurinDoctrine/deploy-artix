@@ -5,13 +5,7 @@ ln -sf /usr/share/zoneinfo/"$REGION_CITY" /etc/localtime
 hwclock --systohc
 
 # Localization
-echo -e "LANG=en_GB.UTF8" >>/etc/environment
-echo -e "LANGUAGE=en_GB.UTF8" >>/etc/environment
-echo -e "LC_ALL=en_GB.UTF8" >>/etc/environment
 echo -e "LC_COLLATE=C" >>/etc/environment
-echo -e "en_GB.UTF-8 UTF-8" >>/etc/locale.gen
-echo -e "LANG=en_GB.UTF-8" >/etc/locale.conf
-locale-gen
 
 echo -e "FONT_MAP=8859-2
 KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
