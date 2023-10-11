@@ -454,7 +454,8 @@ net.core.rmem_max=6291456
 net.core.wmem_max=6291456" >/usr/lib/sysctl.d/99-swappiness.conf
 sysctl -w vm.compact_memory=1 && sysctl -w vm.drop_caches=3 && sysctl -w vm.drop_caches=2
 
-echo -e "* hard nofile 524288 1048576" >/etc/security/limits.conf
+echo -e "* soft nofile 1024000
+* hard nofile 1024000" >/etc/security/limits.conf
 
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
