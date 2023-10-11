@@ -35,6 +35,8 @@ sed -i -e s"/\#LogFile.*/LogFile = /"g /etc/pacman.conf
 
 cp -rfd /etc/pacman.conf /etc/pacman.conf.bak
 
+yes | pacman -Scc
+
 echo -e "[universe]
 Server = https://universe.artixlinux.org/\$arch
 Server = https://mirror1.artixlinux.org/universe/\$arch
