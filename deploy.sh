@@ -281,8 +281,6 @@ sed -i -e 's|rw,relatime|rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nof
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
 
-echo -e "$MY_USERNAME hard nofile 1048576" >>/etc/security/limits.conf
-
 echo -e "vm.swappiness = 1
 vm.vfs_cache_pressure = 50
 vm.overcommit_memory = 1
@@ -455,6 +453,39 @@ net.core.optmem_max=65535
 net.core.rmem_max=6291456
 net.core.wmem_max=6291456" >/usr/lib/sysctl.d/99-swappiness.conf
 sysctl -w vm.compact_memory=1 && sysctl -w vm.drop_caches=3 && sysctl -w vm.drop_caches=2
+
+echo -e "* soft nofile 524288
+* hard nofile 524288
+root soft nofile 524288
+root hard nofile 524288
+* soft as unlimited
+* hard as unlimited
+root soft as unlimited
+root hard as unlimited
+* soft memlock unlimited
+* hard memlock unlimited
+root soft memlock unlimited
+root hard memlock unlimited
+* soft core unlimited
+* hard core unlimited
+root soft core unlimited
+root hard core unlimited
+* soft nproc unlimited
+* hard nproc unlimited
+root soft nproc unlimited
+root hard nproc unlimited
+* soft sigpending unlimited
+* hard sigpending unlimited
+root soft sigpending unlimited
+root hard sigpending unlimited
+* soft stack unlimited
+* hard stack unlimited
+root soft stack unlimited
+root hard stack unlimited
+* soft data unlimited
+* hard data unlimited
+root soft data unlimited
+root hard data unlimited" >/etc/security/limits.conf
 
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
