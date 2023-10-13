@@ -7,7 +7,6 @@ hwclock --systohc
 # Localization
 echo -e "LANG=en_GB.UTF8
 LANGUAGE=en_GB.UTF8
-LC_ALL=en_GB.UTF8
 LC_COLLATE=C" >/etc/environment
 echo -e "FONT_MAP=8859-2
 KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
