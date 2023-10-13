@@ -131,7 +131,7 @@ fi
 # Format and mount partitions
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
-mkfs.ext4 -O ^quota,^has_journal,^metadata_csum "$ROOT_PART"
+mkfs.ext4 -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -m1 "$ROOT_PART"
 
 mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
