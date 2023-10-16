@@ -273,7 +273,7 @@ fi
 
 echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
 
-sed -i -e 's|rw,relatime|rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard|g' /etc/fstab
+sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard|g' /etc/fstab
 
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
