@@ -30,7 +30,6 @@ sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads = 3/"g /etc/pacman.conf
 sed -i -e s"/\#CheckSpace/CheckSpace/"g /etc/pacman.conf
 sed -i -e s"/\#CacheDir.*/CacheDir = /"g /etc/pacman.conf
 sed -i -e s"/\#NoExtract.*/NoExtract = usr\/share\/doc\/* usr\/share\/gtk-doc\/* usr\/share\/help\/* usr\/share\/info\/* usr\/share\/man\/*/"g /etc/pacman.conf
-sed -i -e s"/\#LogFile.*/LogFile = /"g /etc/pacman.conf
 
 cp -rfd /etc/pacman.conf /etc/pacman.conf.bak
 
@@ -274,8 +273,12 @@ fi
 echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
 
 sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard|g' /etc/fstab
-echo -e "tmpfs /tmp tmpfs defaults,nodiratime,nodev,nosuid 0 0" >>/etc/fstab
-echo -e "/bin/mount -t tmpfs tmp,777 /tmp" >>/etc/rc.local
+echo -e "tmpfs /tmp tmpfs defaults,noatime,nodev,nosuid 0 0
+tmpfs /var/tmp tmpfs defaults,noatime,nodev,nosuid 0 0
+tmpfs /var/log tmpfs defaults,noatime,nodev,nosuid 0 0" >>/etc/fstab
+echo -e "/bin/mount -t tmpfs /tmp,777 /tmp
+/bin/mount -t tmpfs /var/tmp,755 /var/tmp
+/bin/mount -t tmpfs /var/log,755 /var/log" >>/etc/rc.local
 
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
