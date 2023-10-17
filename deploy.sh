@@ -29,7 +29,6 @@ sed -i -e s"/\#VerbosePkgLists/VerbosePkgLists/"g /etc/pacman.conf
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads = 3/"g /etc/pacman.conf
 sed -i -e s"/\#CheckSpace/CheckSpace/"g /etc/pacman.conf
 sed -i -e s"/\#NoExtract.*/NoExtract = usr\/share\/doc\/* usr\/share\/gtk-doc\/* usr\/share\/help\/* usr\/share\/info\/* usr\/share\/man\/*/"g /etc/pacman.conf
-sed -i -e s"/\#LogFile.*/LogFile = /"g /etc/pacman.conf
 
 cp -rfd /etc/pacman.conf /etc/pacman.conf.bak
 
