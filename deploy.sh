@@ -279,7 +279,7 @@ tmpfs /var/log tmpfs defaults,noatime,nodev,nosuid 0 0" >>/etc/fstab
 echo -e "/bin/mount -t tmpfs /tmp,777 /tmp
 /bin/mount -t tmpfs /var/tmp,755 /var/tmp
 /bin/mount -t tmpfs /var/log,755 /var/log
-/bin/mount -o remount,noatime,nosuid,noexec,nodev -t tmpfs shm /dev/shm" >>/etc/rc.local
+/bin/mount -o remount,noatime,nodev,nosuid,noexec -t tmpfs shm /dev/shm" >>/etc/rc.local
 
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
