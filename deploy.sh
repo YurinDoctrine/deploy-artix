@@ -60,7 +60,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils dbus-broker doas gtk-engines gtk-engine-murrine haveged-$MY_INIT kitty mesa openbox pipewire pipewire-alsa thermald-$MY_INIT unzip vim wayland wget wireplumber wpa_supplicant xdg-desktop-portal-lxqt xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --noconfirm acpid-$MY_INIT alsa-utils dbus-broker doas gtk-engines gtk-engine-murrine haveged-$MY_INIT kitty mesa openbox pipewire pipewire-alsa thermald-$MY_INIT tor-$MY_INIT torsocks unzip vim wayland wget wireplumber wpa_supplicant xdg-desktop-portal-lxqt xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
@@ -480,12 +480,14 @@ SSD_NICELEVEL="-19"' >/etc/rc.conf
   rc-update add dhcpcd default
   rc-update add haveged default
   rc-update add thermald default
+  rc-update add tor default
   rc-update add wpa_supplicant default
 elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/haveged/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
+  ln -s /etc/runit/sv/tor/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/wpa_supplicant/ /etc/runit/runsvdir/current
 fi
 
