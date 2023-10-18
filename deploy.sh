@@ -14,7 +14,7 @@ KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
 # Host stuff
 echo -e "$MY_HOSTNAME" >/etc/hostname
 mkdir -p /etc/conf.d
-echo -e 'hostname="$MY_HOSTNAME"' >/etc/conf.d/hostname
+echo -e "hostname=$MY_HOSTNAME" >/etc/conf.d/hostname
 printf "\n127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$MY_HOSTNAME" "$MY_HOSTNAME" >/etc/hosts
 
 # User
@@ -468,6 +468,9 @@ sysctl -w vm.compact_memory=1 && sysctl -w vm.drop_caches=3 && sysctl -w vm.drop
 
 echo -e "* soft nofile 1024000
 * hard nofile 1024000" >/etc/security/limits.conf
+
+echo -e "session required pam_limits.so" >>/etc/pam.d/common-session
+echo -e "session required pam_limits.so" >>/etc/pam.d/common-session-noninteractive
 
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
