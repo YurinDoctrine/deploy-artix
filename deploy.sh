@@ -145,9 +145,12 @@ sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
 
-echo -e "exec startx --" >/home/$MY_USERNAME/.bash_profile
-echo -e "exec startx --" >/etc/skel/.bash_profile
-echo -e "exec startx --" >/root/.bash_profile
+echo -e "alias sudo='doas'
+exec startx --" >/home/$MY_USERNAME/.bash_profile
+echo -e "alias sudo='doas'
+exec startx --" >/etc/skel/.bash_profile
+echo -e "alias sudo='doas'
+exec startx --" >/root/.bash_profile
 
 echo -e "alias sudo='doas'
 . torsocks on &> /dev/null" >/home/$MY_USERNAME/.bashrc
