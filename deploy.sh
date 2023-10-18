@@ -148,18 +148,18 @@ sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
 
 echo -e "alias sudo='doas'
-exec startx --" >/home/$MY_USERNAME/.bash_profile
+exec startx --" >/home/$MY_USERNAME/.profile
 echo -e "alias sudo='doas'
-exec startx --" >/etc/skel/.bash_profile
+exec startx --" >/etc/skel/.profile
 echo -e "alias sudo='doas'
-exec startx --" >/root/.bash_profile
+exec startx --" >/root/.profile
 
 echo -e "alias sudo='doas'
-. torsocks on &> /dev/null" >/home/$MY_USERNAME/.bashrc
+. torsocks on &> /dev/null" >/home/$MY_USERNAME/.mkshrc
 echo -e "alias sudo='doas'
-. torsocks on &> /dev/null" >/etc/skel/.bashrc
+. torsocks on &> /dev/null" >/etc/skel/.mkshrc
 echo -e "alias sudo='doas'
-. torsocks on &> /dev/null" >/root/.bashrc
+. torsocks on &> /dev/null" >/root/.mkshrc
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
