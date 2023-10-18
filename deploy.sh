@@ -149,6 +149,13 @@ echo -e "exec startx --" >/home/$MY_USERNAME/.bash_profile
 echo -e "exec startx --" >/etc/skel/.bash_profile
 echo -e "exec startx --" >/root/.bash_profile
 
+echo -e "alias sudo='doas'
+. torsocks on &> /dev/null" >/home/$MY_USERNAME/.bashrc
+echo -e "alias sudo='doas'
+. torsocks on &> /dev/null" >/etc/skel/.bashrc
+echo -e "alias sudo='doas'
+. torsocks on &> /dev/null" >/root/.bashrc
+
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/elogind/logind.conf
