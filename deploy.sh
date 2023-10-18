@@ -283,12 +283,9 @@ fi
 echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
 
 sed -i -e 's| rw,relatime| rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard|g' /etc/fstab
-echo -e "tmpfs /tmp tmpfs defaults,noatime,nosuid,nodev 0 0
-tmpfs /var/tmp tmpfs defaults,noatime,nosuid,nodev 0 0
-tmpfs /var/log tmpfs defaults,noatime,nosuid,nodev 0 0" >>/etc/fstab
-echo -e "/bin/mount -t tmpfs /tmp,777 /tmp
-/bin/mount -t tmpfs /var/tmp,755 /var/tmp
-/bin/mount -t tmpfs /var/log,755 /var/log
+echo -e "/bin/mount -o noatime,nosuid,nodev,noexec -t tmpfs tmpfs /tmp
+/bin/mount -o noatime,nosuid,nodev -t tmpfs tmpfs /var/tmp
+/bin/mount -o noatime,nosuid,nodev,noexec -t tmpfs tmpfs /var/log
 /bin/mount -o remount,noatime,nosuid,nodev,noexec -t tmpfs shm /dev/shm" >>/etc/rc.local
 
 echo -e "order bind,hosts
