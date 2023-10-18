@@ -145,9 +145,9 @@ sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
 
-echo -e "exec startx --" >/home/$MY_USERNAME/.bashrc
-echo -e "exec startx --" >/etc/skel/.bashrc
-echo -e "exec startx --" >/root/.bashrc
+echo -e "exec startx --" >/home/$MY_USERNAME/.bash_profile
+echo -e "exec startx --" >/etc/skel/.bash_profile
+echo -e "exec startx --" >/root/.bash_profile
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
