@@ -476,6 +476,8 @@ sed -i -e 's/ENCRYPT_METHOD.*/ENCRYPT_METHOD SHA512/g' /etc/login.defs
 sed -i -e 's/#SHA_CRYPT_MIN_ROUNDS 5000/SHA_CRYPT_MIN_ROUNDS 5000/g' /etc/login.defs
 sed -i -e 's/#SHA_CRYPT_MAX_ROUNDS 5000/SHA_CRYPT_MAX_ROUNDS 50000/g' /etc/login.defs
 
+echo -e "umask 027" >>/etc/profile
+
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
 rc_interactive="NO"
