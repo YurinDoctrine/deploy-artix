@@ -145,9 +145,9 @@ sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
 
-echo -e "exec startx --" >/home/$MY_USERNAME/.bash_profile
-echo -e "exec startx --" >/etc/skel/.bash_profile
-echo -e "exec startx --" >/root/.bash_profile
+echo -e "exec startx --" >/home/$MY_USERNAME/.bashrc
+echo -e "exec startx --" >/etc/skel/.bashrc
+echo -e "exec startx --" >/root/.bashrc
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
@@ -267,7 +267,7 @@ echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", 
 echo -e 'ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{bdi/read_ahead_kb}="64", ATTR{queue/read_ahead_kb}="64", ATTR{queue/nr_requests}="32"' >/etc/udev/rules.d/70-readahead.rules
 
 if $(find /sys/block/nvme[0-9]* | grep -q nvme); then
-    echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
+  echo -e "options nvme_core default_ps_max_latency_us=0" >/etc/modprobe.d/nvme.conf
 fi
 
 echo -e "options nf_conntrack nf_conntrack_helper=0" >/etc/modprobe.d/no-conntrack-helper.conf
