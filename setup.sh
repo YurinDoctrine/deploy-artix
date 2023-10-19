@@ -41,7 +41,8 @@ confirm_password() {
 }
 
 # Dependencies
-pacman -Sy --noconfirm parted && clear
+pacman -Sy --noconfirm parted
+clear
 
 # Load keymap
 echo -e "Load keymap (Default: us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
@@ -49,7 +50,7 @@ echo -e "Load keymap (Default: us): " && read -p $"> " MY_KEYMAP && loadkeys $MY
 
 # Choose disk
 while :; do
-  echo ""
+  clear
   sfdisk -l | grep -E "/dev/"
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
@@ -71,6 +72,7 @@ ROOT_PART=$PART2
 
 # Encrypt
 until [ ! -e $ENCRYPTED ]; do
+  clear
   echo -e "Encrypt filesystem? (y/Default: n): " && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
 done
@@ -81,12 +83,14 @@ fi
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
+  clear
   echo -e "Region/City (Default: Europe/Moscow): " && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
 # Host
 while :; do
+  clear
   echo -e "Hostname (Default: localhost): " && read -p $"> " MY_HOSTNAME
   [ ! "$MY_HOSTNAME" ] && MY_HOSTNAME="localhost"
   [ "$MY_HOSTNAME" ] && break
@@ -94,6 +98,7 @@ done
 
 # Username
 while :; do
+  clear
   echo -e "Username (Default: artix): " && read -p $"> " MY_USERNAME
   [ ! "$MY_USERNAME" ] && MY_USERNAME="artix"
   [ "$MY_USERNAME" ] && break
@@ -104,6 +109,7 @@ ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root
 
 # Network
 while :; do
+  clear
   echo -e "Wi-Fi SSID (Leave empty for Ethernet): " && read -p $"> " SSID
   [ ! "$SSID" ] && break
   until [ ! -e $PSK ]; do
@@ -138,7 +144,8 @@ mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 
 # Install base system and kernel
-clear && echo -e 'Done with configuration. Installing...'
+clear
+echo -e 'Done with configuration. Installing...'
 
 if [ "$ENCRYPTED" = "y" ]; then
   basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT cryptsetup-$MY_INIT
@@ -159,6 +166,7 @@ psk=\"$PSK\"
 fi
 
 # Chroot
-(MY_INIT="$MY_INIT" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit') && clear
+(MY_INIT="$MY_INIT" PART2="$PART2" ROOT_PART="$ROOT_PART" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit')
 
+clear
 echo -e 'Installation completed successfully. You may now reboot or poweroff...'
