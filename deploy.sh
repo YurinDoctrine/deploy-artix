@@ -119,9 +119,9 @@ cp -rfd .config/CBPP/index.theme /usr/share/icons/default
 cp -rfd .config/.newsboat /home/$MY_USERNAME/.newsboat
 cp -rfd .config/.newsboat /etc/skel/.newsboat
 cp -rfd .config/.newsboat /root/.newsboat
-cp -rfd .config/.local /home/$MY_USERNAME/.local
-cp -rfd .config/.local /etc/skel/.local
-cp -rfd .config/.local /root/.local
+cp -rfd .config/.local/* /home/$MY_USERNAME/.local
+cp -rfd .config/.local/* /etc/skel/.local
+cp -rfd .config/.local/* /root/.local
 cp -rfd .config/* /home/$MY_USERNAME/.config
 cp -rfd .config/* /etc/skel/.config
 cp -rfd .config/* /root/.config
