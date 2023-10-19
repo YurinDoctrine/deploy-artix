@@ -83,6 +83,7 @@ mkdir -p /etc/skel/.config
 mkdir -p /root/.config
 mkdir -p /home/$MY_USERNAME/.local
 mkdir -p /etc/skel/.local
+mkdir -p /root/.local
 cp -rfd .config/.gmrunrc /home/$MY_USERNAME
 cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /home/$MY_USERNAME
