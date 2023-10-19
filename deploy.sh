@@ -91,6 +91,7 @@ cp -rfd .config/.vimrc /home/$MY_USERNAME
 cp -rfd .config/.xinitrc /home/$MY_USERNAME
 cp -rfd .config/.Xresources /home/$MY_USERNAME
 cp -rfd .config/.nanorc /home/$MY_USERNAME
+cp -rfd .config/.mkshrc /home/$MY_USERNAME
 cp -rfd .config/.gmrunrc /etc/skel
 cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /etc/skel
@@ -99,6 +100,7 @@ cp -rfd .config/.vimrc /etc/skel
 cp -rfd .config/.xinitrc /etc/skel
 cp -rfd .config/.Xresources /etc/skel
 cp -rfd .config/.nanorc /etc/skel
+cp -rfd .config/.mkshrc /etc/skel
 mv .config/.gmrunrc /root
 mv .config/.gtkrc-2.0 /root/.gtkrc-2.0
 mv .config/.fonts.conf /root
@@ -107,6 +109,7 @@ mv .config/.vimrc /root
 mv .config/.xinitrc /root
 mv .config/.Xresources /root
 mv .config/.nanorc /root
+mv .config/.mkshrc /root
 mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
 rm -rfd /usr/share/icons/CBPP*
 cp -rfd .config/CBPP /usr/share/icons
@@ -153,13 +156,6 @@ echo -e "alias sudo='doas'
 exec startx --" >/etc/skel/.profile
 echo -e "alias sudo='doas'
 exec startx --" >/root/.profile
-
-echo -e "alias sudo='doas'
-. torsocks on &> /dev/null" >/home/$MY_USERNAME/.mkshrc
-echo -e "alias sudo='doas'
-. torsocks on &> /dev/null" >/etc/skel/.mkshrc
-echo -e "alias sudo='doas'
-. torsocks on &> /dev/null" >/root/.mkshrc
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
