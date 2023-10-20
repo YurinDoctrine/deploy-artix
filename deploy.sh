@@ -146,7 +146,8 @@ find /root/.config/ | grep '\cbpp' | xargs rm -f
 # Other stuff you should do
 echo "permit persist :wheel
 permit nopass $MY_USERNAME as root cmd poweroff
-permit nopass $MY_USERNAME as root cmd reboot" >/etc/doas.conf
+permit nopass $MY_USERNAME as root cmd reboot
+permit nopass $MY_USERNAME as root cmd killall" >/etc/doas.conf
 
 sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
