@@ -145,6 +145,7 @@ find /root/.config/ | grep '\cbpp' | xargs rm -f
 
 # Other stuff you should do
 echo "permit persist :wheel
+permit nopass $MY_USERNAME as root cmd pacman
 permit nopass $MY_USERNAME as root cmd poweroff
 permit nopass $MY_USERNAME as root cmd reboot
 permit nopass $MY_USERNAME as root cmd killall" >/etc/doas.conf
