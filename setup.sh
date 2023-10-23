@@ -119,8 +119,8 @@ while :; do
 done
 
 # Partition disk
-umount /mnt*
 swapoff -a
+umount -R /mnt*
 
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
