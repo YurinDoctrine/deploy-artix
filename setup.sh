@@ -120,7 +120,7 @@ done
 
 # Partition disk
 swapoff -a
-umount -R /mnt*
+umount -A --recursive /mnt*
 
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
@@ -170,6 +170,7 @@ fi
 
 # Perform finish
 swapoff -a
-umount -R /mnt*
+umount -A --recursive /mnt*
+
 clear
 echo -e 'Installation completed successfully. You may now reboot or poweroff...'
