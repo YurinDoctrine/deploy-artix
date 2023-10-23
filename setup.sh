@@ -131,7 +131,7 @@ if [ "$ENCRYPTED" = "y" ]; then
   yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
   yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
 
-  ROOT_PART="/dev/mapper/root"
+  ROOT_PART="/dev/mapper/ROOT"
 fi
 
 # Format and mount partitions
