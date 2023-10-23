@@ -128,8 +128,8 @@ parted -s "$MY_DISK" mkpart primary ext4 512MiB 100%
 parted -s "$MY_DISK" set 1 boot on
 
 if [ "$ENCRYPTED" = "y" ]; then
-  yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
-  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" ROOT
+  yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART" -
+  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" ROOT -
 
   ROOT_PART="/dev/mapper/ROOT"
 fi
