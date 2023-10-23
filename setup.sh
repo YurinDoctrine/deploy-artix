@@ -129,7 +129,7 @@ parted -s "$MY_DISK" set 1 boot on
 
 if [ "$ENCRYPTED" = "y" ]; then
   yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART"
-  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
+  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" ROOT
 
   ROOT_PART="/dev/mapper/ROOT"
 fi
@@ -137,7 +137,7 @@ fi
 # Format and mount partitions
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
-mkfs.ext4 -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -m1 "$ROOT_PART"
+mkfs.ext4 -L ROOT -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -m1 "$ROOT_PART"
 
 mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
