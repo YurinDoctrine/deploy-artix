@@ -473,8 +473,6 @@ sed -i -e 's|022|027|g' /etc/login.defs
 
 echo -e "noarp" >>/etc/dhcpcd.conf
 
-modprobe btusb && echo -e "btusb" >/etc/modules-load.d/btusb.conf
-
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
 rc_interactive="NO"
