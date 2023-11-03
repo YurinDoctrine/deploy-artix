@@ -471,6 +471,8 @@ echo -e "session required pam_limits.so" >>/etc/pam.d/common-session-noninteract
 
 sed -i -e 's|022|027|g' /etc/login.defs
 
+echo -e "#" >/etc/securetty
+
 echo -e "noarp" >>/etc/dhcpcd.conf
 
 if [ "$MY_INIT" = "openrc" ]; then
