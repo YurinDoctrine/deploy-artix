@@ -45,8 +45,9 @@ pacman -Sy --noconfirm parted
 clear
 
 # Load keymap
-echo -e "Load keymap (Default: us): " && read -p $"> " MY_KEYMAP && loadkeys $MY_KEYMAP
+echo -e "Load keymap (Default: us): " && read -p $"> " MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
+loadkeys $MY_KEYMAP
 
 # Choose disk
 while :; do
