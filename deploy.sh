@@ -532,4 +532,10 @@ sed -i -e 's/GRUB_RECORDFAIL_TIMEOUT=.*/GRUB_RECORDFAIL_TIMEOUT=0/' /etc/default
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --removable --recheck
+
+# Encrypt boot loader
+GRUB_PASS=$(echo -e "$ROOT_PASSWORD\n$ROOT_PASSWORD" | grub-mkpasswd-pbkdf2 | grep -oE '[^ ]+$')
+echo -e "set superusers=root
+password_pbkdf2 root $GRUB_PASS" >>/etc/grub.d/40_custom
+sed -i -e 's/class os/class os --unrestricted/' /etc/grub.d/10_linux
 grub-mkconfig -o /boot/grub/grub.cfg
