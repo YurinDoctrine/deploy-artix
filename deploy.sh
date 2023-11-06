@@ -145,6 +145,7 @@ find /root/.config/ | grep '\cbpp' | xargs rm -f
 
 # Other stuff you should do
 echo "permit persist :wheel
+permit nopass $MY_USERNAME as root cmd macchanger
 permit nopass $MY_USERNAME as root cmd openvpn
 permit nopass $MY_USERNAME as root cmd pacman
 permit nopass $MY_USERNAME as root cmd poweroff
