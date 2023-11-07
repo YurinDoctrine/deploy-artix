@@ -162,6 +162,7 @@ fstabgen -U /mnt >/mnt/etc/fstab
 if [ "$SSID" ]; then
   echo -e "update_config=1
 ap_scan=1
+fast_reauth=1
 network={
 ssid=\"$SSID\"
 psk=\"$PSK\"
