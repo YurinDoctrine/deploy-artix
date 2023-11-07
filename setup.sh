@@ -160,9 +160,12 @@ fstabgen -U /mnt >/mnt/etc/fstab
 
 # Save connection
 if [ "$SSID" ]; then
-  echo -e "network={
+  echo -e "update_config=1
+ap_scan=1
+network={
 ssid=\"$SSID\"
 psk=\"$PSK\"
+scan_ssid=1  
 }" >/mnt/etc/wpa_supplicant/wpa_supplicant.conf
 fi
 
