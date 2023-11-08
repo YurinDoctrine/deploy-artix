@@ -120,6 +120,7 @@ while :; do
 done
 
 # Partition disk
+clear
 swapoff -a
 umount -AR /mnt*
 
