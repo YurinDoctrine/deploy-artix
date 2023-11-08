@@ -161,11 +161,11 @@ sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
 
 echo -e "alias sudo='doas'
-exec startx --" >/home/$MY_USERNAME/.profile
+[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && exec startx --" >/home/$MY_USERNAME/.profile
 echo -e "alias sudo='doas'
-exec startx --" >/etc/skel/.profile
+[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && exec startx --" >/etc/skel/.profile
 echo -e "alias sudo='doas'
-exec startx --" >/root/.profile
+[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && exec startx --" >/root/.profile
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
