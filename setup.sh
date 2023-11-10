@@ -124,6 +124,10 @@ clear
 swapoff -a
 umount -AR /mnt*
 
+dd if=/dev/zero of=$ROOT_PART bs=4M status=progress
+dd if=/dev/urandom of=$ROOT_PART bs=4M status=progress
+sync
+
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
 parted -s "$MY_DISK" mkpart primary ext4 512MiB 100%
@@ -140,7 +144,6 @@ fi
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
 mkfs.ext4 -L ROOT -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -m1 "$ROOT_PART"
-
 mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
