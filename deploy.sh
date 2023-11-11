@@ -480,6 +480,8 @@ echo -e "#" >/etc/securetty
 
 echo -e "noarp" >>/etc/dhcpcd.conf
 
+echo -e "/home/$MY_USERNAME/.local/bin/mksh" >>/etc/shells
+
 if [ "$MY_INIT" = "openrc" ]; then
   echo -e 'rc_parallel="YES"
 rc_interactive="NO"
