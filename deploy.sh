@@ -503,7 +503,9 @@ tee /etc/issue <<"EOF"
   'ooooi:'`                `'';ioxxo'
  'i:'`                          '':io'
 '`                                   `'
+
 \s \r (\m) (\l) \t \d
+
 EOF
 
 if [ "$MY_INIT" = "openrc" ]; then
