@@ -124,8 +124,8 @@ clear
 swapoff -a
 umount -AR /mnt*
 
-dd if=/dev/zero of=$ROOT_PART bs=4M status=progress
-dd if=/dev/urandom of=$ROOT_PART bs=4M status=progress
+dd if=/dev/zero of=$ROOT_PART bs=8M status=progress
+dd if=/dev/urandom of=$ROOT_PART bs=8M status=progress
 sync
 
 parted -s "$MY_DISK" mklabel gpt
