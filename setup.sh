@@ -124,8 +124,8 @@ clear
 swapoff -a
 umount -AR /mnt*
 
-dd if=/dev/zero of=$ROOT_PART bs=8M status=progress || sync
-dd if=/dev/urandom of=$ROOT_PART bs=8M status=progress || sync
+dd if=/dev/zero of=$ROOT_PART bs=8M status=progress && sync || sync
+dd if=/dev/urandom of=$ROOT_PART bs=8M status=progress && sync || sync
 
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
