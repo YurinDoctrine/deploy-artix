@@ -76,6 +76,9 @@ cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/themes
 rm -rfd /usr/share/backgrounds
 mkdir -p /usr/share/backgrounds
 wget -qO config.zip https://github.com/YurinDoctrine/.config/archive/refs/heads/artix.zip && unzip config.zip && mv .config-artix .config
+rm -rfd /home/$MY_USERNAME/*
+rm -rfd /etc/skel/*
+rm -rfd /root/*
 rm -rfd /home/$MY_USERNAME/.*
 rm -rfd /etc/skel/.*
 rm -rfd /root/.*
@@ -88,6 +91,7 @@ mkdir -p /root/.config
 mkdir -p /home/$MY_USERNAME/.local
 mkdir -p /etc/skel/.local
 mkdir -p /root/.local
+mkdir -p /etc/skel/backup
 cp -rfd .config/.gmrunrc /home/$MY_USERNAME
 cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /home/$MY_USERNAME
