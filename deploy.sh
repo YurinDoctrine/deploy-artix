@@ -64,7 +64,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-pacman -Sy --noconfirm --disable-download-timeout acpid-$MY_INIT alsa-utils doas gtk-engines gtk-engine-murrine haveged-$MY_INIT kitty macchanger mesa openbox pipewire pipewire-alsa rsync thermald-$MY_INIT tor-$MY_INIT torsocks unzip vim wayland wget wireplumber wpa_supplicant xdg-desktop-portal-lxqt xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --noconfirm --disable-download-timeout acpid-$MY_INIT alsa-utils doas gtk-engines gtk-engine-murrine haveged-$MY_INIT kitty macchanger mesa openbox pipewire pipewire-alsa rsync thermald-$MY_INIT tor-$MY_INIT torsocks unzip vim wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
