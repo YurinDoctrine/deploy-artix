@@ -504,7 +504,7 @@ tee /etc/issue <<"EOF"
  'i:'`                          '':io'
 '`                                   `'
 
-\s \r (\m) (\l) \t \d
+\s \r (\m) (\l) \d \t
 
 EOF
 
