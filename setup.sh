@@ -45,7 +45,7 @@ pacman -Sy --noconfirm parted
 clear
 
 # Load keymap
-echo -e "Load keymap (Default: us): " && read -p $"> " MY_KEYMAP
+echo -e "Load keymap (Default: us)" && read -p $"> " MY_KEYMAP
 [ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
 loadkeys $MY_KEYMAP
 
@@ -55,7 +55,7 @@ while :; do
   sfdisk -l | grep -E "/dev/"
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
-  echo -e "Disk to install to (e.g. /dev/Xda): " && read -p $"> " MY_DISK
+  echo -e "Disk to install to (e.g. /dev/Xda)" && read -p $"> " MY_DISK
   [ -b "$MY_DISK" ] && break
 done
 
@@ -74,25 +74,25 @@ ROOT_PART=$PART2
 # Encrypt
 until [ ! -e $ENCRYPTED ]; do
   clear
-  echo -e "Encrypt filesystem? (y/Default: n): " && read -p $"> " ENCRYPTED
+  echo -e "Encrypt filesystem? (y/Default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
 done
 
 if [ "$ENCRYPTED" = "y" ]; then
-  CRYPTPASS=$(confirm_password "Password for encryption: ") && echo ""
+  CRYPTPASS=$(confirm_password "Password for encryption") && echo ""
 fi
 
 # Timezone
 until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
   clear
-  echo -e "Region/City (Default: Europe/Moscow): " && read -p $"> " REGION_CITY
+  echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
 # Host
 while :; do
   clear
-  echo -e "Hostname (Default: localhost): " && read -p $"> " MY_HOSTNAME
+  echo -e "Hostname (Default: localhost)" && read -p $"> " MY_HOSTNAME
   [ ! "$MY_HOSTNAME" ] && MY_HOSTNAME="localhost"
   [ "$MY_HOSTNAME" ] && break
 done
@@ -100,21 +100,21 @@ done
 # Username
 while :; do
   clear
-  echo -e "Username (Default: artix): " && read -p $"> " MY_USERNAME
+  echo -e "Username (Default: artix)" && read -p $"> " MY_USERNAME
   [ ! "$MY_USERNAME" ] && MY_USERNAME="artix"
   [ "$MY_USERNAME" ] && break
 done
 
 # Root
-ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root): ") && echo ""
+ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)") && echo ""
 
 # Network
 while :; do
   clear
-  echo -e "Wi-Fi SSID (Leave empty for Ethernet): " && read -p $"> " SSID
+  echo -e "Wi-Fi SSID (Leave empty for Ethernet)" && read -p $"> " SSID
   [ ! "$SSID" ] && break
   until [ ! -e $PSK ]; do
-    echo -e "Wi-Fi Password: " && read -p $"> " PSK
+    echo -e "Wi-Fi Password" && read -p $"> " PSK
   done
   [ "$PSK" ] && break
 done
