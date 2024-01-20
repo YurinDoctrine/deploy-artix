@@ -47,4 +47,4 @@ bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main
 
 #### References
 
-* [Artix Wiki Installation](https://wiki.artixlinux.org/Main/Installation)
+* [Artix Wiki / Installation](https://wiki.artixlinux.org/Main/Installation)
