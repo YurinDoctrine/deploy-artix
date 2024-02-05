@@ -25,6 +25,7 @@ yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
 yes "$ROOT_PASSWORD" | passwd
 
 # Pacman
+sed -i -e 's/Server = http:/#Server = http:/' /etc/pacman.d/mirrorlist
 sed -i -e s"/\#VerbosePkgLists/VerbosePkgLists/"g /etc/pacman.conf
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads = 3/"g /etc/pacman.conf
 sed -i -e s"/\#CheckSpace/CheckSpace/"g /etc/pacman.conf
