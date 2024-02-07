@@ -7,19 +7,7 @@ fi
 
 [ ! -d /sys/firmware/efi ] && echo -e "Not booted in UEFI mode." && exit 1
 
-case "$(readlink -f /sbin/init)" in
-*"dinit"*)
-  MY_INIT="dinit"
-  echo -e "Init system: "$MY_INIT""
-  ;;
-*"runit"*)
-  MY_INIT="runit"
-  echo -e "Init system: "$MY_INIT""
-  ;;
-*)
-  echo -e "Init system not supported." && exit 1
-  ;;
-esac
+MY_INIT="runit"
 
 case $(grep vendor /proc/cpuinfo) in
 *"Intel"*)
