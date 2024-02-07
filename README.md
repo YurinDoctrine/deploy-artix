@@ -9,7 +9,7 @@
 ![](https://img.shields.io/badge/Artix%20Linux-grey?logo=Artix+Linux)
 
 _This project aims to provide a smooth **[Artix Linux](https://artixlinux.org)** installation experience, either for beginners or experts who want a reproducable best-practices installation.
-It supports both `runit` and `openrc` init systems. It also supports `cryptsetup`._
+It supports both `runit` and `dinit` init systems. It also supports `cryptsetup`._
 
 The installer performs the following main steps (in roughly this order),
 with some parts depending on the chosen configuration:
