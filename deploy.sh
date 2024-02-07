@@ -509,25 +509,15 @@ tee /etc/issue <<"EOF"
 
 EOF
 
-if [ "$MY_INIT" = "dinit" ]; then
-  dinitctl enable acpid
-  dinitctl enable dhcpcd
-  dinitctl enable haveged
-  dinitctl enable thermald
-  dinitctl enable tor
-  dinitctl enable wpa_supplicant
-elif [ "$MY_INIT" = "runit" ]; then
-  ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/haveged/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/tor/ /etc/runit/runsvdir/current
-  ln -s /etc/runit/sv/wpa_supplicant/ /etc/runit/runsvdir/current
-fi
+ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
+ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
+ln -s /etc/runit/sv/haveged/ /etc/runit/runsvdir/current
+ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
+ln -s /etc/runit/sv/tor/ /etc/runit/runsvdir/current
+ln -s /etc/runit/sv/wpa_supplicant/ /etc/runit/runsvdir/current
 
 if [ "$ENCRYPTED" = "y" ]; then
-  [ "$MY_INIT" = "dinit" ] && dinitctl enable dmcrypt
-  [ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
+  ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
 fi
 
 # Configure mkinitcpio
