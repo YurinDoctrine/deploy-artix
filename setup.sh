@@ -8,8 +8,8 @@ fi
 [ ! -d /sys/firmware/efi ] && echo -e "Not booted in UEFI mode." && exit 1
 
 case "$(readlink -f /sbin/init)" in
-*"openrc"*)
-  MY_INIT="openrc"
+*"dinit"*)
+  MY_INIT="dinit"
   echo -e "Init system: "$MY_INIT""
   ;;
 *"runit"*)
