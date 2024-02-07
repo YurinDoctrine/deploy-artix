@@ -509,21 +509,13 @@ tee /etc/issue <<"EOF"
 
 EOF
 
-if [ "$MY_INIT" = "openrc" ]; then
-  echo -e 'rc_parallel="YES"
-rc_interactive="NO"
-rc_logger="NO"
-rc_send_sigkill="YES"
-rc_send_sighup="YES"
-rc_timeout_stopsec="10"
-SSD_NICELEVEL="-19"' >/etc/rc.conf
-
-  rc-update add acpid default
-  rc-update add dhcpcd default
-  rc-update add haveged default
-  rc-update add thermald default
-  rc-update add tor default
-  rc-update add wpa_supplicant default
+if [ "$MY_INIT" = "dinit" ]; then
+  dinitctl enable acpid
+  dinitctl enable dhcpcd
+  dinitctl enable haveged
+  dinitctl enable thermald
+  dinitctl enable tor
+  dinitctl enable wpa_supplicant
 elif [ "$MY_INIT" = "runit" ]; then
   ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
   ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
@@ -534,7 +526,7 @@ elif [ "$MY_INIT" = "runit" ]; then
 fi
 
 if [ "$ENCRYPTED" = "y" ]; then
-  [ "$MY_INIT" = "openrc" ] && rc-update add dmcrypt boot
+  [ "$MY_INIT" = "dinit" ] && dinitctl enable dmcrypt
   [ "$MY_INIT" = "runit" ] && ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
 fi
 
