@@ -65,7 +65,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-pacman -Sy --noconfirm --disable-download-timeout acpid-$MY_INIT alsa-utils bluez-$MY_INIT doas gtk-engines gtk-engine-murrine haveged-$MY_INIT jitterentropy kitty libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa rsync thermald-$MY_INIT tor-$MY_INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --noconfirm --disable-download-timeout acpid-$MY_INIT alsa-utils bluez-$MY_INIT doas fwupd gtk-engines gtk-engine-murrine haveged-$MY_INIT jitterentropy kitty libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa rsync thermald-$MY_INIT tor-$MY_INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
@@ -160,6 +160,7 @@ echo "permit persist :wheel
 permit nopass $MY_USERNAME as root cmd macchanger
 permit nopass $MY_USERNAME as root cmd openvpn
 permit nopass $MY_USERNAME as root cmd pacman
+permit nopass $MY_USERNAME as root cmd fwupdmgr
 permit nopass $MY_USERNAME as root cmd poweroff
 permit nopass $MY_USERNAME as root cmd reboot
 permit nopass $MY_USERNAME as root cmd killall" >/etc/doas.conf
