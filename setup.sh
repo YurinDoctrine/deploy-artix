@@ -102,6 +102,7 @@ while :; do
 done
 
 # Root
+clear
 ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)") && echo ""
 
 # Network
