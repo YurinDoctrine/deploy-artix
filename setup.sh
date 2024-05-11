@@ -75,7 +75,7 @@ until [ ! -e $ENCRYPTED ]; do
 done
 
 if [ "$ENCRYPTED" = "y" ]; then
-  CRYPTPASS=$(confirm_password "Password for encryption") && echo ""
+  CRYPTPASS=$(confirm_password "Password for encryption")
 fi
 
 # Timezone
@@ -102,7 +102,7 @@ while :; do
 done
 
 # Root
-ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)") && echo ""
+ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
 
 # Network
 while :; do
