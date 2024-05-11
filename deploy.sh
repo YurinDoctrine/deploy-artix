@@ -101,7 +101,7 @@ cp -rfd .config/.vimrc /home/$MY_USERNAME
 cp -rfd .config/.xinitrc /home/$MY_USERNAME
 cp -rfd .config/.Xresources /home/$MY_USERNAME
 cp -rfd .config/.nanorc /home/$MY_USERNAME
-cp -rfd .config/.mkshrc /home/$MY_USERNAME
+cp -rfd .config/.okshrc /home/$MY_USERNAME
 cp -rfd .config/.profile /home/$MY_USERNAME
 cp -rfd .config/.gmrunrc /etc/skel
 cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
@@ -111,7 +111,7 @@ cp -rfd .config/.vimrc /etc/skel
 cp -rfd .config/.xinitrc /etc/skel
 cp -rfd .config/.Xresources /etc/skel
 cp -rfd .config/.nanorc /etc/skel
-cp -rfd .config/.mkshrc /etc/skel
+cp -rfd .config/.okshrc /etc/skel
 cp -rfd .config/.profile /etc/skel
 mv .config/.gmrunrc /root
 mv .config/.gtkrc-2.0 /root/.gtkrc-2.0
@@ -121,7 +121,7 @@ mv .config/.vimrc /root
 mv .config/.xinitrc /root
 mv .config/.Xresources /root
 mv .config/.nanorc /root
-mv .config/.mkshrc /root
+mv .config/.okshrc /root
 mv .config/.profile /root
 mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
 rm -rfd /usr/share/icons/CBPP*
@@ -484,7 +484,7 @@ cat /dev/null >/etc/securetty
 
 echo -e "noarp" >>/etc/dhcpcd.conf
 
-echo -e "/home/$MY_USERNAME/.local/bin/mksh" >>/etc/shells
+echo -e "/home/$MY_USERNAME/.local/bin/oksh" >>/etc/shells
 
 tee /etc/issue <<"EOF"
                    '
