@@ -27,10 +27,9 @@ case $(grep vendor /proc/cpuinfo) in
 esac
 
 confirm_password() {
-  clear
   stty -echo
   until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
-    printf "%s\n" "$1" >&2 && read -p $"> " pass1
+    printf "\n%s\n" "$1" >&2 && read -p $"> " pass1
     printf "\nRe-type %s\n" "$1" >&2 && read -p $"> " pass2
   done
   stty echo
