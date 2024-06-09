@@ -276,9 +276,9 @@ mkdir -p /etc/modules-load.d
 modprobe bfq && echo -e "bfq" >/etc/modules-load.d/bfq.conf
 modprobe tcp_bbr2 && echo -e "tcp_bbr2" >/etc/modules-load.d/bbr2.conf || modprobe tcp_bbr && echo -e "tcp_bbr" >/etc/modules-load.d/bbr.conf
 
-mkdir -p /usr/lib/sysctl.d
-echo -e "net.core.default_qdisc=fq" >/usr/lib/sysctl.d/99-tcp.conf
-modprobe tcp_bbr2 && echo -e "net.ipv4.tcp_congestion_control=bbr2" >>/usr/lib/sysctl.d/99-tcp.conf || modprobe tcp_bbr && echo -e "net.ipv4.tcp_congestion_control=bbr" >>/usr/lib/sysctl.d/99-tcp.conf
+mkdir -p /lib/sysctl.d
+echo -e "net.core.default_qdisc=fq" >/lib/sysctl.d/99-tcp.conf
+modprobe tcp_bbr2 && echo -e "net.ipv4.tcp_congestion_control=bbr2" >>/lib/sysctl.d/99-tcp.conf || modprobe tcp_bbr && echo -e "net.ipv4.tcp_congestion_control=bbr" >>/lib/sysctl.d/99-tcp.conf
 
 mkdir -p /etc/udev/rules.d
 echo -e 'ACTION=="add|change", ATTR{queue/scheduler}=="*bfq*", KERNEL=="sd*[!0-9]|sr*|mmcblk[0-9]*|nvme[0-9]*", ATTR{queue/scheduler}="bfq"' >/etc/udev/rules.d/60-scheduler.rules
@@ -420,7 +420,6 @@ fs.protected_fifos=2
 fs.protected_regular=2
 fs.suid_dumpable=0
 kernel.unprivileged_bpf_disabled=1
-kernel.yama.ptrace_scope=2
 kernel.dmesg_restrict=1
 net.ipv6.conf.default.disable_ipv6=1
 net.ipv4.conf.default.rp_filter=1
@@ -470,7 +469,7 @@ net.core.netdev_max_backlog=65535
 net.core.somaxconn=65535
 net.core.optmem_max=65535
 net.core.rmem_max=6291456
-net.core.wmem_max=6291456" >/usr/lib/sysctl.d/99-swappiness.conf
+net.core.wmem_max=6291456" >/lib/sysctl.d/99-swappiness.conf
 sysctl -w vm.compact_memory=1 && sysctl -w vm.drop_caches=3 && sysctl -w vm.drop_caches=2
 
 echo -e "* soft nofile 1024000
