@@ -138,10 +138,17 @@ fi
 # Format and mount partitions
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
-mkfs.ext4 -L ROOT -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -m1 "$ROOT_PART"
+mkfs.ext4 -L ROOT -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -b 2048 -m1 "$ROOT_PART"
 mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
+# Create swapfile
+SWAP_SIZE=$(echo $(($(free -m | awk '/^Mem:/{print $2}') / 2 + 1000)) | head -c1)
+mkdir /mnt/swap
+fallocate -l "$SWAP_SIZE"G /mnt/swap/swapfile
+chmod 600 /mnt/swap/swapfile
+mkswap /mnt/swap/swapfile
+swapon /mnt/swap/swapfile
 
 # Install base system and kernel
 clear
