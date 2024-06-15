@@ -75,7 +75,11 @@ until [ ! -e $ENCRYPTED ]; do
 done
 
 if [ "$ENCRYPTED" = "y" ]; then
-  CRYPTPASS=$(confirm_password "Password for encryption")
+  cryptsetup close /dev/mapper/cryptroot
+  cryptsetup -q luksFormat "$ROOT_PART" -
+  cryptsetup open "$ROOT_PART" cryptroot -
+
+  ROOT_PART="/dev/mapper/cryptroot"
 fi
 
 # Timezone
@@ -119,7 +123,6 @@ done
 clear
 swapoff -a
 umount -AR /mnt*
-cryptsetup close /dev/mapper/cryptroot
 
 dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
 dd if=/dev/urandom of=$MY_DISK bs=2M status=progress && sync || sync
@@ -128,13 +131,6 @@ parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
 parted -s "$MY_DISK" mkpart primary ext4 512MiB 100%
 parted -s "$MY_DISK" set 1 boot on
-
-if [ "$ENCRYPTED" = "y" ]; then
-  yes "$CRYPTPASS" | cryptsetup -q luksFormat "$ROOT_PART" -
-  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" cryptroot -
-
-  ROOT_PART="/dev/mapper/cryptroot"
-fi
 
 # Format and mount partitions
 mkfs.fat -F 32 "$PART1"
