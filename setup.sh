@@ -77,8 +77,8 @@ done
 if [ "$ENCRYPTED" = "y" ]; then
   cryptsetup close /dev/mapper/cryptroot
   clear
-  cryptsetup -q luksFormat "$ROOT_PART" -
-  cryptsetup open "$ROOT_PART" cryptroot -
+  cryptsetup -q luksFormat "$ROOT_PART"
+  cryptsetup open "$ROOT_PART" cryptroot
 
   ROOT_PART="/dev/mapper/cryptroot"
 fi
