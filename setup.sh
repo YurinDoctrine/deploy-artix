@@ -119,7 +119,7 @@ done
 clear
 swapoff -a
 umount -AR /mnt*
-cryptsetup close "$ROOT_PART"
+cryptsetup close /dev/mapper/*
 
 dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
 dd if=/dev/urandom of=$MY_DISK bs=2M status=progress && sync || sync
