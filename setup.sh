@@ -119,6 +119,7 @@ done
 clear
 swapoff -a
 umount -AR /mnt*
+cryptsetup close "$ROOT_PART"
 
 dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
 dd if=/dev/urandom of=$MY_DISK bs=2M status=progress && sync || sync
@@ -182,6 +183,7 @@ fi
 # Perform finish
 swapoff -a
 umount -AR /mnt*
+cryptsetup close "$ROOT_PART"
 
 clear
 echo -e 'Installation completed successfully. You may now reboot or poweroff...'
