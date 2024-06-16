@@ -114,7 +114,7 @@ done
 # Partition disk
 swapoff -a
 umount -AR /mnt*
-cryptsetup close /dev/mapper/cryptroot
+cryptsetup close /dev/mapper/root
 
 clear
 dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
@@ -128,16 +128,16 @@ parted -s "$MY_DISK" set 1 boot on
 # Encrypt drive
 if [ "$ENCRYPTED" = "y" ]; then
   clear
-  cryptsetup -q luksFormat "$ROOT_PART"
-  cryptsetup open "$ROOT_PART" cryptroot
+  cryptsetup -q -y -v luksFormat "$ROOT_PART"
+  cryptsetup open "$ROOT_PART" root
 
-  ROOT_PART="/dev/mapper/cryptroot"
+  ROOT_PART="/dev/mapper/root"
 fi
 
 # Format and mount partitions
 mkfs.fat -F 32 "$PART1"
 fatlabel "$PART1" ESP
-mkfs.ext4 -L cryptroot -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -b2048 -m1 "$ROOT_PART"
+mkfs.ext4 -L root -F -O ^quota,^has_journal,^metadata_csum,uninit_bg -b2048 -m1 "$ROOT_PART"
 mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
