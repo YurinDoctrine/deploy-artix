@@ -510,7 +510,7 @@ fi
 
 # Configure mkinitcpio
 if [ "$ENCRYPTED" = "y" ]; then
-  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf block encrypt filesystems)/g' /etc/mkinitcpio.conf
+  sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf keyboard block encrypt filesystems)/g' /etc/mkinitcpio.conf
 else
   sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf block filesystems)/g' /etc/mkinitcpio.conf
 fi
