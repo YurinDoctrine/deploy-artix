@@ -128,7 +128,7 @@ parted -s "$MY_DISK" set 1 boot on
 # Encrypt drive
 if [ "$ENCRYPTED" = "y" ]; then
   clear
-  cryptsetup -q -y luksFormat "$ROOT_PART"
+  cryptsetup -q -y luksFormat --pbkdf=pbkdf2 "$ROOT_PART"
   cryptsetup open "$ROOT_PART" root
 
   ROOT_PART="/dev/mapper/root"
