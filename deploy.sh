@@ -282,7 +282,7 @@ echo -e "net.core.default_qdisc=fq" >/lib/sysctl.d/99-tcp.conf
 modprobe tcp_bbr && echo -e "net.ipv4.tcp_congestion_control=bbr" >>/lib/sysctl.d/99-tcp.conf
 modprobe tcp_bbr2 && echo -e "net.ipv4.tcp_congestion_control=bbr2" >>/lib/sysctl.d/99-tcp.conf
 
-echo -e "kernel.core_pattern=/dev/null" >/etc/sysctl.d/50-coredump.conf
+echo -e "kernel.core_pattern=/dev/null" >/lib/sysctl.d/50-coredump.conf
 
 echo -e "vm.swappiness = 1
 vm.vfs_cache_pressure = 50
