@@ -117,8 +117,10 @@ umount -AR /mnt*
 cryptsetup close /dev/mapper/root
 
 clear
-dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
-dd if=/dev/urandom of=$MY_DISK bs=2M status=progress && sync || sync
+if [ "$ENCRYPTED" = "y" ]; then
+  dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
+  dd if=/dev/urandom of=$MY_DISK bs=2M status=progress && sync || sync
+fi
 
 parted -s "$MY_DISK" mklabel gpt
 parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
