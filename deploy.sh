@@ -18,7 +18,7 @@ echo -e "hostname=$MY_HOSTNAME" >/etc/conf.d/hostname
 printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$MY_HOSTNAME" "$MY_HOSTNAME" >/etc/hosts
 
 # User
-useradd -m -G users,audio,video -s /bin/bash $MY_USERNAME
+useradd -m -G users,audio,video,input -s /bin/bash $MY_USERNAME
 yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
 
 # Root user
