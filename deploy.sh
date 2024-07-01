@@ -160,6 +160,9 @@ find /home/$MY_USERNAME/.config/ | grep '\cbpp' | xargs rm -f
 find /root/.config/ | grep '\cbpp' | xargs rm -f
 
 # Other stuff you should do
+wget -qO /etc/preload.conf https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/preload/preload.conf
+wget -qO /sbin/preload https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/preload/preload
+
 echo "permit persist :$MY_USERNAME
 permit nopass $MY_USERNAME as root cmd macchanger
 permit nopass $MY_USERNAME as root cmd openvpn
