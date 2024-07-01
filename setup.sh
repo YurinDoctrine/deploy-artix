@@ -144,7 +144,7 @@ mount "$ROOT_PART" /mnt
 mkdir -p /mnt/boot/efi
 mount "$PART1" /mnt/boot/efi
 # Create swapfile
-SWAP_SIZE=$(echo $(($(free -g | awk '/^Mem:/{print $2}') * 2 + 1)))
+SWAP_SIZE=$(echo $(($(free -g | awk '/^Mem:/{print $2}') * 2 + 4)))
 mkdir /mnt/swap
 fallocate -l "$SWAP_SIZE"G /mnt/swap/swapfile
 chmod 600 /mnt/swap/swapfile
