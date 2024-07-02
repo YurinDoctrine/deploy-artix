@@ -509,6 +509,10 @@ tee /etc/issue <<"EOF"
 
 EOF
 
+for run_script in /etc/runit/sv.bak/*/run; do
+  sed -i -e '/^exec [^2&>]/ s|^exec |exec nice -n 19 |' "$run_script"
+done
+
 ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/backlight/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
