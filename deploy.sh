@@ -184,7 +184,8 @@ sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspe
 sed -i -e 's/#HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/elogind/logind.conf
 sed -i -e 's/#HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=reboot/' /etc/elogind/logind.conf
 
-echo -e "MALLOC_CONF=background_thread:true
+echo -e "CPU_LIMIT=0
+MALLOC_CONF=background_thread:true
 MALLOC_CHECK=0
 MALLOC_TRACE=0
 MESA_DEBUG=0
