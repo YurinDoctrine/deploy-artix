@@ -181,6 +181,9 @@ permit nopass $MY_USERNAME as root cmd sv" >/etc/doas.conf
 sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
+sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/environment
+sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/environment
+sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/environment
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
