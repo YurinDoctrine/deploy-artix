@@ -176,7 +176,9 @@ permit nopass $MY_USERNAME as root cmd poweroff
 permit nopass $MY_USERNAME as root cmd reboot
 permit nopass $MY_USERNAME as root cmd killall
 permit nopass $MY_USERNAME as root cmd renice
-permit nopass $MY_USERNAME as root cmd sv" >/etc/doas.conf
+permit nopass $MY_USERNAME as root cmd sv
+permit nopass $MY_USERNAME as root cmd modprobe
+permit nopass $MY_USERNAME as root cmd rmmod" >/etc/doas.conf
 
 sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
