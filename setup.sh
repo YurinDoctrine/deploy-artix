@@ -107,7 +107,7 @@ until [ ! -e "$SSID" ]; do
   [ ! "$SSID" ] && break
   until [ ! -e "$PSK" ]; do
     stty -echo
-    echo -e "Wi-Fi password" && read -p $"> " PSK
+    echo -e "Password for Wi-Fi" && read -p $"> " PSK
     stty echo
   done
 done
