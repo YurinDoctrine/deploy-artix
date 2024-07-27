@@ -9,8 +9,8 @@ fi
 
 case "$(readlink -f /sbin/init)" in
 *"runit"*)
-  MY_INIT="runit"
-  echo -e "Init system: "$MY_INIT""
+  INIT="runit"
+  echo -e "Init system: "$INIT""
   ;;
 *)
   echo -e "Init system not supported." && exit 1
@@ -41,9 +41,9 @@ pacman -Sy --noconfirm parted
 clear
 
 # Load keymap
-echo -e "Load keymap (Default: us)" && read -p $"> " MY_KEYMAP
-[ ! "$MY_KEYMAP" ] && MY_KEYMAP="us"
-loadkeys $MY_KEYMAP
+echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
+[ ! "$KEYMAP" ] && KEYMAP="us"
+loadkeys $KEYMAP
 
 # Choose disk
 while :; do
@@ -51,17 +51,17 @@ while :; do
   sfdisk -l | grep -E "/dev/"
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
-  echo -e "Disk to install to (e.g. /dev/Xda)" && read -p $"> " MY_DISK
-  [ -b "$MY_DISK" ] && break
+  echo -e "Disk to install to (e.g. /dev/Xda)" && read -p $"> " DISK
+  [ -b "$DISK" ] && break
 done
 
-PART1="$MY_DISK"1
-PART2="$MY_DISK"2
+PART1="$DISK"1
+PART2="$DISK"2
 
-case "$MY_DISK" in
+case "$DISK" in
 *"nvme"*)
-  PART1="$MY_DISK"p1
-  PART2="$MY_DISK"p2
+  PART1="$DISK"p1
+  PART2="$DISK"p2
   ;;
 esac
 
@@ -84,17 +84,17 @@ done
 # Host
 while :; do
   clear
-  echo -e "Hostname (Default: localhost)" && read -p $"> " MY_HOSTNAME
-  [ ! "$MY_HOSTNAME" ] && MY_HOSTNAME="localhost"
-  [ "$MY_HOSTNAME" ] && break
+  echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
+  [ ! "$HOSTNAME" ] && HOSTNAME="localhost"
+  [ "$HOSTNAME" ] && break
 done
 
 # Username
 while :; do
   clear
-  echo -e "Username (Default: artix)" && read -p $"> " MY_USERNAME
-  [ ! "$MY_USERNAME" ] && MY_USERNAME="artix"
-  [ "$MY_USERNAME" ] && break
+  echo -e "Username (Default: artix)" && read -p $"> " USERNAME
+  [ ! "$USERNAME" ] && USERNAME="artix"
+  [ "$USERNAME" ] && break
 done
 
 # Root
@@ -118,14 +118,14 @@ cryptsetup close /dev/mapper/root
 
 if [ "$ENCRYPTED" = "y" ]; then
   clear
-  dd if=/dev/zero of=$MY_DISK bs=2M status=progress && sync || sync
-  dd if=/dev/urandom of=$MY_DISK bs=2M status=progress && sync || sync
+  dd if=/dev/zero of=$DISK bs=2M status=progress && sync || sync
+  dd if=/dev/urandom of=$DISK bs=2M status=progress && sync || sync
 fi
 
-parted -s "$MY_DISK" mklabel gpt
-parted -s "$MY_DISK" mkpart primary fat32 1MiB 512MiB
-parted -s "$MY_DISK" mkpart primary ext4 512MiB 100%
-parted -s "$MY_DISK" set 1 boot on
+parted -s "$DISK" mklabel gpt
+parted -s "$DISK" mkpart primary fat32 1MiB 512MiB
+parted -s "$DISK" mkpart primary ext4 512MiB 100%
+parted -s "$DISK" set 1 boot on
 
 # Encrypt drive
 if [ "$ENCRYPTED" = "y" ]; then
@@ -156,9 +156,9 @@ clear
 echo -e 'Done with configuration. Installing...'
 
 if [ "$ENCRYPTED" = "y" ]; then
-  basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT cryptsetup-$MY_INIT
+  basestrap /mnt base $INIT elogind-$INIT efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT cryptsetup-$INIT
 else
-  basestrap /mnt base $MY_INIT elogind-$MY_INIT efibootmgr dbus-$MY_INIT dhcpcd-$MY_INIT grub $UCODE wpa_supplicant-$MY_INIT
+  basestrap /mnt base $INIT elogind-$INIT efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT
 fi
 
 basestrap /mnt linux-zen linux-zen-headers linux-firmware mkinitcpio
@@ -178,7 +178,7 @@ scan_ssid=1
 fi
 
 # Chroot
-(MY_INIT="$MY_INIT" PART2="$PART2" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" MY_HOSTNAME="$MY_HOSTNAME" MY_USERNAME="$MY_USERNAME" MY_KEYMAP="$MY_KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit')
+(INIT="$INIT" PART2="$PART2" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" HOSTNAME="$HOSTNAME" USERNAME="$USERNAME" KEYMAP="$KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit')
 
 # Perform finish
 swapoff -a
