@@ -69,7 +69,7 @@ ROOT_PART=$PART2
 # Encrypt
 until [ ! -e "$ENCRYPTED" ]; do
   clear
-  echo -e "Encrypt filesystem? (y/Default: n)" && read -p $"> " ENCRYPTED
+  echo -e "Encrypt filesystem (y/Default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
   if [ "$ENCRYPTED" = "y" ]; then
     [ ! "$CRYPTPASS" ] && CRYPTPASS=$(confirm_password "Password for encryption (must at least 6 characters)") && echo ""
