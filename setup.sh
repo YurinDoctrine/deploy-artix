@@ -52,7 +52,6 @@ until [ ! -e "$DISK" ]; do
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
   echo -e "Disk to install to (e.g. /dev/Xda)" && read -p $"> " DISK
-  [ -b "$DISK" ] && break
 done
 
 PART1="$DISK"1
@@ -73,9 +72,8 @@ until [ ! -e "$ENCRYPTED" ]; do
   echo -e "Encrypt filesystem? (y/Default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
   if [ "$ENCRYPTED" = "y" ]; then
-    [ ! "$CRYPTPASS" ] && CRYPTPASS=$(confirm_password "Password for encryption: ") && echo ""
+    [ ! "$CRYPTPASS" ] && CRYPTPASS=$(confirm_password "Password for encryption") && echo ""
   fi
-  [ "$ENCRYPTED" ] && break
 done
 
 # Timezone
@@ -90,7 +88,6 @@ until [ ! -e "$HOSTNAME" ]; do
   clear
   echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
   [ ! "$HOSTNAME" ] && HOSTNAME="localhost"
-  [ "$HOSTNAME" ] && break
 done
 
 # Username
@@ -98,7 +95,6 @@ until [ ! -e "$USERNAME" ]; do
   clear
   echo -e "Username (Default: artix)" && read -p $"> " USERNAME
   [ ! "$USERNAME" ] && USERNAME="artix"
-  [ "$USERNAME" ] && break
 done
 
 # Root
@@ -112,7 +108,6 @@ until [ ! -e "$SSID" ]; do
   until [ ! -e "$PSK" ]; do
     echo -e "Wi-Fi Password" && read -p $"> " PSK
   done
-  [ "$PSK" ] && break
 done
 
 # Partition disk
