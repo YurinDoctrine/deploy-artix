@@ -103,10 +103,12 @@ done
 # Network
 until [ ! -e "$SSID" ]; do
   clear
-  echo -e "Wi-Fi SSID (Leave empty for Ethernet)" && read -p $"> " SSID
+  echo -e "Wi-Fi SSID (leave empty for Ethernet)" && read -p $"> " SSID
   [ ! "$SSID" ] && break
   until [ ! -e "$PSK" ]; do
-    echo -e "Wi-Fi Password" && read -p $"> " PSK
+    stty -echo
+    echo -e "Wi-Fi password" && read -p $"> " PSK
+    stty echo
   done
 done
 
