@@ -7,7 +7,8 @@ hwclock --systohc
 # Localization
 echo -e "LANG=en_GB.UTF8
 LANGUAGE=en_GB.UTF8
-LC_COLLATE=C" >/etc/environment
+LC_COLLATE=C
+XKB_DEFAULT_LAYOUT=$MY_KEYMAP" >/etc/environment
 echo -e "FONT_MAP=8859-2
 KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
 
@@ -183,9 +184,6 @@ permit nopass $MY_USERNAME as root cmd rmmod" >/etc/doas.conf
 sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
 sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
-sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/environment
-sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/environment
-sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/environment
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
