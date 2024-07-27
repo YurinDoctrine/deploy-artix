@@ -5,7 +5,7 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-[ ! -d /sys/firmware/efi ] && echo -e "Not booted in UEFI mode." && exit 1
+[ ! -d /sys/firmware/efi ] && echo -e "System not booted in UEFI mode." && exit 1
 
 case "$(readlink -f /sbin/init)" in
 *"runit"*)
@@ -13,7 +13,7 @@ case "$(readlink -f /sbin/init)" in
   echo -e "Init system: "$INIT""
   ;;
 *)
-  echo -e "Init system not supported." && exit 1
+  echo -e "Init system: not supported." && exit 1
   ;;
 esac
 
