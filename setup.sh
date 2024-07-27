@@ -28,7 +28,7 @@ esac
 
 confirm_password() {
   stty -echo
-  until [ "$pass1" = "$pass2" ] && [ "$pass2" ]; do
+  until [ "$pass1" = "$pass2" ] && [ "$pass1" ] && [ "$pass2" ]; do
     printf "\n%s\n" "$1" >&2 && read -p $"> " pass1
     printf "\nRe-type %s\n" "$1" >&2 && read -p $"> " pass2
   done
@@ -46,7 +46,7 @@ echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
 loadkeys $KEYMAP
 
 # Choose disk
-while :; do
+until [ ! -e $DISK ]; do
   clear
   sfdisk -l | grep -E "/dev/"
   echo ""
@@ -82,7 +82,7 @@ until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
 done
 
 # Host
-while :; do
+until [ ! -e $HOSTNAME ]; do
   clear
   echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
   [ ! "$HOSTNAME" ] && HOSTNAME="localhost"
@@ -90,7 +90,7 @@ while :; do
 done
 
 # Username
-while :; do
+until [ ! -e $USERNAME ]; do
   clear
   echo -e "Username (Default: artix)" && read -p $"> " USERNAME
   [ ! "$USERNAME" ] && USERNAME="artix"
@@ -101,7 +101,7 @@ done
 ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
 
 # Network
-while :; do
+until [ ! -e $SSID ]; do
   clear
   echo -e "Wi-Fi SSID (Leave empty for Ethernet)" && read -p $"> " SSID
   [ ! "$SSID" ] && break
