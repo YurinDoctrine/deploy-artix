@@ -18,10 +18,10 @@ case "$(readlink -f /sbin/init)" in
 esac
 
 case $(grep vendor /proc/cpuinfo) in
-*"Intel"*)
+*"intel"*)
   UCODE"intel-ucode"
   ;;
-*"Amd"*)
+*"amd"*)
   UCODE"amd-ucode"
   ;;
 esac
