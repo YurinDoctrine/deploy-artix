@@ -72,6 +72,10 @@ until [ ! -e "$ENCRYPTED" ]; do
   clear
   echo -e "Encrypt filesystem? (y/Default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
+  if [ "$ENCRYPTED" = "y" ]; then
+    [ ! "$CRYPTPASS" ] && CRYPTPASS=$(confirm_password "Password for encryption: ") && echo ""
+  fi
+  [ "$ENCRYPTED" ] && break
 done
 
 # Timezone
@@ -130,8 +134,8 @@ parted -s "$DISK" set 1 boot on
 # Encrypt drive
 if [ "$ENCRYPTED" = "y" ]; then
   clear
-  cryptsetup -q -y luksFormat --pbkdf=pbkdf2 "$ROOT_PART"
-  cryptsetup open "$ROOT_PART" root
+  yes "$CRYPTPASS" | cryptsetup -q luksFormat --pbkdf=pbkdf2 "$ROOT_PART"
+  yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
 
   ROOT_PART="/dev/mapper/root"
 fi
