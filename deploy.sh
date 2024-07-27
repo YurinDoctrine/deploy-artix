@@ -22,7 +22,7 @@ printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n"
 useradd -m -G users,audio,video,input -s /bin/bash $USERNAME
 yes "$ROOT_PASSWORD" | passwd $USERNAME
 
-# Root user
+# Root
 yes "$ROOT_PASSWORD" | passwd
 
 # Pacman
