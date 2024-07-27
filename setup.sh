@@ -17,7 +17,7 @@ case "$(readlink -f /sbin/init)" in
   ;;
 esac
 
-case $(grep vendor /proc/cpuinfo) in
+case "$(grep vendor /proc/cpuinfo)" in
 *"intel"*)
   UCODE"intel-ucode"
   ;;
@@ -46,7 +46,7 @@ echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
 loadkeys $KEYMAP
 
 # Choose disk
-until [ ! -e $DISK ]; do
+until [ ! -e "$DISK" ]; do
   clear
   sfdisk -l | grep -E "/dev/"
   echo ""
@@ -68,21 +68,21 @@ esac
 ROOT_PART=$PART2
 
 # Encrypt
-until [ ! -e $ENCRYPTED ]; do
+until [ ! -e "$ENCRYPTED" ]; do
   clear
   echo -e "Encrypt filesystem? (y/Default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
 done
 
 # Timezone
-until [ ! -e $REGION_CITY ]; do
+until [ ! -e "$REGION_CITY" ]; do
   clear
   echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
 # Host
-until [ ! -e $HOSTNAME ]; do
+until [ ! -e "$HOSTNAME" ]; do
   clear
   echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
   [ ! "$HOSTNAME" ] && HOSTNAME="localhost"
@@ -90,7 +90,7 @@ until [ ! -e $HOSTNAME ]; do
 done
 
 # Username
-until [ ! -e $USERNAME ]; do
+until [ ! -e "$USERNAME" ]; do
   clear
   echo -e "Username (Default: artix)" && read -p $"> " USERNAME
   [ ! "$USERNAME" ] && USERNAME="artix"
@@ -101,11 +101,11 @@ done
 [ ! "$ROOT_PASSWORD" ] && ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
 
 # Network
-until [ ! -e $SSID ]; do
+until [ ! -e "$SSID" ]; do
   clear
   echo -e "Wi-Fi SSID (Leave empty for Ethernet)" && read -p $"> " SSID
   [ ! "$SSID" ] && break
-  until [ ! -e $PSK ]; do
+  until [ ! -e "$PSK" ]; do
     echo -e "Wi-Fi Password" && read -p $"> " PSK
   done
   [ "$PSK" ] && break
