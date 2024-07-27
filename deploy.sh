@@ -8,19 +8,19 @@ hwclock --systohc
 echo -e "LANG=en_GB.UTF8
 LANGUAGE=en_GB.UTF8
 LC_COLLATE=C
-XKB_DEFAULT_LAYOUT=$MY_KEYMAP" >/etc/environment
+XKB_DEFAULT_LAYOUT=$KEYMAP" >/etc/environment
 echo -e "FONT_MAP=8859-2
-KEYMAP=$MY_KEYMAP" >/etc/vconsole.conf
+KEYMAP=$KEYMAP" >/etc/vconsole.conf
 
 # Host stuff
-echo -e "$MY_HOSTNAME" >/etc/hostname
+echo -e "$HOSTNAME" >/etc/hostname
 mkdir -p /etc/conf.d
-echo -e "hostname=$MY_HOSTNAME" >/etc/conf.d/hostname
-printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$MY_HOSTNAME" "$MY_HOSTNAME" >/etc/hosts
+echo -e "hostname=$HOSTNAME" >/etc/conf.d/hostname
+printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$HOSTNAME" "$HOSTNAME" >/etc/hosts
 
 # User
-useradd -m -G users,audio,video,input -s /bin/bash $MY_USERNAME
-yes "$ROOT_PASSWORD" | passwd $MY_USERNAME
+useradd -m -G users,audio,video,input -s /bin/bash $USERNAME
+yes "$ROOT_PASSWORD" | passwd $USERNAME
 
 # Root user
 yes "$ROOT_PASSWORD" | passwd
@@ -70,7 +70,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-pacman -Sy --noconfirm --disable-download-timeout acpid-$MY_INIT alsa-utils backlight-$MY_INIT bluez-$MY_INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$MY_INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync thermald-$MY_INIT tor-$MY_INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --noconfirm --disable-download-timeout acpid-$INIT alsa-utils backlight-$INIT bluez-$INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync thermald-$INIT tor-$INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
@@ -82,33 +82,33 @@ cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/themes
 rm -rfd /usr/share/backgrounds
 mkdir -p /usr/share/backgrounds
 wget -qO config.zip https://github.com/YurinDoctrine/.config/archive/refs/heads/artix.zip && unzip config.zip && mv .config-artix .config
-rm -rfd /home/$MY_USERNAME/*
+rm -rfd /home/$USERNAME/*
 rm -rfd /etc/skel/*
 rm -rfd /root/*
-rm -rfd /home/$MY_USERNAME/.*
+rm -rfd /home/$USERNAME/.*
 rm -rfd /etc/skel/.*
 rm -rfd /root/.*
-rmdir -p /home/$MY_USERNAME/*
+rmdir -p /home/$USERNAME/*
 rmdir -p /etc/skel/*
 rmdir -p /root/*
-mkdir -p /home/$MY_USERNAME/.config
+mkdir -p /home/$USERNAME/.config
 mkdir -p /etc/skel/.config
 mkdir -p /root/.config
-mkdir -p /home/$MY_USERNAME/.local
+mkdir -p /home/$USERNAME/.local
 mkdir -p /etc/skel/.local
 mkdir -p /root/.local
 mkdir -p /etc/skel/backup
-cp -rfd .config/.gmrunrc /home/$MY_USERNAME
-cp -rfd .config/.gtkrc-2.0 /home/$MY_USERNAME/.gtkrc-2.0
-cp -rfd .config/.fonts.conf /home/$MY_USERNAME
-cp -rfd .config/.gtk-bookmarks /home/$MY_USERNAME
-cp -rfd .config/.vimrc /home/$MY_USERNAME
-cp -rfd .config/.xinitrc /home/$MY_USERNAME
-cp -rfd .config/.Xresources /home/$MY_USERNAME
-cp -rfd .config/.nanorc /home/$MY_USERNAME
-cp -rfd .config/.mkshrc /home/$MY_USERNAME
-cp -rfd .config/.profile /home/$MY_USERNAME
-cp -rfd .config/.bashrc /home/$MY_USERNAME
+cp -rfd .config/.gmrunrc /home/$USERNAME
+cp -rfd .config/.gtkrc-2.0 /home/$USERNAME/.gtkrc-2.0
+cp -rfd .config/.fonts.conf /home/$USERNAME
+cp -rfd .config/.gtk-bookmarks /home/$USERNAME
+cp -rfd .config/.vimrc /home/$USERNAME
+cp -rfd .config/.xinitrc /home/$USERNAME
+cp -rfd .config/.Xresources /home/$USERNAME
+cp -rfd .config/.nanorc /home/$USERNAME
+cp -rfd .config/.mkshrc /home/$USERNAME
+cp -rfd .config/.profile /home/$USERNAME
+cp -rfd .config/.bashrc /home/$USERNAME
 cp -rfd .config/.gmrunrc /etc/skel
 cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /etc/skel
@@ -137,30 +137,30 @@ cp -rfd .config/CBPP /usr/share/icons
 cp -rfd .config/openbox-3 /usr/share/themes/CBPP
 mkdir -p /usr/share/icons/default
 cp -rfd .config/CBPP/index.theme /usr/share/icons/default
-cp -rfd .config/.newsboat /home/$MY_USERNAME/.newsboat
+cp -rfd .config/.newsboat /home/$USERNAME/.newsboat
 cp -rfd .config/.newsboat /etc/skel/.newsboat
 cp -rfd .config/.newsboat /root/.newsboat
-cp -rfd .config/.local/* /home/$MY_USERNAME/.local
+cp -rfd .config/.local/* /home/$USERNAME/.local
 cp -rfd .config/.local/* /etc/skel/.local
 cp -rfd .config/.local/* /root/.local
-cp -rfd .config/* /home/$MY_USERNAME/.config
+cp -rfd .config/* /home/$USERNAME/.config
 cp -rfd .config/* /etc/skel/.config
 cp -rfd .config/* /root/.config
 mkdir -p /var/cache/libx11/compose
-mkdir -p /home/$MY_USERNAME/.compose-cache
-touch /home/$MY_USERNAME/.XCompose
-chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.*
-chown -hR $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/*
-find /home/$MY_USERNAME/.config/ | grep '\CBPP' | xargs rm -rfd
+mkdir -p /home/$USERNAME/.compose-cache
+touch /home/$USERNAME/.XCompose
+chown -hR $USERNAME:$USERNAME /home/$USERNAME/.*
+chown -hR $USERNAME:$USERNAME /home/$USERNAME/*
+find /home/$USERNAME/.config/ | grep '\CBPP' | xargs rm -rfd
 find /etc/skel/.config/ | grep '\CBPP' | xargs rm -rfd
 find /root/.config/ | grep '\CBPP' | xargs rm -rfd
-find /home/$MY_USERNAME/.config/ | grep '\themes' | xargs rm -rfd
+find /home/$USERNAME/.config/ | grep '\themes' | xargs rm -rfd
 find /etc/skel/.config/ | grep '\themes' | xargs rm -rfd
 find /root/.config/ | grep '\themes' | xargs rm -rfd
-find /home/$MY_USERNAME/.config/ | grep '\openbox-3' | xargs rm -rfd
+find /home/$USERNAME/.config/ | grep '\openbox-3' | xargs rm -rfd
 find /etc/skel/.config/ | grep '\openbox-3' | xargs rm -rfd
 find /root/.config/ | grep '\openbox-3' | xargs rm -rfd
-find /home/$MY_USERNAME/.config/ | grep '\cbpp' | xargs rm -f
+find /home/$USERNAME/.config/ | grep '\cbpp' | xargs rm -f
 find /root/.config/ | grep '\cbpp' | xargs rm -f
 
 # Other stuff you should do
@@ -168,22 +168,22 @@ wget -qO /etc/preload.conf https://raw.githubusercontent.com/YurinDoctrine/deplo
 wget -qO /sbin/preload https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/preload/preload
 chmod +x /sbin/preload
 
-echo "permit persist :$MY_USERNAME
-permit nopass $MY_USERNAME as root cmd macchanger
-permit nopass $MY_USERNAME as root cmd openvpn
-permit nopass $MY_USERNAME as root cmd pacman
-permit nopass $MY_USERNAME as root cmd fwupdmgr
-permit nopass $MY_USERNAME as root cmd poweroff
-permit nopass $MY_USERNAME as root cmd reboot
-permit nopass $MY_USERNAME as root cmd killall
-permit nopass $MY_USERNAME as root cmd renice
-permit nopass $MY_USERNAME as root cmd sv
-permit nopass $MY_USERNAME as root cmd modprobe
-permit nopass $MY_USERNAME as root cmd rmmod" >/etc/doas.conf
+echo "permit persist :$USERNAME
+permit nopass $USERNAME as root cmd macchanger
+permit nopass $USERNAME as root cmd openvpn
+permit nopass $USERNAME as root cmd pacman
+permit nopass $USERNAME as root cmd fwupdmgr
+permit nopass $USERNAME as root cmd poweroff
+permit nopass $USERNAME as root cmd reboot
+permit nopass $USERNAME as root cmd killall
+permit nopass $USERNAME as root cmd renice
+permit nopass $USERNAME as root cmd sv
+permit nopass $USERNAME as root cmd modprobe
+permit nopass $USERNAME as root cmd rmmod" >/etc/doas.conf
 
-sed -i -e "s/replaceme/$MY_KEYMAP/" /home/$MY_USERNAME/.config/openbox/autostart
-sed -i -e "s/replaceme/$MY_KEYMAP/" /etc/skel/.config/openbox/autostart
-sed -i -e "s/replaceme/$MY_KEYMAP/" /root/.config/openbox/autostart
+sed -i -e "s/replaceme/$KEYMAP/" /home/$USERNAME/.config/openbox/autostart
+sed -i -e "s/replaceme/$KEYMAP/" /etc/skel/.config/openbox/autostart
+sed -i -e "s/replaceme/$KEYMAP/" /root/.config/openbox/autostart
 
 sed -i -e 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend/' /etc/elogind/logind.conf
 sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend/' /etc/elogind/logind.conf
@@ -489,7 +489,7 @@ cat /dev/null >/etc/securetty
 
 echo -e "noarp" >>/etc/dhcpcd.conf
 
-echo -e "/home/$MY_USERNAME/.local/bin/mksh" >>/etc/shells
+echo -e "/home/$USERNAME/.local/bin/mksh" >>/etc/shells
 
 tee /etc/issue <<"EOF"
                    '
@@ -565,7 +565,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub 
 
 # Encrypt boot loader
 GRUB_PASS=$(echo -e "$ROOT_PASSWORD\n$ROOT_PASSWORD" | grub-mkpasswd-pbkdf2 | grep -oE '[^ ]+$')
-echo -e "set superusers=$MY_USERNAME
-password_pbkdf2 $MY_USERNAME $GRUB_PASS" >>/etc/grub.d/40_custom
+echo -e "set superusers=$USERNAME
+password_pbkdf2 $USERNAME $GRUB_PASS" >>/etc/grub.d/40_custom
 sed -i -e 's/class os/class os --unrestricted/' /etc/grub.d/10_linux
 grub-mkconfig -o /boot/grub/grub.cfg
