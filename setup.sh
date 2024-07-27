@@ -75,7 +75,7 @@ until [ ! -e $ENCRYPTED ]; do
 done
 
 # Timezone
-until [ -f /usr/share/zoneinfo/"$REGION_CITY" ]; do
+until [ ! -e $REGION_CITY ]; do
   clear
   echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
@@ -98,7 +98,7 @@ until [ ! -e $USERNAME ]; do
 done
 
 # Root
-ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
+[ ! "$ROOT_PASSWORD" ] && ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
 
 # Network
 until [ ! -e $SSID ]; do
