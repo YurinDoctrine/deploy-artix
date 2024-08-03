@@ -168,7 +168,7 @@ wget -qO /etc/preload.conf https://raw.githubusercontent.com/YurinDoctrine/deplo
 wget -qO /sbin/preload https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/preload/preload
 chmod +x /sbin/preload
 
-echo "permit persist :$USERNAME
+echo -e "permit persist :$USERNAME
 permit nopass $USERNAME as root cmd macchanger
 permit nopass $USERNAME as root cmd openvpn
 permit nopass $USERNAME as root cmd pacman
