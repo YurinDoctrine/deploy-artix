@@ -191,6 +191,7 @@ sed -i -e 's/#HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/elogi
 sed -i -e 's/#HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=reboot/' /etc/elogind/logind.conf
 
 echo -e "CPU_LIMIT=0
+GPU_USE_SYNC_OBJECTS=1
 SHARED_MEMORY=1
 MALLOC_CONF=background_thread:true
 MALLOC_CHECK=0
