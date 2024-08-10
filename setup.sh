@@ -13,7 +13,7 @@ case "$(readlink -f /sbin/init)" in
   echo -e "Init system: "$INIT""
   ;;
 *)
-  echo -e "Init system: not supported." && exit 1
+  echo -e "Init system: Not supported." && exit 1
   ;;
 esac
 
@@ -51,7 +51,7 @@ until [ -e "$DISK" ]; do
   sfdisk -l | grep -E "/dev/"
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
-  echo -e "Disk to install to (e.g. /dev/Xda)" && read -p $"> " DISK
+  echo -e "Disk to install (e.g. /dev/Xda)" && read -p $"> " DISK
 done
 
 PART1="$DISK"1
