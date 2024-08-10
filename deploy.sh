@@ -13,10 +13,10 @@ echo -e "FONT_MAP=8859-2
 KEYMAP=$KEYMAP" >/etc/vconsole.conf
 
 # Host stuff
-echo -e "$HOSTNAME" >/etc/hostname
+echo -e "$HOST" >/etc/hostname
 mkdir -p /etc/conf.d
-echo -e "hostname=$HOSTNAME" >/etc/conf.d/hostname
-printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$HOSTNAME" "$HOSTNAME" >/etc/hosts
+echo -e "hostname=$HOST" >/etc/conf.d/hostname
+printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t%s.localdomain\t%s\n" "$HOST" "$HOST" >/etc/hosts
 
 # User
 useradd -m -G users,audio,video,input -s /bin/bash $USERNAME
