@@ -113,12 +113,12 @@ until [ "$SSID" ]; do
 done
 
 # Partition disk
+clear
 swapoff -a
 umount -AR /mnt*
 cryptsetup close /dev/mapper/root
 
 if [ "$ENCRYPTED" = "y" ]; then
-  clear
   dd if=/dev/zero of=$DISK bs=2M status=progress && sync || sync
   dd if=/dev/urandom of=$DISK bs=2M status=progress && sync || sync
 fi
@@ -130,7 +130,6 @@ parted -s "$DISK" set 1 boot on
 
 # Encrypt drive
 if [ "$ENCRYPTED" = "y" ]; then
-  clear
   yes "$CRYPTPASS" | cryptsetup -q luksFormat --pbkdf=pbkdf2 "$ROOT_PART"
   yes "$CRYPTPASS" | cryptsetup open "$ROOT_PART" root
 
