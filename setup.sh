@@ -37,13 +37,15 @@ confirm_password() {
 }
 
 # Dependencies
-pacman -Sy --noconfirm parted
+command -v dpkg >/dev/null 2>&1 || pacman -Sy --noconfirm parted
 
 # Load keymap
-clear
-echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
-[ ! "$KEYMAP" ] && KEYMAP="us"
-loadkeys $KEYMAP
+until [ "$KEYMAP" ]; do
+  clear
+  echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
+  [ ! "$KEYMAP" ] && KEYMAP="us"
+  loadkeys $KEYMAP
+done
 
 # Choose disk
 until [ -e "$DISK" ]; do
