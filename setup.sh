@@ -47,6 +47,42 @@ until [ "$KEYMAP" ]; do
   loadkeys $KEYMAP
 done
 
+# Timezone
+until [ "$REGION_CITY" ]; do
+  clear
+  echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
+  [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
+done
+
+# Host
+until [ "$HOST" ]; do
+  clear
+  echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
+  [ ! "$HOST" ] && HOSTNAME="localhost"
+done
+
+# Username
+until [ "$USERNAME" ]; do
+  clear
+  echo -e "Username (Default: artix)" && read -p $"> " USERNAME
+  [ ! "$USERNAME" ] && USERNAME="artix"
+done
+
+# Root
+[ ! "$ROOT_PASSWORD" ] && ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
+
+# Network
+until [ "$SSID" ]; do
+  clear
+  echo -e "Wi-Fi SSID (leave empty for Ethernet)" && read -p $"> " SSID
+  [ ! "$SSID" ] && break
+  until [ "$PSK" ]; do
+    stty -echo
+    echo -e "Password for Wi-Fi" && read -p $"> " PSK
+    stty echo
+  done
+done
+
 # Choose disk
 until [ -e "$DISK" ]; do
   clear
@@ -76,42 +112,6 @@ until [ "$ENCRYPTED" ]; do
   if [ "$ENCRYPTED" = "y" ]; then
     [ ! "$CRYPTPASS" ] && CRYPTPASS=$(confirm_password "Password for encryption (must at least 6 characters)")
   fi
-done
-
-# Timezone
-until [ "$REGION_CITY" ]; do
-  clear
-  echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
-  [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
-done
-
-# Host
-until [ "$HOSTNAME" ]; do
-  clear
-  echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
-  [ ! "$HOSTNAME" ] && HOSTNAME="localhost"
-done
-
-# Username
-until [ "$USERNAME" ]; do
-  clear
-  echo -e "Username (Default: artix)" && read -p $"> " USERNAME
-  [ ! "$USERNAME" ] && USERNAME="artix"
-done
-
-# Root
-[ ! "$ROOT_PASSWORD" ] && ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
-
-# Network
-until [ "$SSID" ]; do
-  clear
-  echo -e "Wi-Fi SSID (leave empty for Ethernet)" && read -p $"> " SSID
-  [ ! "$SSID" ] && break
-  until [ "$PSK" ]; do
-    stty -echo
-    echo -e "Password for Wi-Fi" && read -p $"> " PSK
-    stty echo
-  done
 done
 
 # Partition disk
@@ -180,7 +180,7 @@ scan_ssid=1
 fi
 
 # Chroot
-(INIT="$INIT" PART2="$PART2" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" HOSTNAME="$HOSTNAME" USERNAME="$USERNAME" KEYMAP="$KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit')
+(INIT="$INIT" PART2="$PART2" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" HOSTNAME="$HOST" USERNAME="$USERNAME" KEYMAP="$KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/deploy.sh); exit')
 
 # Perform finish
 swapoff -a
