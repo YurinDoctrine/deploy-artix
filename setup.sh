@@ -38,9 +38,9 @@ confirm_password() {
 
 # Dependencies
 pacman -Sy --noconfirm parted
-clear
 
 # Load keymap
+clear
 echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
 [ ! "$KEYMAP" ] && KEYMAP="us"
 loadkeys $KEYMAP
