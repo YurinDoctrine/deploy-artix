@@ -46,7 +46,7 @@ echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
 loadkeys $KEYMAP
 
 # Choose disk
-until [ ! -e "$DISK" ]; do
+until [ -e "$DISK" ]; do
   clear
   sfdisk -l | grep -E "/dev/"
   echo ""
@@ -67,7 +67,7 @@ esac
 ROOT_PART=$PART2
 
 # Encrypt
-until [ ! -e "$ENCRYPTED" ]; do
+until [ "$ENCRYPTED" ]; do
   clear
   echo -e "Encrypt filesystem (y/Default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
@@ -77,21 +77,21 @@ until [ ! -e "$ENCRYPTED" ]; do
 done
 
 # Timezone
-until [ ! -e "$REGION_CITY" ]; do
+until [ "$REGION_CITY" ]; do
   clear
   echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
 # Host
-until [ ! -e "$HOSTNAME" ]; do
+until [ "$HOSTNAME" ]; do
   clear
   echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
   [ ! "$HOSTNAME" ] && HOSTNAME="localhost"
 done
 
 # Username
-until [ ! -e "$USERNAME" ]; do
+until [ "$USERNAME" ]; do
   clear
   echo -e "Username (Default: artix)" && read -p $"> " USERNAME
   [ ! "$USERNAME" ] && USERNAME="artix"
@@ -101,11 +101,11 @@ done
 [ ! "$ROOT_PASSWORD" ] && ROOT_PASSWORD=$(confirm_password "Password for superuser (will use same for root)")
 
 # Network
-until [ ! -e "$SSID" ]; do
+until [ "$SSID" ]; do
   clear
   echo -e "Wi-Fi SSID (leave empty for Ethernet)" && read -p $"> " SSID
   [ ! "$SSID" ] && break
-  until [ ! -e "$PSK" ]; do
+  until [ "$PSK" ]; do
     stty -echo
     echo -e "Password for Wi-Fi" && read -p $"> " PSK
     stty echo
