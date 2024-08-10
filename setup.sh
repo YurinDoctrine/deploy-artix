@@ -45,6 +45,7 @@ until [ "$KEYMAP" ]; do
   echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
   [ ! "$KEYMAP" ] && KEYMAP="us"
   loadkeys $KEYMAP
+  setxkbmap $KEYMAP
 done
 
 # Timezone
