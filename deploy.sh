@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Boring stuff you should probably do now
+# Boring stuff should probably do now
 ln -sf /usr/share/zoneinfo/"$REGION_CITY" /etc/localtime
 hwclock --systohc
 
@@ -163,7 +163,7 @@ find /root/.config/ | grep '\openbox-3' | xargs rm -rfd
 find /home/$USERNAME/.config/ | grep '\cbpp' | xargs rm -f
 find /root/.config/ | grep '\cbpp' | xargs rm -f
 
-# Other stuff you should do
+# Other stuff should do
 wget -qO /etc/preload.conf https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/preload/preload.conf
 wget -qO /sbin/preload https://raw.githubusercontent.com/YurinDoctrine/deploy-artix/main/preload/preload
 chmod +x /sbin/preload
