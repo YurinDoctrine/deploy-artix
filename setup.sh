@@ -51,7 +51,7 @@ done
 # Timezone
 until [ "$REGION_CITY" ]; do
   clear
-  echo -e "Region/City (default: Europe/Moscow)" && read -p $"> " REGION_CITY
+  echo -e "Local Time (default: Europe/Moscow)" && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
