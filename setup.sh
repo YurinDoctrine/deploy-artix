@@ -42,7 +42,7 @@ command -v dpkg >/dev/null 2>&1 || pacman -Sy --noconfirm parted
 # Load keymap
 until [ "$KEYMAP" ]; do
   clear
-  echo -e "Load keymap (Default: us)" && read -p $"> " KEYMAP
+  echo -e "Load keymap (default: us)" && read -p $"> " KEYMAP
   [ ! "$KEYMAP" ] && KEYMAP="us"
   loadkeys $KEYMAP
   setxkbmap $KEYMAP
@@ -51,21 +51,21 @@ done
 # Timezone
 until [ "$REGION_CITY" ]; do
   clear
-  echo -e "Region/City (Default: Europe/Moscow)" && read -p $"> " REGION_CITY
+  echo -e "Region/City (default: Europe/Moscow)" && read -p $"> " REGION_CITY
   [ ! "$REGION_CITY" ] && REGION_CITY="Europe/Moscow"
 done
 
 # Host
 until [ "$HOST" ]; do
   clear
-  echo -e "Hostname (Default: localhost)" && read -p $"> " HOSTNAME
+  echo -e "Hostname (default: localhost)" && read -p $"> " HOSTNAME
   [ ! "$HOST" ] && HOSTNAME="localhost"
 done
 
 # Username
 until [ "$USERNAME" ]; do
   clear
-  echo -e "Username (Default: artix)" && read -p $"> " USERNAME
+  echo -e "Username (default: artix)" && read -p $"> " USERNAME
   [ ! "$USERNAME" ] && USERNAME="artix"
 done
 
@@ -108,7 +108,7 @@ ROOT_PART=$PART2
 # Encrypt
 until [ "$ENCRYPTED" ]; do
   clear
-  echo -e "Encrypt filesystem (y/Default: n)" && read -p $"> " ENCRYPTED
+  echo -e "Encrypt filesystem (y/default: n)" && read -p $"> " ENCRYPTED
   [ ! "$ENCRYPTED" ] && ENCRYPTED="n"
   if [ "$ENCRYPTED" = "y" ]; then
     [ ! "$CRYPTPASS" ] && CRYPTPASS=$(confirm_password "Password for encryption (must at least 6 characters)")
