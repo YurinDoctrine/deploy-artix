@@ -55,7 +55,7 @@ Server = https://artix.sakamoto.pl/universe/\$arch
 Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/\$arch
 " >>/etc/pacman.conf
 
-pacman -Sy --noconfirm artix-keyring artix-archlinux-support
+pacman -Sy --noconfirm --disable-download-timeout artix-keyring artix-archlinux-support
 
 echo -e "
 # Arch
