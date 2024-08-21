@@ -539,10 +539,6 @@ ln -s /etc/runit/sv/thermald/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/tor/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/wpa_supplicant/ /etc/runit/runsvdir/current
 
-if [ "$ENCRYPTED" = "y" ]; then
-  ln -s /etc/runit/sv/dmcrypt/ /etc/runit/runsvdir/current
-fi
-
 # Configure mkinitcpio
 if [ "$ENCRYPTED" = "y" ]; then
   sed -i -e 's/^HOOKS.*$/HOOKS=(base udev autodetect modconf keyboard block encrypt filesystems)/g' /etc/mkinitcpio.conf
