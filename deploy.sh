@@ -339,6 +339,7 @@ kernel.timer_migration = 0
 kernel.core_pipe_limit = 0
 kernel.core_uses_pid = 1
 kernel.hung_task_timeout_secs = 0
+kernel.sched_schedstats = 0
 kernel.numa_balancing = 1
 kernel.panic = 0
 kernel.panic_on_oops = 0
