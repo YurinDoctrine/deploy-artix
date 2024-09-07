@@ -32,7 +32,7 @@ with some parts depending on the chosen configuration:
 1. Boot into live environment (both login and password are `artix`).
 2. Connect to the internet.
 
-Ethernet is setup automatically, and Wi-Fi is setup with something like:
+Ethernet is setup automatically and Wi-Fi is setup with something like:
 ```
 sudo rfkill unblock wifi
 sudo ip link set wlan0 up
