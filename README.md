@@ -14,7 +14,7 @@ It supports only `runit` init system. It also supports `cryptsetup`._
 The installer performs the following main steps (in roughly this order),
 with some parts depending on the chosen configuration:
 
-1. Configure system (hostname, timezone, keymap, locales ...)
+1. Configure system (hostname, timezone, keymap, locales, ...)
 2. Partition disk
 3. Install kernel
 4. Install base packages
