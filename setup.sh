@@ -90,7 +90,7 @@ until [ -e "$DISK" ]; do
   sfdisk -l | grep -E "/dev/"
   echo ""
   echo -e "WARNING: The selected disk will be rewritten."
-  echo -e "Disk to install (e.g. /dev/Xda)" && read -p $"> " DISK
+  echo -e "Disk to install (e.g. /dev/[drive letter])" && read -p $"> " DISK
 done
 
 PART1="$DISK"1
