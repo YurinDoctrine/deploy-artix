@@ -9,7 +9,7 @@ fi
 
 case "$(readlink -f /sbin/init)" in
   *"runit"*)
-    INIT="runit" && echo -e "Init system: "$INIT""
+    INIT="runit" && echo -e "Init system: $INIT"
     ;;
   *)
     echo -e "Init system: Not supported." && exit 1
