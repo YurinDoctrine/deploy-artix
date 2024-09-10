@@ -55,7 +55,7 @@ Server = https://artix.sakamoto.pl/universe/\$arch
 Server = http://rrtovkpcaxl6s2ommj5tigyxamzxaknasd74ecb5t5cdfnkodirjnwyd.onion/artixlinux/\$arch
 " >>/etc/pacman.conf
 
-pacman -Sy --noconfirm --disable-download-timeout artix-keyring artix-archlinux-support
+pacman -Sy --needed --noconfirm --disable-download-timeout artix-keyring artix-archlinux-support
 
 echo -e "
 # Arch
@@ -70,7 +70,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-pacman -Sy --noconfirm --disable-download-timeout acpid-$INIT alsa-utils backlight-$INIT bluez-$INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync thermald-$INIT tor-$INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --needed --noconfirm --disable-download-timeout acpid-$INIT alsa-utils backlight-$INIT bluez-$INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync thermald-$INIT tor-$INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
