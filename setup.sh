@@ -9,8 +9,7 @@ fi
 
 case "$(readlink -f /sbin/init)" in
   *"runit"*)
-    INIT="runit"
-    echo -e "Init system: "$INIT""
+    echo -e "Init system: "$INIT"" && INIT="runit"
     ;;
   *)
     echo -e "Init system: Not supported." && exit 1
@@ -93,13 +92,14 @@ until [ -e "$DISK" ]; do
   echo -e "Disk to install (e.g. /dev/[drive letter])" && read -p $"> " DISK
 done
 
-PART1="$DISK"1
-PART2="$DISK"2
-
 case "$DISK" in
   *"nvme"*)
     PART1="$DISK"p1
     PART2="$DISK"p2
+    ;;
+  *)
+    PART1="$DISK"1
+    PART2="$DISK"2
     ;;
 esac
 
