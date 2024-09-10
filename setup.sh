@@ -18,12 +18,12 @@ case "$(readlink -f /sbin/init)" in
 esac
 
 case "$(grep vendor /proc/cpuinfo)" in
-*"intel"*)
-  UCODE"intel-ucode"
-  ;;
-*"amd"*)
-  UCODE"amd-ucode"
-  ;;
+  *"Intel"*)
+    UCODE="intel-ucode"
+    ;;
+  *"AMD"*)
+    UCODE="amd-ucode"
+    ;;
 esac
 
 confirm_password() {
