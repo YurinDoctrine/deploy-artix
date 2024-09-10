@@ -8,13 +8,13 @@ fi
 [ ! -d /sys/firmware/efi ] && echo -e "System not booted in UEFI mode." && exit 1
 
 case "$(readlink -f /sbin/init)" in
-*"runit"*)
-  INIT="runit"
-  echo -e "Init system: "$INIT""
-  ;;
-*)
-  echo -e "Init system: Not supported." && exit 1
-  ;;
+  *"runit"*)
+    INIT="runit"
+    echo -e "Init system: "$INIT""
+    ;;
+  *)
+    echo -e "Init system: Not supported." && exit 1
+    ;;
 esac
 
 case "$(grep vendor /proc/cpuinfo)" in
@@ -97,10 +97,10 @@ PART1="$DISK"1
 PART2="$DISK"2
 
 case "$DISK" in
-*"nvme"*)
-  PART1="$DISK"p1
-  PART2="$DISK"p2
-  ;;
+  *"nvme"*)
+    PART1="$DISK"p1
+    PART2="$DISK"p2
+    ;;
 esac
 
 ROOT_PART=$PART2
