@@ -37,7 +37,7 @@ confirm_password() {
 }
 
 # Dependencies
-command -v parted >/dev/null 2>&1 || pacman -Sy --noconfirm --disable-download-timeout parted
+command -v parted >/dev/null 2>&1 || pacman -Sy --needed --noconfirm --disable-download-timeout parted
 
 # Load keymap
 until [ "$KEYMAP" ]; do
