@@ -140,6 +140,9 @@ cp -rfd .config/CBPP/index.theme /usr/share/icons/default
 cp -rfd .config/.newsboat /home/$USERNAME/.newsboat
 cp -rfd .config/.newsboat /etc/skel/.newsboat
 cp -rfd .config/.newsboat /root/.newsboat
+cp -rfd .config/.irssi /home/$USERNAME/.irssi
+cp -rfd .config/.irssi /etc/skel/.irssi
+cp -rfd .config/.irssi /root/.irssi
 cp -rfd .config/.local/* /home/$USERNAME/.local
 cp -rfd .config/.local/* /etc/skel/.local
 cp -rfd .config/.local/* /root/.local
