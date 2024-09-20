@@ -72,6 +72,18 @@ Include = /etc/pacman.d/mirrorlist-arch
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
 pacman -Sy --needed --noconfirm --disable-download-timeout acpid-$INIT alsa-utils backlight-$INIT bluez-$INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync thermald-$INIT tor-$INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
+mkdir -p /etc/pacman.d/hooks
+
+echo -e "[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+When = PostTransaction
+Exec = /sbin/sh -c '[ \$DISPLAY ] && XAUTHORITY=/home/$USERNAME/.Xauthority /usr/bin/setxkbmap tr'" >/etc/pacman.d/hooks/set-keyboard-layout-back-to-normal.hook
+
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
 cd /tmp
