@@ -12,7 +12,7 @@ XKB_DEFAULT_LAYOUT=$KEYMAP" >/etc/environment
 echo -e "FONT_MAP=8859-2
 KEYMAP=$KEYMAP" >/etc/vconsole.conf
 
-# Host stuff
+# Host
 echo -e "$HOST" >/etc/hostname
 mkdir -p /etc/conf.d
 echo -e "hostname=$HOST" >/etc/conf.d/hostname
