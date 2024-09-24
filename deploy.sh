@@ -121,6 +121,7 @@ cp -rfd .config/.nanorc /home/$USERNAME
 cp -rfd .config/.mkshrc /home/$USERNAME
 cp -rfd .config/.profile /home/$USERNAME
 cp -rfd .config/.bashrc /home/$USERNAME
+cp -rfd .config/.tmux.conf /home/$USERNAME
 cp -rfd .config/.gmrunrc /etc/skel
 cp -rfd .config/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
 cp -rfd .config/.fonts.conf /etc/skel
@@ -132,6 +133,7 @@ cp -rfd .config/.nanorc /etc/skel
 cp -rfd .config/.mkshrc /etc/skel
 cp -rfd .config/.profile /etc/skel
 cp -rfd .config/.bashrc /etc/skel
+cp -rfd .config/.tmux.conf /etc/skel
 mv .config/.gmrunrc /root
 mv .config/.gtkrc-2.0 /root/.gtkrc-2.0
 mv .config/.fonts.conf /root
@@ -143,6 +145,7 @@ mv .config/.nanorc /root
 mv .config/.mkshrc /root
 mv .config/.profile /root
 mv .config/.bashrc /root
+mv .config/.tmux.conf /root
 mv .config/default-tile.png /usr/share/backgrounds/default-tile.png
 rm -rfd /usr/share/icons/CBPP*
 cp -rfd .config/CBPP /usr/share/icons
