@@ -89,7 +89,7 @@ release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-
 cd /tmp
 wget -qO cbpp-ui-theme.zip https://github.com/CBPP/cbpp-ui-theme/archive/refs/heads/$release.zip && unzip cbpp-ui-theme.zip && mv cbpp-ui-theme-$release cbpp-ui-theme
 rm -rfd /usr/share/themes/CBPP*
-rm -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/CBPP/xf*
+rm -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/CBPP*/xf*
 cp -rfd cbpp-ui-theme/cbpp-ui-theme/data/usr/share/themes/* /usr/share/themes
 rm -rfd /usr/share/backgrounds
 mkdir -p /usr/share/backgrounds
