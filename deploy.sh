@@ -503,11 +503,13 @@ echo -e "options rfkill default_state=0 master_switch_mode=0" >/etc/modprobe.d/w
 
 sed -i -e 's|ext4.*|ext4 rw,lazytime,relatime,commit=3600,delalloc,nobarrier,nofail,discard 0 1|g' /etc/fstab
 
+echo -e "* soft nofile 524288
+* hard nofile 524288
+root soft nofile 524288
+root hard nofile 524288" >/etc/security/limits.conf
+
 echo -e "order bind,hosts
 multi on" >/etc/host.conf
-
-echo -e "* soft nofile 1024000
-* hard nofile 1024000" >/etc/security/limits.conf
 
 echo -e "session required pam_limits.so" >>/etc/pam.d/common-session
 echo -e "session required pam_limits.so" >>/etc/pam.d/common-session-noninteractive
