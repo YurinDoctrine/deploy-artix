@@ -161,9 +161,9 @@ echo -e 'Done with configuration. Installing...'
 basestrap /mnt linux-zen linux-zen-headers linux-firmware mkinitcpio
 
 if [ "$ENCRYPTED" = "y" ]; then
-  basestrap /mnt base $INIT elogind-$INIT efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT cryptsetup-$INIT
+  basestrap /mnt base $INIT elogind efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT cryptsetup-$INIT
 else
-  basestrap /mnt base $INIT elogind-$INIT efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT
+  basestrap /mnt base $INIT elogind efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT
 fi
 
 fstabgen -U /mnt >/mnt/etc/fstab
