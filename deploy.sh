@@ -70,7 +70,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 " >>/etc/pacman.conf
 
 pacman -Sy && pacman-key --init && pacman-key --populate archlinux
-pacman -Sy --needed --noconfirm --disable-download-timeout acpid-$INIT alsa-utils backlight-$INIT bluez-$INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync tmux tor-$INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
+pacman -Sy --needed --noconfirm --disable-download-timeout alsa-utils backlight-$INIT bluez-$INIT dbus-broker doas fwupd gtk-engines gtk-engine-murrine haveged-$INIT jitterentropy libva-mesa-driver macchanger mesa mesa-vdpau openbox pipewire pipewire-alsa pipewire-pulse rsync tmux tor-$INIT torsocks unzip vim vulkan-mesa-layers wayland wget wireplumber wpa_supplicant xdg-desktop-portal-gtk xdg-utils xdg-user-dirs xorg xorg-xinit xterm
 
 mkdir -p /etc/pacman.d/hooks
 
@@ -551,7 +551,6 @@ for run_script in /etc/runit/sv/*/run; do
   sed -i -e '/^exec [^2&>][^1>&]/ { s|^exec |exec nice -n 19 | }' "$run_script"
 done
 
-ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/backlight/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/dhcpcd/ /etc/runit/runsvdir/current
 ln -s /etc/runit/sv/haveged/ /etc/runit/runsvdir/current
