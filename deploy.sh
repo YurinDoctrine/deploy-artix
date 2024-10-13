@@ -549,7 +549,7 @@ tee /etc/issue <<"EOF"
 EOF
 
 for run_script in /etc/runit/sv/*/run; do
-  sed -i -e '/^exec [^2&>]/ s|^exec |exec nice -n 19 |' "$run_script"
+  sed -i -e '/^exec [^2&>][^1>&]/ { s|^exec |exec nice -n 19 | }' "$run_script"
 done
 
 ln -s /etc/runit/sv/acpid/ /etc/runit/runsvdir/current
