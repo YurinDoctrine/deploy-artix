@@ -512,6 +512,7 @@ multi on" >/etc/host.conf
 
 echo -e "session required pam_limits.so" >>/etc/pam.d/common-session
 echo -e "session required pam_limits.so" >>/etc/pam.d/common-session-noninteractive
+echo -e "session required pam_limits.so" >>/etc/pam.d/runuser-l
 
 sed -i -e 's|022|077|g' /etc/login.defs
 
