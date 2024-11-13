@@ -158,13 +158,13 @@ swapon /mnt/swap/swapfile
 clear
 echo -e 'Done with configuration. Installing...'
 
-basestrap /mnt linux-zen linux-zen-headers linux-firmware mkinitcpio
-
 if [ "$ENCRYPTED" = "y" ]; then
   basestrap /mnt base $INIT elogind efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT cryptsetup-$INIT
 else
   basestrap /mnt base $INIT elogind efibootmgr dbus-$INIT dhcpcd-$INIT grub $UCODE wpa_supplicant-$INIT
 fi
+
+basestrap /mnt linux-zen linux-zen-headers linux-firmware mkinitcpio
 
 fstabgen -U /mnt >/mnt/etc/fstab
 
