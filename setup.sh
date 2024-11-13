@@ -35,6 +35,9 @@ confirm_password() {
   echo -e "$pass2"
 }
 
+# Pacman
+sed -i -e '/#DisableSandbox/a DisableDownloadTimeout' /etc/pacman.conf
+
 # Dependencies
 command -v parted >/dev/null 2>&1 || pacman -Sy --needed --noconfirm --disable-download-timeout parted
 
