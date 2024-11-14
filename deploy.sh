@@ -311,13 +311,13 @@ echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
 echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.conf
 
 mkdir -p /etc/modules-load.d
-modprobe bfq && echo -e "bfq" >/etc/modules-load.d/bfq.conf
-modprobe tcp_bbr && echo -e "tcp_bbr" >/etc/modules-load.d/bbr.conf
+echo -e "bfq" >/etc/modules-load.d/bfq.conf
+echo -e "tcp_bbr" >/etc/modules-load.d/bbr.conf
 modprobe tcp_bbr2 && echo -e "tcp_bbr2" >/etc/modules-load.d/bbr.conf
 
 mkdir -p /lib/sysctl.d
 echo -e "net.core.default_qdisc=fq" >/lib/sysctl.d/99-tcp.conf
-modprobe tcp_bbr && echo -e "net.ipv4.tcp_congestion_control=bbr" >>/lib/sysctl.d/99-tcp.conf
+echo -e "net.ipv4.tcp_congestion_control=bbr" >>/lib/sysctl.d/99-tcp.conf
 modprobe tcp_bbr2 && echo -e "net.ipv4.tcp_congestion_control=bbr2" >>/lib/sysctl.d/99-tcp.conf
 
 echo -e "kernel.core_pattern=/dev/null" >/lib/sysctl.d/50-coredump.conf
