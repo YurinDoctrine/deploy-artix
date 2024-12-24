@@ -85,6 +85,8 @@ Target = *
 When = PostTransaction
 Exec = /sbin/sh -c '[ \$DISPLAY ] && XAUTHORITY=/home/$USERNAME/.Xauthority /sbin/setxkbmap $KEYMAP'" >/etc/pacman.d/hooks/set-keyboard-layout-back-to-normal.hook
 
+echo -e "StrictNodes 0" >>/etc/tor/torrc
+
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
 cd /tmp
