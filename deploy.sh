@@ -313,6 +313,7 @@ echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
 echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.conf
 
 mkdir -p /etc/modules-load.d
+echo -e "ntsync" >/etc/modules-load.d/ntsync.conf
 echo -e "bfq" >/etc/modules-load.d/bfq.conf
 echo -e "tcp_bbr" >/etc/modules-load.d/bbr.conf
 modprobe tcp_bbr2 && echo -e "tcp_bbr2" >/etc/modules-load.d/bbr.conf
