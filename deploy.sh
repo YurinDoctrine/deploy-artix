@@ -312,6 +312,8 @@ echo -e "options processor ignore_ppc=1" >/etc/modprobe.d/ignore_ppc.conf
 
 echo -e "options drm_kms_helper poll=0" >/etc/modprobe.d/disable-gpu-polling.conf
 
+echo -e "options nvidia NVreg_UsePageAttributeTable=1 NVreg_InitializeSystemMemoryAllocations=0 NVreg_DynamicPowerManagement=0x02" >/etc/modprobe.d/nvidia.conf
+
 mkdir -p /etc/modules-load.d
 echo -e "ntsync" >/etc/modules-load.d/ntsync.conf
 echo -e "bfq" >/etc/modules-load.d/bfq.conf
