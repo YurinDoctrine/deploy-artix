@@ -425,6 +425,7 @@ net.ipv4.tcp_timestamps=0
 net.core.bpf_jit_enable=1
 net.core.bpf_jit_harden=0
 net.core.bpf_jit_kallsyms=0
+vm.min_free_kbytes=2048
 vm.mmap_rnd_bits=32
 vm.mmap_rnd_compat_bits=16
 fs.file-max=1048576
