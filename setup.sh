@@ -36,7 +36,7 @@ confirm_password() {
 }
 
 # Pacman
-sed -i -e '/#DisableSandbox/a DisableDownloadTimeout' /etc/pacman.conf
+sed -i -e '/ILoveCandy/a DisableDownloadTimeout' /etc/pacman.conf
 
 # Dependencies
 command -v parted >/dev/null 2>&1 || pacman -Sy --needed --noconfirm --disable-download-timeout parted
