@@ -190,6 +190,7 @@ wget -qO /sbin/preload https://raw.githubusercontent.com/YurinDoctrine/deploy-ar
 chmod +x /sbin/preload
 
 echo -e "permit persist :$USERNAME
+permit nopass $USERNAME as root cmd ip
 permit nopass $USERNAME as root cmd macchanger
 permit nopass $USERNAME as root cmd openvpn
 permit nopass $USERNAME as root cmd pacman
