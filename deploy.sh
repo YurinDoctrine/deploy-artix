@@ -85,7 +85,12 @@ Target = *
 When = PostTransaction
 Exec = /sbin/sh -c '[ \$DISPLAY ] && XAUTHORITY=/home/$USERNAME/.Xauthority /sbin/setxkbmap $KEYMAP'" >/etc/pacman.d/hooks/set-keyboard-layout-back-to-normal.hook
 
-echo -e "StrictNodes 0" >>/etc/tor/torrc
+echo -e "SocksPort 127.0.0.1:9050 IsolateClientAddr IsolateSOCKSAuth IsolateClientProtocol IsolateDestPort IsolateDestAddr
+Sandbox 1
+HardwareAccel 1
+UseEntryGuards 1
+EnforceDistinctSubnets 1
+StrictNodes 0" >>/etc/tor/torrc
 
 # Pull my dotfiles
 release=$(curl -s https://www.debian.org/releases/stable/ | grep -oP 'Debian [0-9]+' | cut -d " " -f2 | head -n 1)
