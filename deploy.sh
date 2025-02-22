@@ -197,7 +197,7 @@ chmod +x /sbin/preload
 echo -e "permit persist :$USERNAME
 permit nopass $USERNAME as root cmd ip
 permit nopass $USERNAME as root cmd macchanger
-permit nopass $USERNAME as root cmd openvpn
+permit nopass $USERNAME as root cmd tor-router
 permit nopass $USERNAME as root cmd pacman
 permit nopass $USERNAME as root cmd fwupdmgr
 permit nopass $USERNAME as root cmd poweroff
