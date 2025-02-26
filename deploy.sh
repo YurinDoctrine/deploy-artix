@@ -217,6 +217,15 @@ sed -i -e 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspe
 sed -i -e 's/#HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/elogind/logind.conf
 sed -i -e 's/#HandlePowerKeyLongPress=.*/HandlePowerKeyLongPress=reboot/' /etc/elogind/logind.conf
 
+echo -e 'Section "Device"
+    Identifier "Device0"
+    Option "TearFree" "true"
+EndSection
+
+Section "Extensions"
+    Option "Composite" "Disable"
+EndSection' >/etc/xorg.conf
+
 echo -e "CPU_LIMIT=0
 GPU_USE_SYNC_OBJECTS=1
 SHARED_MEMORY=1
