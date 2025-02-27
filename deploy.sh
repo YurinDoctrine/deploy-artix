@@ -93,7 +93,7 @@ Target = firefox-esr
 
 [Action]
 When = PostTransaction
-Exec = /sbin/sh -c "echo \'#!/bin/sh\nexport LD_PRELOAD= && exec /usr/lib/firefox-esr/firefox-esr -safe-mode -purgecaches `$@`\' | tee /bin/firefox-esr"' >/etc/pacman.d/hooks/set-browser-back-to-normal.hook
+Exec = /sbin/sh -c "echo '\''#!/bin/sh\\nexport LD_PRELOAD= && exec /usr/lib/firefox-esr/firefox-esr -safe-mode -purgecaches `$@`'\'' >/bin/firefox-esr"' >/etc/pacman.d/hooks/set-browser-back-to-normal.hook
 
 echo -e "SocksPort 127.0.0.1:9050 IsolateClientAddr IsolateSOCKSAuth IsolateClientProtocol IsolateDestPort IsolateDestAddr
 Sandbox 1
