@@ -601,6 +601,7 @@ fi
 
 sed -i -e 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
 sed -i -e 's/#COMPRESSION_OPTIONS=.*/COMPRESSION_OPTIONS=("--best")/g' /etc/mkinitcpio.conf
+sed -i -e 's/#MODULES_DECOMPRESS=.*/MODULES_DECOMPRESS="yes"/g' /etc/mkinitcpio.conf
 
 mkinitcpio -P
 
