@@ -564,6 +564,7 @@ tee /etc/issue <<"EOF"
   |_||_| (_)    |____/|_| |_|_____|____/_/   \_\_| \_|\____|
 
 Shebang \s \r (\m) (\l) \d \t
+
 EOF
 
 for run_script in /etc/runit/sv/*/run; do
