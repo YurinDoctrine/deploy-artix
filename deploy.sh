@@ -35,6 +35,7 @@ sed -i -e s"/\#VerbosePkgLists/VerbosePkgLists/"g /etc/pacman.conf
 sed -i -e s"/\#ParallelDownloads.*/ParallelDownloads = 3/"g /etc/pacman.conf
 sed -i -e s"/\#CheckSpace/CheckSpace/"g /etc/pacman.conf
 sed -i -e s"/\#CacheDir.*/CacheDir = \/tmp\//"g /etc/pacman.conf
+sed -i -e s"/\#LogFile.*/LogFile = \/dev\/null/"g /etc/pacman.conf
 sed -i -e 's/#IgnorePkg.*/IgnorePkg = sudo/' /etc/pacman.conf
 sed -i -e s"/\#NoExtract.*/NoExtract = usr\/share\/doc\/* usr\/share\/gtk-doc\/* usr\/share\/help\/* usr\/share\/info\/* usr\/share\/man\/*/"g /etc/pacman.conf
 sed -i -e "s/xz.*/xz -c -z -q - --threads=$(nproc))/;s/^#COMPRESSXZ/COMPRESSXZ/;s/zstd.*/zstd -c -z -q - --threads=$(nproc))/;s/^#COMPRESSZST/COMPRESSZST/;s/lz4.*/lz4 -q --best)/;s/^#COMPRESSLZ4/COMPRESSLZ4/" /etc/makepkg.conf
@@ -83,7 +84,7 @@ Target = *
 
 [Action]
 When = PostTransaction
-Exec = /sbin/sh -c '[ \$DISPLAY ] && XAUTHORITY=/home/$USERNAME/.Xauthority /sbin/setxkbmap $KEYMAP'" >/etc/pacman.d/hooks/set-keyboard-layout-back-to-normal.hook
+Exec = /sbin/sh -c '[ \$DISPLAY ] && XAUTHORITY=/home/$USERNAME/.Xauthority setxkbmap $KEYMAP'" >/etc/pacman.d/hooks/set-keyboard-layout-back-to-normal.hook
 
 echo -e '[Trigger]
 Operation = Install
