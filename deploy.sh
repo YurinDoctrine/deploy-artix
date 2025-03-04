@@ -557,13 +557,28 @@ echo -e "noarp" >>/etc/dhcpcd.conf
 echo -e "/home/$USERNAME/.local/bin/mksh" >>/etc/shells
 
 tee /etc/issue <<"EOF"
-   _  _   _     ____  _   _ _____ ____    _    _   _  ____
- _| || |_| |   / ___|| | | | ____| __ )  / \\  | \\ | |/ ___|
-|_      _| |   \\___ \\| |_| |  _| |  _ \\ / _ \\ |  \\| | |  _
-|_      _|_|    ___) |  _  | |___| |_) / ___ \\| |\\  | |_| |
-  |_||_| (_)   |____/|_| |_|_____|____/_/   \\_\\_| \\_|\\____|
+                   '
+                  'o'
+                 'ooo'
+                'ooxoo'
+               'ooxxxoo'
+              'oookkxxoo'
+             'oiioxkkxxoo'
+            ':;:iiiioxxxoo'
+               `'.;::ioxxoo'
+          '-.      `':;jiooo'
+         'oooio-..     `'i:io'
+        'ooooxxxxoio:,.   `'-;'
+       'ooooxxxxxkkxoooIi:-.  `'
+      'ooooxxxxxkkkkxoiiiiiji'
+     'ooooxxxxxkxxoiiii:'`     .i'
+    'ooooxxxxxoi:::'`       .;ioxo'
+   'ooooxooi::'`         .:iiixkxxo'
+  'ooooi:'`                `'';ioxxo'
+ 'i:'`                          '':io'
+'`                                   `'
 
-Shebang \s \r (\m) (\l) \d \t
+Artix \s \r (\m) (\l) \d \t
 
 EOF
 
